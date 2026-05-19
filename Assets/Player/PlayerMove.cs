@@ -29,6 +29,15 @@ public class PlayerMove : MonoBehaviour
 
         Vector3 move = Vector3.zero;
 
+        // カメラの向きを基準に前後左右を決定（カメラの水平成分のみを使用）
+        Transform camT = Camera.main != null ? Camera.main.transform : null;
+        Vector3 camForward = camT != null ? camT.forward : transform.forward;
+        camForward.y = 0f;
+        camForward.Normalize();
+        Vector3 camRight = camT != null ? camT.right : transform.right;
+        camRight.y = 0f;
+        camRight.Normalize();
+
         // 押した瞬間を記録
         if (kb.aKey.wasPressedThisFrame)
         {
@@ -40,18 +49,18 @@ public class PlayerMove : MonoBehaviour
             lastHorizontalKey = Key.D;
         }
 
-        // 前後移動
+        // 前後移動（カメラ基準）
         if (kb.wKey.isPressed)
         {
-            move += Vector3.forward;
+            move += camForward;
         }
 
         if (kb.sKey.isPressed)
         {
-            move += Vector3.back;
+            move -= camForward;
         }
 
-        // 左右移動
+        // 左右移動（カメラ基準）
         bool a = kb.aKey.isPressed;
         bool d = kb.dKey.isPressed;
         if (a && d)
@@ -59,20 +68,20 @@ public class PlayerMove : MonoBehaviour
             //最後に押されたキーの方に移動
             if (lastHorizontalKey == Key.A)
             {
-                move += Vector3.left;
+                move -= camRight;
             }
             else if (lastHorizontalKey == Key.D)
             {
-                move += Vector3.right;
+                move += camRight;
             }
         }
         else if (a)
         {
-            move += Vector3.left;
+            move -= camRight;
         }
         else if (d)
         {
-            move += Vector3.right;
+            move += camRight;
         }
 
         // 移動量がある場合のみ移動・回転
