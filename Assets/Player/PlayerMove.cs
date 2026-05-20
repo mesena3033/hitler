@@ -1,6 +1,9 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -9,9 +12,17 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float invicibleTime = 1.5f;  // 無敵時間
 
     [SerializeField] private float rotateSpeed = 540f;   // 向く速度
+    private Animator animator;  // アニメーターコンポーネント
 
     private Key lastHorizontalKey = Key.None;  // 最後に押された水平移動キー
     private Rigidbody rb;
+
+   
+    private bool IsDancing = false;
+
+    private bool IsAttacking = false;
+    private float attackDuration = .3f; // 攻撃アニメーションの長さ
+
 
     private void Start()
     {
@@ -19,17 +30,32 @@ public class PlayerMove : MonoBehaviour
         {
             rb = GetComponent<Rigidbody>();
         }
+
+        // アニメーターコンポーネントを取得
+        animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
     {
-        
         var kb = Keyboard.current;
-        if (kb == null) return; // Input System が初期化されていない場合は何もしない
+        if (kb == null) return; 
+
+        // 攻撃中は移動処理を行わない（攻撃アニメが終わるまで）
+        if (IsAttacking)
+        {
+            attackDuration -= Time.fixedDeltaTime;
+            if (attackDuration <= 0f)
+            {
+                animator.SetBool("IsAttack", false);
+                Debug.Log("IsAttack :" + animator.GetBool("IsAttack"));
+                IsAttacking = false;
+            }
+            return;
+        }
 
         Vector3 move = Vector3.zero;
 
-        // カメラの向きを基準に前後左右を決定（カメラの水平成分のみを使用）
+        // カメラの向きを基準に前後左右移動
         Transform camT = Camera.main != null ? Camera.main.transform : null;
         Vector3 camForward = camT != null ? camT.forward : transform.forward;
         camForward.y = 0f;
@@ -69,28 +95,48 @@ public class PlayerMove : MonoBehaviour
             if (lastHorizontalKey == Key.A)
             {
                 move -= camRight;
+                animator.SetBool("IsMove", true);
+                Debug.Log("IsMove :" + animator.GetBool("IsMove"));
+                animator.SetBool("IsIdle", false);
+                Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
             }
             else if (lastHorizontalKey == Key.D)
             {
                 move += camRight;
+                animator.SetBool("IsMove", true);
+                Debug.Log("IsMove :" + animator.GetBool("IsMove"));
+                animator.SetBool("IsIdle", false);
+                Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
             }
         }
         else if (a)
         {
             move -= camRight;
+            animator.SetBool("IsMove", true);
+            Debug.Log("IsMove :" + animator.GetBool("IsMove"));
+            animator.SetBool("IsIdle", false);
+            Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
         }
         else if (d)
         {
             move += camRight;
+            animator.SetBool("IsMove", true);
+            Debug.Log("IsMove :" + animator.GetBool("IsMove"));
+            animator.SetBool("IsIdle", false);
+            Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
         }
 
         // 移動量がある場合のみ移動・回転
         if (move != Vector3.zero)
         {
-            // 斜め移動でも速度一定（ワールド座標で移動）
+            animator.SetBool("IsMove", true);
+            Debug.Log("IsMove :" + animator.GetBool("IsMove"));
+            animator.SetBool("IsIdle", false);
+            Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
+            // 斜め移動でも速度一定
             Vector3 dir = move.normalized;
             float dt = Time.fixedDeltaTime;
-            // Rigidbody があれば物理挙動で移動・回転する
+            
             if (rb != null)
             {
                 rb.MovePosition(rb.position + dir * speed * dt);
@@ -117,6 +163,52 @@ public class PlayerMove : MonoBehaviour
                     float step = rotateSpeed * dt; 
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, step);
                 }
+            }
+        }
+
+        else
+        {
+            animator.SetBool("IsMove", false);
+            Debug.Log("IsMove :" + animator.GetBool("IsMove"));
+            animator.SetBool("IsIdle", true);
+            Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
+        }
+        
+        /*if(kb.hKey.isPressed && !IsDancing)
+        {
+
+            animator.SetBool("IsDance", true);
+            IsDancing = true;
+        }
+
+        else if(kb.hKey.isPressed && IsDancing)
+        {
+            animator.SetBool("IsDance", false);
+            IsDancing = false;
+        }*/
+
+        Debug.Log(attackDuration);
+
+        // 攻撃
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            animator.SetBool("IsAttack", true);
+            Debug.Log("IsAttack :" + animator.GetBool("IsAttack"));
+            animator.SetBool("IsMove", false);
+            Debug.Log("IsMove :" + animator.GetBool("IsMove"));
+            animator.SetBool("IsIdle", false);
+            Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
+            IsAttacking = true;
+            attackDuration -= Time.fixedDeltaTime;
+            if (attackDuration <= 0f)
+            {
+                
+                animator.SetBool("IsAttack", false);
+                Debug.Log("IsAttack :" + animator.GetBool("IsAttack"));
+                IsAttacking = false;
+                attackDuration = 1f; // 攻撃アニメーションの長さにリセット
+
+               
             }
         }
     }
