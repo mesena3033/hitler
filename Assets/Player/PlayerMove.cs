@@ -1,70 +1,111 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
-using System.Collections;
-using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;  // 移動速度
+    [Header("移動")]
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float rotateSpeed = 360f;
 
-    [SerializeField] private float invicibleTime = 1.5f;  // 無敵時間
+    [Header("攻撃")]
+    [SerializeField] private float attackDuration = .75f;
 
-    [SerializeField] private float rotateSpeed = 540f;   // 向く速度
-    private Animator animator;  // アニメーターコンポーネント
-
-    private Key lastHorizontalKey = Key.None;  // 最後に押された水平移動キー
+    private Animator animator;
     private Rigidbody rb;
 
-   
-    private bool IsDancing = false;
+    // 入力保持
+    private Vector3 moveInput;
+    private bool attackInput;
 
-    private bool IsAttacking = false;
-    private float attackDuration = .3f; // 攻撃アニメーションの長さ
+    // 状態
+    private bool isAttacking = false;
+
+    // コンボ攻撃
+    // コンボ予約
+    private bool IsComboQueued = false;
+    private int comboCount = 0;
+    [SerializeField] private int maxCombo = 3;
+
+    // コンボ入力受付時間
+    private float comboWindow = 2f;
+    private float comboTimer = 0f;
 
 
-    private void Start()
+    // 攻撃時間
+    private float attackTimer = 0f;
+
+    // 最後に押した横キー
+    private Key lastHorizontalKey = Key.None;
+
+
+
+    void Start()
     {
-        if (rb == null)
-        {
-            rb = GetComponent<Rigidbody>();
-        }
-
-        // アニメーターコンポーネントを取得
+        rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
 
-    void FixedUpdate()
+    // 入力処理
+    void Update()
     {
         var kb = Keyboard.current;
-        if (kb == null) return; 
 
-        // 攻撃中は移動処理を行わない（攻撃アニメが終わるまで）
-        if (IsAttacking)
+        if (kb == null) return;
+
+        // 攻撃入力
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            attackDuration -= Time.fixedDeltaTime;
-            if (attackDuration <= 0f)
-            {
-                animator.SetBool("IsAttack", false);
-                Debug.Log("IsAttack :" + animator.GetBool("IsAttack"));
-                IsAttacking = false;
-            }
+            attackInput = true;
+        }
+        UpdateAttack();
+
+        // 攻撃中は移動入力停止
+        if (isAttacking)
+        {
+            moveInput = Vector3.zero;
+            animator.SetBool(
+            "IsMove",
+            false
+        );
+
+            animator.SetBool(
+                "IsIdle",
+                false
+            );
             return;
         }
 
-        Vector3 move = Vector3.zero;
+        UpdateMoveInput(kb);
 
-        // カメラの向きを基準に前後左右移動
-        Transform camT = Camera.main != null ? Camera.main.transform : null;
-        Vector3 camForward = camT != null ? camT.forward : transform.forward;
-        camForward.y = 0f;
+        
+        UpdateAnimation();
+    }
+
+    // 物理処理
+    void FixedUpdate()
+    {
+        if (isAttacking) return;
+
+        MovePlayer();
+    }
+
+    // 移動入力
+    void UpdateMoveInput(Keyboard kb)
+    {
+        moveInput = Vector3.zero;
+
+        Transform camT = Camera.main.transform;
+
+        // 向いている方に進む
+        Vector3 camForward = camT.forward;
+        camForward.y = 0;
         camForward.Normalize();
-        Vector3 camRight = camT != null ? camT.right : transform.right;
-        camRight.y = 0f;
+
+        Vector3 camRight = camT.right;
+        camRight.y = 0;
         camRight.Normalize();
 
-        // 押した瞬間を記録
+        // 後押し優先
         if (kb.aKey.wasPressedThisFrame)
         {
             lastHorizontalKey = Key.A;
@@ -75,141 +116,162 @@ public class PlayerMove : MonoBehaviour
             lastHorizontalKey = Key.D;
         }
 
-        // 前後移動（カメラ基準）
+        // 前後
         if (kb.wKey.isPressed)
         {
-            move += camForward;
+            moveInput += camForward;
         }
 
         if (kb.sKey.isPressed)
         {
-            move -= camForward;
+            moveInput -= camForward;
         }
 
-        // 左右移動（カメラ基準）
+        // 左右
         bool a = kb.aKey.isPressed;
         bool d = kb.dKey.isPressed;
+
         if (a && d)
         {
-            //最後に押されたキーの方に移動
             if (lastHorizontalKey == Key.A)
             {
-                move -= camRight;
-                animator.SetBool("IsMove", true);
-                Debug.Log("IsMove :" + animator.GetBool("IsMove"));
-                animator.SetBool("IsIdle", false);
-                Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
+                moveInput -= camRight;
             }
+
             else if (lastHorizontalKey == Key.D)
             {
-                move += camRight;
-                animator.SetBool("IsMove", true);
-                Debug.Log("IsMove :" + animator.GetBool("IsMove"));
-                animator.SetBool("IsIdle", false);
-                Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
+                moveInput += camRight;
             }
         }
+
         else if (a)
         {
-            move -= camRight;
-            animator.SetBool("IsMove", true);
-            Debug.Log("IsMove :" + animator.GetBool("IsMove"));
-            animator.SetBool("IsIdle", false);
-            Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
+            moveInput -= camRight;
         }
+
         else if (d)
         {
-            move += camRight;
-            animator.SetBool("IsMove", true);
-            Debug.Log("IsMove :" + animator.GetBool("IsMove"));
-            animator.SetBool("IsIdle", false);
-            Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
+            moveInput += camRight;
         }
 
-        // 移動量がある場合のみ移動・回転
-        if (move != Vector3.zero)
+        moveInput.Normalize();
+    }
+
+    // プレイヤー移動
+    void MovePlayer()
+    {
+        if (moveInput == Vector3.zero) return;
+
+        float dt = Time.fixedDeltaTime;
+
+        rb.MovePosition(
+            rb.position +
+            moveInput * speed * dt
+        );
+
+        Quaternion targetRot = Quaternion.LookRotation(moveInput);
+
+        Quaternion rot =
+            Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
+
+        rb.MoveRotation(rot);
+    }
+
+    // 攻撃
+    void UpdateAttack()
+    {
+        // 攻撃開始
+        if (attackInput)
         {
-            animator.SetBool("IsMove", true);
-            Debug.Log("IsMove :" + animator.GetBool("IsMove"));
-            animator.SetBool("IsIdle", false);
-            Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
-            // 斜め移動でも速度一定
-            Vector3 dir = move.normalized;
-            float dt = Time.fixedDeltaTime;
-            
-            if (rb != null)
+            // 初回攻撃
+            if (!isAttacking)
             {
-                rb.MovePosition(rb.position + dir * speed * dt);
-
-                // 移動方向に滑らかに向く
-                Vector3 lookDir = new Vector3(dir.x, 0f, dir.z);
-                if (lookDir.sqrMagnitude > 0f)
-                {
-                    Quaternion targetRot = Quaternion.LookRotation(lookDir);
-                    float step = rotateSpeed * dt; 
-                    Quaternion newRot = Quaternion.RotateTowards(rb.rotation, targetRot, step);
-                    rb.MoveRotation(newRot);
-                }
+                StartAttack();
             }
-            else
+
+            // コンボ攻撃
+            else if (comboCount < maxCombo && comboTimer > 0f)
             {
-                transform.Translate(dir * dt * speed, Space.World);
-
-                // 移動方向に滑らかに向く
-                Vector3 lookDir = new Vector3(dir.x, 0f, dir.z);
-                if (lookDir.sqrMagnitude > 0f)
-                {
-                    Quaternion targetRot = Quaternion.LookRotation(lookDir);
-                    float step = rotateSpeed * dt; 
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, step);
-                }
+                IsComboQueued = true;
             }
+            attackInput = false;
         }
 
-        else
+        // 攻撃していない
+        if (!isAttacking)
         {
-            animator.SetBool("IsMove", false);
-            Debug.Log("IsMove :" + animator.GetBool("IsMove"));
-            animator.SetBool("IsIdle", true);
-            Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
-        }
-        
-        /*if(kb.hKey.isPressed && !IsDancing)
-        {
-
-            animator.SetBool("IsDance", true);
-            IsDancing = true;
+            return;
         }
 
-        else if(kb.hKey.isPressed && IsDancing)
+        // 攻撃時間
+        attackTimer -= Time.deltaTime;
+        // コンボ受付時間
+        comboTimer -= Time.deltaTime;
+
+        // 攻撃終了
+        if (attackTimer <= 0f)
         {
-            animator.SetBool("IsDance", false);
-            IsDancing = false;
-        }*/
-
-        Debug.Log(attackDuration);
-
-        // 攻撃
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            animator.SetBool("IsAttack", true);
-            Debug.Log("IsAttack :" + animator.GetBool("IsAttack"));
-            animator.SetBool("IsMove", false);
-            Debug.Log("IsMove :" + animator.GetBool("IsMove"));
-            animator.SetBool("IsIdle", false);
-            Debug.Log("IsIdle :" + animator.GetBool("IsIdle"));
-            IsAttacking = true;
-            attackDuration -= Time.fixedDeltaTime;
-            if (attackDuration <= 0f)
-            {
-                
-                animator.SetBool("IsAttack", false);
-                Debug.Log("IsAttack :" + animator.GetBool("IsAttack"));
-                IsAttacking = false;
-                attackDuration = 1f; // 攻撃アニメーションの長さにリセット
-
-               
-            }
+            EndAttack();
         }
+    }
+
+    void StartAttack()
+    {
+        isAttacking = true;
+        // 初回
+        if (comboCount == 0)
+        {
+            comboCount = 1;
+        }
+
+        attackTimer = attackDuration;
+
+        // 次入力受付
+        comboTimer = comboWindow;
+
+        // アニメーション
+        animator.SetInteger("ComboCount",comboCount);
+        animator.SetBool("IsAttack",true);
+        animator.SetBool("IsMove", false);
+        animator.SetBool("IsIdle", false);
+       
+    }
+
+    void EndAttack()
+    {
+        // 次コンボあり
+        if (IsComboQueued)
+        {
+            comboCount++;
+            IsComboQueued = false;
+
+            StartAttack();
+            return;
+        }
+
+        // 終了
+        isAttacking = false;
+        comboCount = 0;
+        IsComboQueued= false;
+        animator.SetBool("IsAttack", false);
+        animator.SetBool("IsIdle", true);
+    }
+
+    // アニメーション
+    void UpdateAnimation()
+    {
+        if (isAttacking) return;
+
+        bool moving = moveInput != Vector3.zero;
+
+        animator.SetBool(
+            "IsMove",
+            moving
+        );
+
+        animator.SetBool(
+            "IsIdle",
+            !moving
+        );
     }
 }
