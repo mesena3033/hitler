@@ -714,8 +714,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  invicibleTime: 1.5
   rotateSpeed: 360
+  attackDuration: 0.6
 --- !u!111 &3145081559174687103
 Animation:
   m_ObjectHideFlags: 0
