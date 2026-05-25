@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -63,15 +64,9 @@ public class PlayerMove : MonoBehaviour
         if (isAttacking)
         {
             moveInput = Vector3.zero;
-            animator.SetBool(
-            "IsMove",
-            false
-        );
+            animator.SetBool("IsMove",false);
 
-            animator.SetBool(
-                "IsIdle",
-                false
-            );
+            animator.SetBool("IsIdle",false);
             return;
         }
 
@@ -195,6 +190,8 @@ public class PlayerMove : MonoBehaviour
                 IsComboQueued = true;
             }
             attackInput = false;
+
+            
         }
 
         // 攻撃していない
@@ -224,6 +221,7 @@ public class PlayerMove : MonoBehaviour
             comboCount = 1;
         }
 
+
         attackTimer = attackDuration;
 
         // 次入力受付
@@ -239,6 +237,17 @@ public class PlayerMove : MonoBehaviour
 
     void EndAttack()
     {
+        // コンボリセット
+        if(comboCount >= maxCombo)
+        {
+            isAttacking = false;
+            comboCount = 0;
+            IsComboQueued= false;
+            comboTimer = 0f;
+            animator.SetBool("IsAttacking", false);
+            return;
+        }
+
         // 次コンボあり
         if (IsComboQueued)
         {
