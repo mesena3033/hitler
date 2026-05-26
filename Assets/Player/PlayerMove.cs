@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +10,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float rotateSpeed = 360f;
 
     [Header("攻撃")]
-    [SerializeField] private float attackDuration = .75f;
+    [SerializeField] private float attackDuration = .65f;
 
     private Animator animator;
     private Rigidbody rb;
@@ -185,7 +186,7 @@ public class PlayerMove : MonoBehaviour
             }
 
             // コンボ攻撃
-            else if (comboCount < maxCombo && comboTimer > 0f)
+            else if (comboCount >0 &&comboCount < maxCombo && comboTimer > 0f && !IsComboQueued)
             {
                 IsComboQueued = true;
             }
@@ -214,13 +215,17 @@ public class PlayerMove : MonoBehaviour
 
     void StartAttack()
     {
+        // 前回のコンボ受付を破棄
+        attackInput = false;
+        IsComboQueued = false;
+
         isAttacking = true;
         // 初回
         if (comboCount == 0)
         {
             comboCount = 1;
         }
-
+         Debug.Log("Combo=" + comboCount + "Timer=" + Time.time);
 
         attackTimer = attackDuration;
 
@@ -237,21 +242,11 @@ public class PlayerMove : MonoBehaviour
 
     void EndAttack()
     {
-        // コンボリセット
-        if(comboCount >= maxCombo)
-        {
-            isAttacking = false;
-            comboCount = 0;
-            IsComboQueued= false;
-            comboTimer = 0f;
-            animator.SetBool("IsAttacking", false);
-            return;
-        }
-
         // 次コンボあり
-        if (IsComboQueued)
+        if (IsComboQueued && comboCount < maxCombo)
         {
             comboCount++;
+
             IsComboQueued = false;
 
             StartAttack();
@@ -261,7 +256,11 @@ public class PlayerMove : MonoBehaviour
         // 終了
         isAttacking = false;
         comboCount = 0;
-        IsComboQueued= false;
+        IsComboQueued= false;   // コンボリセット
+        attackInput = false;    // 攻撃入力リセット
+        attackTimer = 0f;       // タイマー初期化
+        comboTimer = 0f;
+        animator.SetInteger("ComboCount", 0);
         animator.SetBool("IsAttack", false);
         animator.SetBool("IsIdle", true);
     }

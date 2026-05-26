@@ -128,7 +128,7 @@ Transform:
   m_GameObject: {fileID: 8274496804334154530}
   serializedVersion: 2
   m_LocalRotation: {x: -0.06773688, y: 7.062851e-17, z: 4.7951685e-18, w: 0.99770325}
-  m_LocalPosition: {x: -3.258629, y: -3.8202524, z: -3.9702878}
+  m_LocalPosition: {x: -3.258629, y: -3.8202524, z: -4.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -277,6 +277,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5451955688243762895}
     m_Modifications:
+    - target: {fileID: 988304775723051136, guid: 88c970f07ca920f44b1985ac6d10a078, type: 3}
+      propertyPath: attackDuration
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 2269674288126804994, guid: 88c970f07ca920f44b1985ac6d10a078, type: 3}
       propertyPath: m_Name
       value: Player
@@ -351,6 +355,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2ded48a4acd404781175760cf98a6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 100
+  currentHP: 0
+  attackPower: 10
+  defensePower: 5
 --- !u!4 &8416831003949712372 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8613843687420368796, guid: 88c970f07ca920f44b1985ac6d10a078, type: 3}
@@ -432,31 +440,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655881519257192185, guid: e73780b6b9eb07f48a46783fd12d06a5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.258629
+      value: -5.993593
       objectReference: {fileID: 0}
     - target: {fileID: 655881519257192185, guid: e73780b6b9eb07f48a46783fd12d06a5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.8202524
+      value: -5.757695
       objectReference: {fileID: 0}
     - target: {fileID: 655881519257192185, guid: e73780b6b9eb07f48a46783fd12d06a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.9702878
+      value: -0.65780115
       objectReference: {fileID: 0}
     - target: {fileID: 655881519257192185, guid: e73780b6b9eb07f48a46783fd12d06a5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99770325
+      value: 0.95945287
       objectReference: {fileID: 0}
     - target: {fileID: 655881519257192185, guid: e73780b6b9eb07f48a46783fd12d06a5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.06773688
+      value: -0.20553333
       objectReference: {fileID: 0}
     - target: {fileID: 655881519257192185, guid: e73780b6b9eb07f48a46783fd12d06a5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 4.9984602e-17
+      value: 0.18861014
       objectReference: {fileID: 0}
     - target: {fileID: 655881519257192185, guid: e73780b6b9eb07f48a46783fd12d06a5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -2.9927095e-16
+      value: 0.040403932
       objectReference: {fileID: 0}
     - target: {fileID: 655881519257192185, guid: e73780b6b9eb07f48a46783fd12d06a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -474,10 +482,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 4264631811071367341, guid: e73780b6b9eb07f48a46783fd12d06a5, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[1].InputValue
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4264631811071367341, guid: e73780b6b9eb07f48a46783fd12d06a5, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[2].InputValue
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 6345877284250380537, guid: e73780b6b9eb07f48a46783fd12d06a5, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 8416831003949712372}
+    - target: {fileID: 8931386052129775490, guid: e73780b6b9eb07f48a46783fd12d06a5, type: 3}
+      propertyPath: VerticalAxis.Value
+      value: -8.592658
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931386052129775490, guid: e73780b6b9eb07f48a46783fd12d06a5, type: 3}
+      propertyPath: HorizontalAxis.Value
+      value: 22.242882
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
