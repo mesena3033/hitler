@@ -9,42 +9,24 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float rotateSpeed = 360f;
 
-    [Header("攻撃")]
-    [SerializeField] private float attackDuration = .65f;
-
-    private Animator animator;
     private Rigidbody rb;
+    private Vector3 moveInput;
 
     // 入力保持
-    private Vector3 moveInput;
+    public  Vector3 MoveInput => moveInput;
     private bool attackInput;
 
-    // 状態
-    private bool isAttacking = false;
-
-    // コンボ攻撃
-    // コンボ予約
-    private bool IsComboQueued = false;
-    private int comboCount = 0;
-    [SerializeField] private int maxCombo = 3;
-
-    // コンボ入力受付時間
-    private float comboWindow = 2f;
-    private float comboTimer = 0f;
-
-
-    // 攻撃時間
-    private float attackTimer = 0f;
 
     // 最後に押した横キー
     private Key lastHorizontalKey = Key.None;
 
-
+    // 攻撃インスタンス
+    private PlayerAttack attack;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
+        attack = GetComponent<PlayerAttack>();
     }
 
     // 入力処理
@@ -54,33 +36,21 @@ public class PlayerMove : MonoBehaviour
 
         if (kb == null) return;
 
-        // 攻撃入力
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            attackInput = true;
-        }
-        UpdateAttack();
 
         // 攻撃中は移動入力停止
-        if (isAttacking)
+        if (attack.IsAttacking)
         {
             moveInput = Vector3.zero;
-            animator.SetBool("IsMove",false);
-
-            animator.SetBool("IsIdle",false);
             return;
         }
 
         UpdateMoveInput(kb);
-
-        
-        UpdateAnimation();
     }
 
     // 物理処理
     void FixedUpdate()
     {
-        if (isAttacking) return;
+        if (attack.IsAttacking) return;
 
         MovePlayer();
     }
@@ -173,113 +143,6 @@ public class PlayerMove : MonoBehaviour
         rb.MoveRotation(rot);
     }
 
-    // 攻撃
-    void UpdateAttack()
-    {
-        // 攻撃開始
-        if (attackInput)
-        {
-            // 初回攻撃
-            if (!isAttacking)
-            {
-                StartAttack();
-            }
-
-            // コンボ攻撃
-            else if (comboCount >0 &&comboCount < maxCombo && comboTimer > 0f && !IsComboQueued)
-            {
-                IsComboQueued = true;
-            }
-            attackInput = false;
-
-            
-        }
-
-        // 攻撃していない
-        if (!isAttacking)
-        {
-            return;
-        }
-
-        // 攻撃時間
-        attackTimer -= Time.deltaTime;
-        // コンボ受付時間
-        comboTimer -= Time.deltaTime;
-
-        // 攻撃終了
-        if (attackTimer <= 0f)
-        {
-            EndAttack();
-        }
-    }
-
-    void StartAttack()
-    {
-        // 前回のコンボ受付を破棄
-        attackInput = false;
-        IsComboQueued = false;
-
-        isAttacking = true;
-        // 初回
-        if (comboCount == 0)
-        {
-            comboCount = 1;
-        }
-         Debug.Log("Combo=" + comboCount + "Timer=" + Time.time);
-
-        attackTimer = attackDuration;
-
-        // 次入力受付
-        comboTimer = comboWindow;
-
-        // アニメーション
-        animator.SetInteger("ComboCount",comboCount);
-        animator.SetBool("IsAttack",true);
-        animator.SetBool("IsMove", false);
-        animator.SetBool("IsIdle", false);
-       
-    }
-
-    void EndAttack()
-    {
-        // 次コンボあり
-        if (IsComboQueued && comboCount < maxCombo)
-        {
-            comboCount++;
-
-            IsComboQueued = false;
-
-            StartAttack();
-            return;
-        }
-
-        // 終了
-        isAttacking = false;
-        comboCount = 0;
-        IsComboQueued= false;   // コンボリセット
-        attackInput = false;    // 攻撃入力リセット
-        attackTimer = 0f;       // タイマー初期化
-        comboTimer = 0f;
-        animator.SetInteger("ComboCount", 0);
-        animator.SetBool("IsAttack", false);
-        animator.SetBool("IsIdle", true);
-    }
-
-    // アニメーション
-    void UpdateAnimation()
-    {
-        if (isAttacking) return;
-
-        bool moving = moveInput != Vector3.zero;
-
-        animator.SetBool(
-            "IsMove",
-            moving
-        );
-
-        animator.SetBool(
-            "IsIdle",
-            !moving
-        );
-    }
+    
+    
 }
