@@ -10,8 +10,8 @@ public class PlayerAnimation : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
-        move = GetComponentInChildren<PlayerMove>();
-        attack = GetComponentInChildren<PlayerAttack>();
+        move = GetComponent<PlayerMove>();
+        attack = GetComponent<PlayerAttack>();
     }
 
     void Update()

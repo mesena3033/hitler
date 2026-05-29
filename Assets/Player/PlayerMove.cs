@@ -9,9 +9,11 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float rotateSpeed = 360f;
 
     private Rigidbody rb;
-    private Vector3 moveInput;
+    private PlayerAttack attack;
 
     // 入力保持
+    private Vector3 moveInput;
+    // 入力プロパティ
     public Vector3 MoveInput => moveInput;
 
 
@@ -21,8 +23,7 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponentInChildren<Rigidbody>();
-        GetComponentInChildren<BoxCollider>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // 入力処理
