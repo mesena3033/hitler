@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,45 +12,33 @@ public class PlayerMove : MonoBehaviour
     private Vector3 moveInput;
 
     // 入力保持
-    public  Vector3 MoveInput => moveInput;
-    private bool attackInput;
+    public Vector3 MoveInput => moveInput;
 
 
     // 最後に押した横キー
     private Key lastHorizontalKey = Key.None;
 
-    // 攻撃インスタンス
-    private PlayerAttack attack;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        attack = GetComponent<PlayerAttack>();
+        rb = GetComponentInChildren<Rigidbody>();
+        GetComponentInChildren<BoxCollider>();
     }
 
     // 入力処理
     void Update()
     {
+
         var kb = Keyboard.current;
 
         if (kb == null) return;
-
-
-        // 攻撃中は移動入力停止
-        if (attack.IsAttacking)
-        {
-            moveInput = Vector3.zero;
-            return;
-        }
-
         UpdateMoveInput(kb);
+
     }
 
     // 物理処理
     void FixedUpdate()
     {
-        if (attack.IsAttacking) return;
-
         MovePlayer();
     }
 
@@ -126,23 +113,27 @@ public class PlayerMove : MonoBehaviour
     // プレイヤー移動
     void MovePlayer()
     {
+        Debug.Log(
+        "MoveInput = " +
+        moveInput
+    );
+
+        Debug.Log(
+            "RB = " +
+            rb
+        );
         if (moveInput == Vector3.zero) return;
 
         float dt = Time.fixedDeltaTime;
 
-        rb.MovePosition(
-            rb.position +
-            moveInput * speed * dt
-        );
+        rb.MovePosition(rb.position + moveInput * speed * dt);
 
         Quaternion targetRot = Quaternion.LookRotation(moveInput);
 
         Quaternion rot =
             Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
 
-        rb.MoveRotation(rot);
     }
+}
 
     
-    
-}

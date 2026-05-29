@@ -3,27 +3,24 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [Header("攻撃")]
-    [SerializeField] private float attackDuration = .65f;
+    [SerializeField] private float attackDuration = .75f;
     [SerializeField] private int maxCombo = 3;
 
-    private bool isAttackInput;  // 攻撃入力済みか
+    private bool attackInput;   // 攻撃入力状態か
     private bool isAttacking;   // 攻撃中か
-    private bool isComboQueued; // コンボ入力受付
+    private bool comboQueued;   // コンボ受付時間か
+    private int comboCount;
     private float attackTimer;
-    private int comboCount = 0;
+
     // プロパティ
     public bool IsAttacking => isAttacking;
     public int ComboCount => comboCount;
 
-    // 強制的にIdle状態に遷移
-    public bool JustFinishedAttack { get; private set; }
     void Update()
     {
-        JustFinishedAttack = false;
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            isAttackInput = true;
+            attackInput = true;
         }
 
         UpdateAttack();
@@ -31,64 +28,60 @@ public class PlayerAttack : MonoBehaviour
 
     void UpdateAttack()
     {
-        // 入力
-        if (isAttackInput)
+        if (attackInput)
         {
-            // 初回攻撃
             if (!isAttacking)
             {
                 StartAttack();
             }
 
-            // コンボ
-            else if(ComboCount < maxCombo)
+            else if (comboCount < maxCombo)
             {
-                isComboQueued = true;
+                comboQueued = true;
             }
 
-            isAttackInput = false;
+            attackInput = false;
         }
 
         if (!isAttacking) return;
 
         attackTimer -= Time.deltaTime;
 
-        if (attackTimer <= 0f)
+        if(attackTimer <= 0)
         {
             EndAttack();
         }
+        
     }
 
     void StartAttack()
     {
         isAttacking = true;
-        isComboQueued = false;
 
-        // 初回
         if(comboCount == 0)
         {
             comboCount = 1;
         }
 
-        Debug.Log("combo" + comboCount);
         attackTimer = attackDuration;
     }
 
     void EndAttack()
     {
-        // 次コンボ
-        if (isComboQueued && comboCount < maxCombo)
+        if(comboQueued && comboCount < maxCombo)
         {
             comboCount++;
+            comboQueued = false;
+
             StartAttack();
+
             return;
         }
 
-        // 終了
         isAttacking = false;
+        comboQueued = false;
         comboCount = 0;
-        isComboQueued = false;
-        attackTimer = 0;
-        JustFinishedAttack = true;
     }
 }
+
+
