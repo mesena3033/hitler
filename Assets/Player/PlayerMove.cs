@@ -1,44 +1,74 @@
-using System.Runtime.CompilerServices;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;  // 移動速度
+    [Header("移動")]
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float rotateSpeed = 360f;
 
-    [SerializeField] private float invicibleTime = 1.5f;  // 無敵時間
-
-    [SerializeField] private float rotateSpeed = 540f;   // 向く速度
-
-    private Key lastHorizontalKey = Key.None;  // 最後に押された水平移動キー
     private Rigidbody rb;
+    private PlayerAttack attack;
 
-    private void Start()
+    // 入力保持
+    private Vector3 moveInput;
+    // 入力プロパティ
+    public Vector3 MoveInput => moveInput;
+
+
+    // 最後に押した横キー
+    private Key lastHorizontalKey = Key.None;
+
+
+    void Start()
     {
-        if (rb == null)
-        {
-            rb = GetComponent<Rigidbody>();
-        }
+        rb = GetComponent<Rigidbody>();
+        attack = GetComponent<PlayerAttack>();
     }
 
+    // 入力処理
+    void Update()
+    {
+        var kb = Keyboard.current;
+
+        if (kb == null) return;
+
+        // 攻撃中は移動停止
+        if (attack.IsAttacking)
+        {
+            moveInput = Vector3.zero;
+            return;
+        }
+
+        UpdateMoveInput(kb);
+
+    }
+
+    // 物理処理
     void FixedUpdate()
     {
-        
-        var kb = Keyboard.current;
-        if (kb == null) return; // Input System が初期化されていない場合は何もしない
+        if (attack.IsAttacking) return;
+        MovePlayer();
+    }
 
-        Vector3 move = Vector3.zero;
+    // 移動入力
+    void UpdateMoveInput(Keyboard kb)
+    {
+        moveInput = Vector3.zero;
 
-        // カメラの向きを基準に前後左右を決定（カメラの水平成分のみを使用）
-        Transform camT = Camera.main != null ? Camera.main.transform : null;
-        Vector3 camForward = camT != null ? camT.forward : transform.forward;
-        camForward.y = 0f;
+        Transform camT = Camera.main.transform;
+
+        // 向いている方に進む
+        Vector3 camForward = camT.forward;
+        camForward.y = 0;
         camForward.Normalize();
-        Vector3 camRight = camT != null ? camT.right : transform.right;
-        camRight.y = 0f;
+
+        Vector3 camRight = camT.right;
+        camRight.y = 0;
         camRight.Normalize();
 
-        // 押した瞬間を記録
+        // 後押し優先
         if (kb.aKey.wasPressedThisFrame)
         {
             lastHorizontalKey = Key.A;
@@ -49,75 +79,66 @@ public class PlayerMove : MonoBehaviour
             lastHorizontalKey = Key.D;
         }
 
-        // 前後移動（カメラ基準）
+        // 前後
         if (kb.wKey.isPressed)
         {
-            move += camForward;
+            moveInput += camForward;
         }
 
         if (kb.sKey.isPressed)
         {
-            move -= camForward;
+            moveInput -= camForward;
         }
 
-        // 左右移動（カメラ基準）
+        // 左右
         bool a = kb.aKey.isPressed;
         bool d = kb.dKey.isPressed;
+
         if (a && d)
         {
-            //最後に押されたキーの方に移動
             if (lastHorizontalKey == Key.A)
             {
-                move -= camRight;
+                moveInput -= camRight;
             }
+
             else if (lastHorizontalKey == Key.D)
             {
-                move += camRight;
+                moveInput += camRight;
             }
         }
+
         else if (a)
         {
-            move -= camRight;
+            moveInput -= camRight;
         }
+
         else if (d)
         {
-            move += camRight;
+            moveInput += camRight;
         }
 
-        // 移動量がある場合のみ移動・回転
-        if (move != Vector3.zero)
-        {
-            // 斜め移動でも速度一定（ワールド座標で移動）
-            Vector3 dir = move.normalized;
-            float dt = Time.fixedDeltaTime;
-            // Rigidbody があれば物理挙動で移動・回転する
-            if (rb != null)
-            {
-                rb.MovePosition(rb.position + dir * speed * dt);
+        moveInput.Normalize();
+    }
 
-                // 移動方向に滑らかに向く
-                Vector3 lookDir = new Vector3(dir.x, 0f, dir.z);
-                if (lookDir.sqrMagnitude > 0f)
-                {
-                    Quaternion targetRot = Quaternion.LookRotation(lookDir);
-                    float step = rotateSpeed * dt; 
-                    Quaternion newRot = Quaternion.RotateTowards(rb.rotation, targetRot, step);
-                    rb.MoveRotation(newRot);
-                }
-            }
-            else
-            {
-                transform.Translate(dir * dt * speed, Space.World);
+    // プレイヤー移動
+    void MovePlayer()
+    {
+        if (moveInput == Vector3.zero) return;
+        float dt = Time.fixedDeltaTime;
+        Debug.Log("MoveInput = " + moveInput);
+        Debug.Log("RB = " + rb);
+        
 
-                // 移動方向に滑らかに向く
-                Vector3 lookDir = new Vector3(dir.x, 0f, dir.z);
-                if (lookDir.sqrMagnitude > 0f)
-                {
-                    Quaternion targetRot = Quaternion.LookRotation(lookDir);
-                    float step = rotateSpeed * dt; 
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, step);
-                }
-            }
-        }
+        rb.MovePosition(rb.position + moveInput * speed * dt);
+
+        Quaternion targetRot = Quaternion.LookRotation(moveInput);
+
+        Quaternion rot =
+            Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
+
+        rb.MoveRotation(rot);
+
     }
 }
+
+    
