@@ -24,15 +24,23 @@ public class PlayerMove : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        attack = GetComponent<PlayerAttack>();
     }
 
     // “ü—Íˆ—
     void Update()
     {
-
         var kb = Keyboard.current;
 
         if (kb == null) return;
+
+        // UŒ‚’†‚ÍˆÚ“®’â~
+        if (attack.IsAttacking)
+        {
+            moveInput = Vector3.zero;
+            return;
+        }
+
         UpdateMoveInput(kb);
 
     }
@@ -40,6 +48,7 @@ public class PlayerMove : MonoBehaviour
     // •¨—ˆ—
     void FixedUpdate()
     {
+        if (attack.IsAttacking) return;
         MovePlayer();
     }
 
@@ -114,18 +123,11 @@ public class PlayerMove : MonoBehaviour
     // ƒvƒŒƒCƒ„[ˆÚ“®
     void MovePlayer()
     {
-        Debug.Log(
-        "MoveInput = " +
-        moveInput
-    );
-
-        Debug.Log(
-            "RB = " +
-            rb
-        );
         if (moveInput == Vector3.zero) return;
-
         float dt = Time.fixedDeltaTime;
+        Debug.Log("MoveInput = " + moveInput);
+        Debug.Log("RB = " + rb);
+        
 
         rb.MovePosition(rb.position + moveInput * speed * dt);
 
@@ -133,6 +135,8 @@ public class PlayerMove : MonoBehaviour
 
         Quaternion rot =
             Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
+
+        rb.MoveRotation(rot);
 
     }
 }

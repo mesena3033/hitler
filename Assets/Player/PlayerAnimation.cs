@@ -3,7 +3,6 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     private Animator animator;
-
     private PlayerMove move;
     private PlayerAttack attack;
 
@@ -18,15 +17,9 @@ public class PlayerAnimation : MonoBehaviour
     {
         bool moving = move.MoveInput != Vector3.zero;
 
-        
-
         animator.SetBool("IsMove", moving);
 
         animator.SetBool("IsIdle", !moving && !attack.IsAttacking);
 
-        animator.SetBool("IsAttack", attack.IsAttacking);
-
-        animator.SetInteger("ComboCount", attack.ComboCount);
     }
-
 }
