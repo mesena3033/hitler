@@ -16,10 +16,15 @@ public class PlayerAnimation : MonoBehaviour
     void Update()
     {
         bool moving = move.MoveInput != Vector3.zero;
+        bool dodging = move.IsDodge;
 
-        animator.SetBool("IsMove", moving);
+        animator.SetBool("IsDodge", dodging);
 
-        animator.SetBool("IsIdle", !moving && !attack.IsAttacking);
+        animator.SetBool("IsMove", moving && !dodging);
+
+        animator.SetBool("IsIdle", !moving && !attack.IsAttacking && !dodging);
+
+
 
     }
 }

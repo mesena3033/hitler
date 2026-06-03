@@ -5,8 +5,10 @@ using UnityEngine.InputSystem;
 public class PlayerMove : MonoBehaviour
 {
     [Header("移動")]
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float rotateSpeed = 360f;
+    [SerializeField] private float speed = 6f;
+    [SerializeField] private float rotateSpeed = 15f;
+    [SerializeField] private float dodgeSpeed = 10f;
+
 
     private Rigidbody rb;
     private PlayerAttack attack;
@@ -15,16 +17,22 @@ public class PlayerMove : MonoBehaviour
     private Vector3 moveInput;
     // 入力プロパティ
     public Vector3 MoveInput => moveInput;
-
+    public bool IsDodge => isDodging;
 
     // 最後に押した横キー
     private Key lastHorizontalKey = Key.None;
 
+    // 回避
+    private Vector3 dodgeDirection;
+    private float invicibleDuration = .4f;
+    private float invicibleTimer;
+    private bool isDodging;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         attack = GetComponent<PlayerAttack>();
+        invicibleTimer = invicibleDuration;
     }
 
     // 入力処理
@@ -42,15 +50,34 @@ public class PlayerMove : MonoBehaviour
         }
 
         UpdateMoveInput(kb);
+        Dodge(kb);
+        if (isDodging)
+        {
+            invicibleTimer -= Time.deltaTime;
 
+            if (invicibleTimer <= 0f)
+            {
+                isDodging = false;
+            }
+        }
     }
 
     // 物理処理
     void FixedUpdate()
     {
-        if (attack.IsAttacking) return;
+        if (isDodging)
+        {
+            rb.MovePosition(
+                rb.position +
+                dodgeDirection * dodgeSpeed * Time.fixedDeltaTime
+            );
+
+            return;
+        }
+
         MovePlayer();
     }
+
 
     // 移動入力
     void UpdateMoveInput(Keyboard kb)
@@ -125,19 +152,42 @@ public class PlayerMove : MonoBehaviour
     {
         if (moveInput == Vector3.zero) return;
         float dt = Time.fixedDeltaTime;
-        Debug.Log("MoveInput = " + moveInput);
-        Debug.Log("RB = " + rb);
-        
 
         rb.MovePosition(rb.position + moveInput * speed * dt);
 
         Quaternion targetRot = Quaternion.LookRotation(moveInput);
 
-        Quaternion rot =
-            Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
+        Quaternion rot = Quaternion.Slerp(rb.rotation, targetRot, rotateSpeed * Time.fixedDeltaTime);
 
         rb.MoveRotation(rot);
 
+    }
+
+
+    // 回避
+    void Dodge(Keyboard kb)
+    {
+        // 回避入力
+        if (kb.spaceKey.wasPressedThisFrame && !isDodging)
+        {
+            isDodging = true;
+            invicibleTimer = invicibleDuration;
+
+            // 回避移動
+            if (moveInput != Vector3.zero)
+            {
+                dodgeDirection = moveInput.normalized;
+            }
+
+            // 静止中
+            else
+            {
+                dodgeDirection = -transform.forward;
+            }
+        }
+
+
+       
     }
 }
 
