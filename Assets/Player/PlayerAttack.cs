@@ -35,26 +35,33 @@ public class PlayerAttack : MonoBehaviour
             attackInput = true;
         }
 
-        if (currentAttack > 0f)
+        if(currentAttack > 0f)
         {
             currentAttack -= Time.deltaTime;
         }
 
+        Debug.Log("aaa= " + currentAttack);
         UpdateAttack();
     }
 
     void UpdateAttack()
     {
-        if (attackInput)
+        Debug.Log(
+    "Input=" + attackInput +
+    " IsAttacking=" + isAttacking +
+    " CurrentAttack=" + currentAttack
+);
+        if (attackInput) 
         {
             // 初回攻撃
             if (!isAttacking && currentAttack <= 0f)
             {
+                Debug.Log("StartAttack");
                 StartAttack();
             }
 
             // コンボ攻撃
-            else if (isAttacking && comboCount < maxCombo && attackTimer <= 0.4f)
+            else if (isAttacking && comboCount < maxCombo && attackTimer <= 0.4f) 
             {
                 isComboQueued = true;
             }
@@ -63,18 +70,18 @@ public class PlayerAttack : MonoBehaviour
 
         }
 
-
+        
         if (!isAttacking) return;
 
         // コンボ受付時間
         attackTimer -= Time.deltaTime;
 
         // 攻撃終了
-        if (attackTimer < 0f)
+        if(attackTimer < 0f)
         {
             EndAttack();
         }
-
+        
     }
 
     void StartAttack()
@@ -91,11 +98,12 @@ public class PlayerAttack : MonoBehaviour
 
         animator.Play("Combo" + comboCount);
 
+        Debug.Log("Combo = " + comboCount);
     }
 
     void EndAttack()
     {
-        if (isComboQueued && comboCount < maxCombo)
+        if (isComboQueued && comboCount < maxCombo )
         {
             comboCount++;
 
@@ -110,7 +118,7 @@ public class PlayerAttack : MonoBehaviour
         isComboQueued = false;
         attackTimer = 0f;
         currentAttack = attackCT;
-        animator.SetBool("IsMove", true);
     }
 }
+
 

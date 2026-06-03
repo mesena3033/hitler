@@ -278,7 +278,7 @@ PrefabInstance:
     - target: {fileID: 7898587800561437642, guid: 41584ebb553dc0f41b4be16208c8ffde, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
-      objectReference: {fileID: 944351086}
+      objectReference: {fileID: 0}
     - target: {fileID: 8662152509632192374, guid: 41584ebb553dc0f41b4be16208c8ffde, type: 3}
       propertyPath: m_Name
       value: PlayerCamera
@@ -409,11 +409,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!4 &944351086 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3599890172395690983, guid: 88c970f07ca920f44b1985ac6d10a078, type: 3}
-  m_PrefabInstance: {fileID: 1271810516}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1271810516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -466,13 +461,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8609273771276772238, guid: 88c970f07ca920f44b1985ac6d10a078, type: 3}
-      propertyPath: dodgeSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8609273771276772238, guid: 88c970f07ca920f44b1985ac6d10a078, type: 3}
-      propertyPath: rotateSpeed
-      value: 15
+    - target: {fileID: 9197049493446155478, guid: 88c970f07ca920f44b1985ac6d10a078, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.3264515
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
