@@ -477,7 +477,7 @@ Transform:
   m_GameObject: {fileID: 1264214819758020260}
   serializedVersion: 2
   m_LocalRotation: {x: 0.6970356, y: -0.18535869, z: -0.06188806, w: 0.6898938}
-  m_LocalPosition: {x: 0.8324815, y: 1.3264513, z: -0.100821786}
+  m_LocalPosition: {x: 0.8324815, y: 1.3264515, z: -0.100821786}
   m_LocalScale: {x: 0.8333334, y: 0.8333334, z: 0.8333333}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2330,7 +2330,7 @@ GameObject:
   - component: {fileID: 1557731360118922239}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2343,7 +2343,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6413236398695696505}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
@@ -2416,7 +2416,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  rotateSpeed: 360
+  rotateSpeed: 12
+  dodgeSpeed: 12
+  dodgeDuration: 0.4
 --- !u!65 &3626289831011476668
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2452,6 +2454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDuration: 0.8
   maxCombo: 3
+  attackCooldown: 0.5
 --- !u!54 &1557731360118922239
 Rigidbody:
   m_ObjectHideFlags: 0

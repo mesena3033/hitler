@@ -1,25 +1,29 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
 {
     [Header("移動")]
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float rotateSpeed = 360f;
+    [SerializeField] private float speed = 6f;
+    [SerializeField] private float rotateSpeed = 15f;
+
+    [Header("回避")]
+    [SerializeField] private float dodgeSpeed = 12f;
+    [SerializeField] private float dodgeDuration = 0.4f;
 
     private Rigidbody rb;
     private PlayerAttack attack;
 
-    // 入力保持
     private Vector3 moveInput;
-    // 入力プロパティ
+
     public Vector3 MoveInput => moveInput;
+    public bool IsDodge => isDodging;
 
+    private Vector3 dodgeDirection;
+    private bool isDodging;
+    private float dodgeTimer;
 
-    // 最後に押した横キー
     private Key lastHorizontalKey = Key.None;
-
 
     void Start()
     {
@@ -27,14 +31,12 @@ public class PlayerMove : MonoBehaviour
         attack = GetComponent<PlayerAttack>();
     }
 
-    // 入力処理
     void Update()
     {
         var kb = Keyboard.current;
 
         if (kb == null) return;
 
-        // 攻撃中は移動停止
         if (attack.IsAttacking)
         {
             moveInput = Vector3.zero;
@@ -42,103 +44,123 @@ public class PlayerMove : MonoBehaviour
         }
 
         UpdateMoveInput(kb);
+        UpdateDodge(kb);
 
+        if (isDodging)
+        {
+            dodgeTimer -= Time.deltaTime;
+
+            if (dodgeTimer <= 0f)
+            {
+                isDodging = false;
+            }
+        }
     }
 
-    // 物理処理
     void FixedUpdate()
     {
-        if (attack.IsAttacking) return;
+        if (isDodging)
+        {
+            rb.MovePosition(
+                rb.position +
+                dodgeDirection * dodgeSpeed * Time.fixedDeltaTime
+            );
+
+            return;
+        }
+
         MovePlayer();
     }
 
-    // 移動入力
     void UpdateMoveInput(Keyboard kb)
     {
         moveInput = Vector3.zero;
 
-        Transform camT = Camera.main.transform;
+        Transform cam = Camera.main.transform;
 
-        // 向いている方に進む
-        Vector3 camForward = camT.forward;
-        camForward.y = 0;
-        camForward.Normalize();
+        Vector3 forward = cam.forward;
+        forward.y = 0f;
+        forward.Normalize();
 
-        Vector3 camRight = camT.right;
-        camRight.y = 0;
-        camRight.Normalize();
+        Vector3 right = cam.right;
+        right.y = 0f;
+        right.Normalize();
 
-        // 後押し優先
         if (kb.aKey.wasPressedThisFrame)
-        {
             lastHorizontalKey = Key.A;
-        }
 
         else if (kb.dKey.wasPressedThisFrame)
-        {
             lastHorizontalKey = Key.D;
-        }
 
-        // 前後
         if (kb.wKey.isPressed)
-        {
-            moveInput += camForward;
-        }
+            moveInput += forward;
 
         if (kb.sKey.isPressed)
-        {
-            moveInput -= camForward;
-        }
+            moveInput -= forward;
 
-        // 左右
         bool a = kb.aKey.isPressed;
         bool d = kb.dKey.isPressed;
 
         if (a && d)
         {
             if (lastHorizontalKey == Key.A)
-            {
-                moveInput -= camRight;
-            }
-
-            else if (lastHorizontalKey == Key.D)
-            {
-                moveInput += camRight;
-            }
+                moveInput -= right;
+            else
+                moveInput += right;
         }
-
         else if (a)
         {
-            moveInput -= camRight;
+            moveInput -= right;
         }
-
         else if (d)
         {
-            moveInput += camRight;
+            moveInput += right;
         }
 
         moveInput.Normalize();
     }
 
-    // プレイヤー移動
     void MovePlayer()
     {
-        if (moveInput == Vector3.zero) return;
-        float dt = Time.fixedDeltaTime;
-        Debug.Log("MoveInput = " + moveInput);
-        Debug.Log("RB = " + rb);
-        
+        if (moveInput == Vector3.zero)
+            return;
 
-        rb.MovePosition(rb.position + moveInput * speed * dt);
+        rb.MovePosition(
+            rb.position +
+            moveInput * speed * Time.fixedDeltaTime
+        );
 
-        Quaternion targetRot = Quaternion.LookRotation(moveInput);
+        Quaternion targetRot =
+            Quaternion.LookRotation(moveInput);
 
         Quaternion rot =
-            Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
+            Quaternion.Slerp(
+                rb.rotation,
+                targetRot,
+                rotateSpeed * Time.fixedDeltaTime
+            );
 
         rb.MoveRotation(rot);
+    }
 
+    void UpdateDodge(Keyboard kb)
+    {
+        if (!kb.spaceKey.wasPressedThisFrame)
+            return;
+
+        if (isDodging)
+            return;
+
+        isDodging = true;
+        dodgeTimer = dodgeDuration;
+
+        if (moveInput != Vector3.zero)
+        {
+            dodgeDirection = moveInput.normalized;
+        }
+        else
+        {
+            dodgeDirection = -transform.forward;
+        }
     }
 }
-
-    
