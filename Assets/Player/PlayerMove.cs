@@ -10,6 +10,7 @@ public class PlayerMove : MonoBehaviour
 
     private Rigidbody rb;
     private PlayerAttack attack;
+    private PlayerAnimation playerAnimation;
 
     // 入力保持
     private Vector3 moveInput;
@@ -20,11 +21,28 @@ public class PlayerMove : MonoBehaviour
     // 最後に押した横キー
     private Key lastHorizontalKey = Key.None;
 
+    // 回避
+    [Header("回避")]
+    [SerializeField] private float dodgeDistance = 5f;
+    [SerializeField] private float dodgeDuration = 0.3f;
+    [SerializeField] private float dodgeStartDelay = 0.08f; // アニメーション開始後に移動を始める遅延（秒）
+    [SerializeField] private float dodgeCooldown = 4f; // 回避のクールタイム（秒）
+   
+
+    private bool isDodging = false;
+    private bool isDodgePending = false;
+    private Vector3 dodgeDirection = Vector3.zero;
+    private float dodgeTimer = 0f;
+    private float dodgeSpeed = 0f;
+    private float dodgePendingTimer = 0f;
+    private float dodgeCooldownTimer = 0f;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         attack = GetComponent<PlayerAttack>();
+        playerAnimation = GetComponent<PlayerAnimation>();
     }
 
     // 入力処理
@@ -41,7 +59,19 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
+        // 回避中、回避開始待ち中、またはクールタイム中は通常入力を処理しない
+        if (isDodging || isDodgePending || dodgeCooldownTimer > 0f)
+        {
+            moveInput = Vector3.zero;
+        }
+
         UpdateMoveInput(kb);
+
+        // スペースで回避開始
+        if (kb.spaceKey.wasPressedThisFrame && !attack.IsAttacking && !isDodging && !isDodgePending && dodgeCooldownTimer <= 0f)
+        {
+            StartDodge();
+        }
 
     }
 
@@ -49,6 +79,55 @@ public class PlayerMove : MonoBehaviour
     void FixedUpdate()
     {
         if (attack.IsAttacking) return;
+
+        float dt = Time.fixedDeltaTime;
+
+        // 回避開始待ちの処理　アニメーションが始まってから移動を開始するための遅延
+        if (isDodgePending)
+        {
+            dodgePendingTimer -= dt;
+            if (dodgePendingTimer <= 0f)
+            {
+                isDodgePending = false;
+                isDodging = true;
+                dodgeTimer = dodgeDuration;
+                dodgeSpeed = dodgeDistance / Mathf.Max(0.0001f, dodgeDuration);
+                // Animator の bool は既に true にしているはず
+            }
+        }
+
+        // クールタイムのカウントダウン
+        if (dodgeCooldownTimer > 0f)
+        {
+            dodgeCooldownTimer -= dt;
+            if (dodgeCooldownTimer < 0f) dodgeCooldownTimer = 0f;
+        }
+
+        if (isDodging)
+        {
+            // 回避移動（横移動のみ）
+            rb.MovePosition(rb.position + dodgeDirection * dodgeSpeed * dt);
+
+            // 回避中は常に移動方向を向くように回転を固定する
+            Quaternion targetRot = Quaternion.LookRotation(dodgeDirection);
+            Quaternion rot = Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
+            rb.MoveRotation(rot);
+
+            dodgeTimer -= dt;
+            if (dodgeTimer <= 0f)
+            {
+                isDodging = false;
+                if (playerAnimation != null)
+                {
+                    playerAnimation.SetDodge(false);
+                }
+                // 回避終了でクールタイム開始
+                dodgeCooldownTimer = dodgeCooldown;
+            }
+
+            return;
+        }
+
         MovePlayer();
     }
 
@@ -125,9 +204,6 @@ public class PlayerMove : MonoBehaviour
     {
         if (moveInput == Vector3.zero) return;
         float dt = Time.fixedDeltaTime;
-        Debug.Log("MoveInput = " + moveInput);
-        Debug.Log("RB = " + rb);
-        
 
         rb.MovePosition(rb.position + moveInput * speed * dt);
 
@@ -139,6 +215,25 @@ public class PlayerMove : MonoBehaviour
         rb.MoveRotation(rot);
 
     }
-}
 
-    
+    // 回避開始
+    void StartDodge()
+    {
+        // 現在向いている方向へ回避する
+        Vector3 dir = transform.forward;
+        dir.y = 0f;
+        dir.Normalize();
+
+        dodgeDirection = dir;
+        // アニメーションが始まってから移動を始めるために待機状態にする
+        isDodgePending = true;
+        isDodging = false;
+        dodgePendingTimer = dodgeStartDelay;
+
+        if (playerAnimation != null)
+        {
+            playerAnimation.SetDodge(true);
+        }
+    }
+
+}

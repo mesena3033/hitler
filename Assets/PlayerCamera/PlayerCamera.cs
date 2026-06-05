@@ -16,6 +16,7 @@ public class PlayerCamera : MonoBehaviour
     private float pitch = 10f;
     private float radius = 0f;
 
+
     private void Awake()
     {
         baseOffset = offset;
