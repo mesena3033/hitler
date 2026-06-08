@@ -748,6 +748,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7190315137880455137, guid: 02fc97ee361571f4c92c77d5909e08a1, type: 3}
+      propertyPath: maxHP
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7190315137880455137, guid: 02fc97ee361571f4c92c77d5909e08a1, type: 3}
+      propertyPath: defensePower
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3639962113685667645, guid: 02fc97ee361571f4c92c77d5909e08a1, type: 3}
     m_RemovedGameObjects: []
