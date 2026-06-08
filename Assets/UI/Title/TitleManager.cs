@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TitleButton : MonoBehaviour
+public class TitleManager : MonoBehaviour
 {
     public void ChangeScene()
     {
