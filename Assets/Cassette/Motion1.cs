@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Motion1 : MonoBehaviour
 {
     [Header("エフェクト一覧")]
@@ -12,15 +13,20 @@ public class Motion1 : MonoBehaviour
     [Header("自動破棄")]
     public float destroyAfter = 5; // 生成したエフェクトを何秒後に破棄するか
 
-    [Header("Animator監視（任意）")]
-    public Animator animator;                 // Animator をアサイン（未設定でもOK）
-    public string watchStateName = "";        // 監視するステート名（例: "Attack"）
-    [Range(0f, 1f)]
-    public float playAtNormalizedTime = 0.1f; // 何%時点で再生するか
-    private int lastStateHash = 0;
-    private bool effectPlayedForState = false;
+    [Header("Animator 参照")]
+    public Animator animator; // Animator をアサイン
 
-    // --------------------
+    // 保留リクエスト（UseSkill からの同期リクエストを保持）
+    private class PendingRequest
+    {
+        public int skillID1;
+        public string stateName;
+        public float normalizedTime;
+        public int requestedAtStateHash = -1;
+    }
+
+    private List<PendingRequest> pendingRequests = new List<PendingRequest>();
+
     // Animation Event から呼べるメソッド（整数パラメータ）
     // Animation Event に登録する関数名は "SpawnEffectByIndex" にする
     public void SpawnEffectByIndex(int index)
@@ -44,12 +50,65 @@ public class Motion1 : MonoBehaviour
         }
     }
 
-    // 任意に呼べるユーティリティ（ランダム再生）
-    public void SpawnRandom()
+    // 外部から直接プレハブを渡して生成したい場合に使える公開メソッド
+    public void SpawnPrefab(GameObject prefab)
     {
-        if (effectPrefabs.Count == 0) return;
-        int idx = Random.Range(0, effectPrefabs.Count);
-        Spawn(effectPrefabs[idx]);
+        Spawn(prefab);
+    }
+
+    // スキルIDからエフェクトを再生する（即時）。往来互換用。
+    public void SpawnEffectForSkill(int skillID1)
+    {
+        if (skillID1 >= 0 && skillID1 < effectPrefabs.Count && effectPrefabs[skillID1] != null)
+        {
+            Spawn(effectPrefabs[skillID1]);
+        }
+    }
+
+    // UseSkill から呼ばれて、アニメーションの指定フレーム（normalizedTime）で再生したいときに使う。
+    // stateName を指定するとそのステートに入ったタイミングで監視し、normalizedTime を超えたら一度だけ再生します。
+    // stateName が空文字の場合は即時再生します.
+    public void RequestSpawnForSkill(int skillID1, string stateName, float normalizedTime)
+    {
+        if (string.IsNullOrEmpty(stateName))
+        {
+            // state 指定無しなら即時再生
+            SpawnEffectForSkill(skillID1);
+            return;
+        }
+
+        // 既に同じリクエストが存在していれば追加しない
+        for (int i = 0; i < pendingRequests.Count; i++)
+        {
+            var r = pendingRequests[i];
+            if (r.skillID1 == skillID1 && r.stateName == stateName && Mathf.Approximately(r.normalizedTime, normalizedTime))
+            {
+                return;
+            }
+        }
+
+        var req = new PendingRequest { skillID1 = skillID1, stateName = stateName, normalizedTime = Mathf.Clamp01(normalizedTime) };
+
+        if (animator != null)
+        {
+            var state = animator.GetCurrentAnimatorStateInfo(0);
+            if (state.IsName(stateName) && state.normalizedTime >= req.normalizedTime)
+            {
+                req.requestedAtStateHash = state.shortNameHash;
+            }
+            else
+            {
+                req.requestedAtStateHash = -1;
+            }
+        }
+
+        pendingRequests.Add(req);
+    }
+
+    // Animator を外部から一度だけ設定するための API
+    public void SetAnimator(Animator a)
+    {
+        animator = a;
     }
 
     // 実際の生成処理（内部）
@@ -68,21 +127,40 @@ public class Motion1 : MonoBehaviour
 
     void Update()
     {
-        
-        // Animator監視でステート到達時に一回だけエフェクトを出す（必要なら）
-        if (animator == null || string.IsNullOrEmpty(watchStateName)) return;
-
-        var state = animator.GetCurrentAnimatorStateInfo(0);
-        if (state.shortNameHash != lastStateHash)
+        // pendingRequests を監視して Animator が一致したらエフェクトを再生
+        if (animator != null && pendingRequests.Count > 0)
         {
-            effectPlayedForState = false;
-        }
-        lastStateHash = state.shortNameHash;
+            var state = animator.GetCurrentAnimatorStateInfo(0);
+            // 複数ある場合は後ろから走査して削除しやすくする
+            for (int i = pendingRequests.Count - 1; i >= 0; i--)
+            {
+                var r = pendingRequests[i];
+                if (string.IsNullOrEmpty(r.stateName))
+                {
+                    // 即時再生
+                    SpawnEffectForSkill(r.skillID1);
+                    pendingRequests.RemoveAt(i);
+                    continue;
+                }
 
-        if (!effectPlayedForState && state.IsName(watchStateName) && state.normalizedTime >= playAtNormalizedTime)
-        {
-            SpawnRandom(); //特定インデックスにしたければ SpawnEffectByIndex を直接呼ぶ
-            effectPlayedForState = true;
+                // リクエスト作成時に既に同ステートで閾値を超えていた場合は再入場を要求
+                if (r.requestedAtStateHash != -1)
+                {
+                    if (state.shortNameHash != r.requestedAtStateHash && state.IsName(r.stateName) && state.normalizedTime >= r.normalizedTime)
+                    {
+                        SpawnEffectForSkill(r.skillID1);
+                        pendingRequests.RemoveAt(i);
+                    }
+                }
+                else
+                {
+                    if (state.IsName(r.stateName) && state.normalizedTime >= r.normalizedTime)
+                    {
+                        SpawnEffectForSkill(r.skillID1);
+                        pendingRequests.RemoveAt(i);
+                    }
+                }
+            }
         }
     }
 }
