@@ -54,17 +54,12 @@ public class PlayerAttack : MonoBehaviour
             currentAttack -= Time.deltaTime;
         }
 
-        Debug.Log("aaa= " + currentAttack);
+        //Debug.Log("aaa= " + currentAttack);
         UpdateAttack();
     }
 
     void UpdateAttack()
     {
-        Debug.Log(
-    "Input=" + attackInput +
-    " IsAttacking=" + isAttacking +
-    " CurrentAttack=" + currentAttack
-);
         if (attackInput) 
         {
             // 初回攻撃
@@ -118,7 +113,7 @@ public class PlayerAttack : MonoBehaviour
         // 攻撃時に剣の当たり判定を有効化
         if (swordCollider != null) swordCollider.enabled = true;
 
-        Debug.Log("Combo = " + comboCount);
+        //Debug.Log("Combo = " + comboCount);
     }
 
     void EndAttack()
