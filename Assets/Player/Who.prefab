@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 3380320991432818738}
   - component: {fileID: 2937397209734756342}
   - component: {fileID: 7384723202294887821}
-  - component: {fileID: 3639962113685667645}
+  - component: {fileID: 7190315137880455137}
   m_Layer: 0
   m_Name: Who
   m_TagString: Player
@@ -335,7 +335,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3639962113685667645
+--- !u!114 &7190315137880455137
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -344,12 +344,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2128768958587327778}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0671dba86c3206446b6b79a825c57f14, type: 3}
+  m_Script: {fileID: 11500000, guid: 55eddbfb1c94f104a8322947260b6521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  invicibleTime: 1.5
-  rotateSpeed: 540
+  maxHP: 50
+  defensePower: 3
 --- !u!1 &3732677766763826854
 GameObject:
   m_ObjectHideFlags: 0
