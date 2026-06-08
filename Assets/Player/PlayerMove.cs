@@ -26,7 +26,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float dodgeDistance = 5f;
     [SerializeField] private float dodgeDuration = 0.3f;
     [SerializeField] private float dodgeStartDelay = 0.08f; // アニメーション開始後に移動を始める遅延（秒）
-    [SerializeField] private float dodgeCooldown = 4f; // 回避のクールタイム（秒）
+    [SerializeField] private float dodgeCooldown = 1.5f; // 回避のクールタイム（秒）
+    [SerializeField] private float dodgeSink = 0.15f; // 回避時に少し下げるYオフセット
    
 
     private bool isDodging = false;
@@ -36,6 +37,8 @@ public class PlayerMove : MonoBehaviour
     private float dodgeSpeed = 0f;
     private float dodgePendingTimer = 0f;
     private float dodgeCooldownTimer = 0f;
+    private float dodgeBaseY = 0f;
+    private float dodgeSinkTimer = 0f;
 
 
     void Start()
@@ -105,8 +108,20 @@ public class PlayerMove : MonoBehaviour
 
         if (isDodging)
         {
-            // 回避移動（横移動のみ）
-            rb.MovePosition(rb.position + dodgeDirection * dodgeSpeed * dt);
+            // 回避移動（横移動＋少し沈めて空中で回らないようにする）
+            Vector3 next = rb.position + dodgeDirection * dodgeSpeed * dt;
+            // sink が残っている間だけ下げる
+            if (dodgeSinkTimer > 0f)
+            {
+                next.y = dodgeBaseY - dodgeSink;
+                dodgeSinkTimer -= dt;
+                if (dodgeSinkTimer < 0f) dodgeSinkTimer = 0f;
+            }
+            else
+            {
+                next.y = dodgeBaseY;
+            }
+            rb.MovePosition(next);
 
             // 回避中は常に移動方向を向くように回転を固定する
             Quaternion targetRot = Quaternion.LookRotation(dodgeDirection);
@@ -123,6 +138,8 @@ public class PlayerMove : MonoBehaviour
                 }
                 // 回避終了でクールタイム開始
                 dodgeCooldownTimer = dodgeCooldown;
+                // 高さを元に戻す
+                rb.MovePosition(new Vector3(rb.position.x, dodgeBaseY, rb.position.z));
             }
 
             return;

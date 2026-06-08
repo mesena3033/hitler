@@ -457,8 +457,16 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8609273771276772238, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
+      propertyPath: dodgeSink
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8609273771276772238, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
       propertyPath: rotateSpeed
       value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 8609273771276772238, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
+      propertyPath: dodgeCooldown
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
