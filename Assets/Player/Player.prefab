@@ -2449,9 +2449,10 @@ GameObject:
   - component: {fileID: 3626289831011476668}
   - component: {fileID: 3818481857907155673}
   - component: {fileID: 1557731360118922239}
+  - component: {fileID: 7402615480957965010}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2582,7 +2583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDuration: 0.8
   maxCombo: 3
-  swordCollider: {fileID: 0}
+  swordCollider: {fileID: 4632821376057008636}
 --- !u!54 &1557731360118922239
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2610,6 +2611,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 96
   m_CollisionDetection: 0
+--- !u!114 &7402615480957965010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6413236398695696505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f2ded48a4acd404781175760cf98a6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 100
+  currentHP: 0
+  baseAttackPower: 10
+  buffMultiplier: 1
+  defensePower: 5
 --- !u!1 &6603474418225993939
 GameObject:
   m_ObjectHideFlags: 0
