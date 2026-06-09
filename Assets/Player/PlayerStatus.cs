@@ -25,6 +25,28 @@ public class PlayerStatus : MonoBehaviour
         if (currentHP <= 0) currentHP = maxHP;
     }
 
+    void Start()
+    {
+        currentHP = maxHP;
+
+    }
+
+    void Update()
+    {
+        // プレイヤーが死んだら
+        if (currentHP <= 0)
+        {
+            // 死亡処理を呼び出す
+            var respawn = GetComponent<PlayerRespawn>();
+            if (respawn != null)
+            {
+                respawn.PlayerDied();
+            }
+        }
+    }
+
+
+
     // ダメージ処理
     public void ApplyDamage(int damage)
     {
@@ -39,22 +61,12 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    // デバッグ用: 現在のステータスを文字列で返す
-    public override string ToString()
+    // 敵の攻撃力でダメージを受ける（攻撃力 - 防御力）
+    public void ReceiveAttack(float enemyAttackPower)
     {
-        return $"HP={currentHP} ATK={AttackPower} DEF={DefensePower}";
-    }
-
-    void Start()
-    {
-        currentHP = maxHP;
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        float raw = enemyAttackPower;
+        int dmg = Mathf.Max(0, Mathf.FloorToInt(raw - defensePower));
+        ApplyDamage(dmg);
     }
 
 }

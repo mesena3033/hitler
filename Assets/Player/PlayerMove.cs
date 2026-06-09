@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
 {
-    [Header("ˆÚ“®")]
+    [Header("ç§»å‹•")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float rotateSpeed = 360f;
 
@@ -12,31 +12,30 @@ public class PlayerMove : MonoBehaviour
     private PlayerAttack attack;
     private PlayerAnimation playerAnimation;
 
-    // “ü—Í•Û
+    // å…¥åŠ›ä¿æŒ
     private Vector3 moveInput;
-    // “ü—ÍƒvƒƒpƒeƒB
+    // å…¥åŠ›ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
     public Vector3 MoveInput => moveInput;
 
 
-    // ÅŒã‚É‰Ÿ‚µ‚½‰¡ƒL[
+    // æœ€å¾Œã«æŠ¼ã—ãŸæ¨ªã‚­ãƒ¼
     private Key lastHorizontalKey = Key.None;
 
-    // ”í’e
+    // è¢«å¼¾
     private bool isBeingHit = false;
     public bool IsBeingHit {
         get { return isBeingHit; }
         set { isBeingHit = value; }
     }
     private float hitDisableTimer = 0f;
-    [SerializeField] private float hitDisableDuration = 0.5f;
 
-    // ‰ñ”ğ
-    [Header("‰ñ”ğ")]
+    // å›é¿
+    [Header("å›é¿")]
     [SerializeField] private float dodgeDistance = 5f;
     [SerializeField] private float dodgeDuration = 0.3f;
-    [SerializeField] private float dodgeStartDelay = 0.08f; // ƒAƒjƒ[ƒVƒ‡ƒ“ŠJnŒã‚ÉˆÚ“®‚ğn‚ß‚é’x‰„i•bj
-    [SerializeField] private float dodgeCooldown = 1.5f; // ‰ñ”ğ‚ÌƒN[ƒ‹ƒ^ƒCƒ€i•bj
-    [SerializeField] private float dodgeSink = 0.15f; // ‰ñ”ğ‚É‰º‚°‚éYƒIƒtƒZƒbƒg
+    [SerializeField] private float dodgeStartDelay = 0.08f; // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹å¾Œã«ç§»å‹•ã‚’å§‹ã‚ã‚‹é…å»¶ï¼ˆç§’ï¼‰
+    [SerializeField] private float dodgeCooldown = 1.5f; // å›é¿ã®ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ ï¼ˆç§’ï¼‰
+    [SerializeField] private float dodgeSink = 0.15f; // å›é¿æ™‚ã«ä¸‹ã’ã‚‹Yã‚ªãƒ•ã‚»ãƒƒãƒˆ
    
 
     private bool isDodging = false;
@@ -57,18 +56,18 @@ public class PlayerMove : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
     }
 
-    // “ü—Íˆ—
+    // å…¥åŠ›å‡¦ç†
     void Update()
     {
         var kb = Keyboard.current;
 
         if (kb == null) return;
 
-        // UŒ‚’†‚Ü‚½‚Í”í’e’†‚Í“ü—Í‚ğ–³Œø‰»
-        if (attack.IsAttacking || isBeingHit)
+        // æ”»æ’ƒä¸­ã¾ãŸã¯è¢«å¼¾ä¸­ã¯å…¥åŠ›ã‚’ç„¡åŠ¹åŒ–
+        if (attack.IsAttacking || hitDisableTimer > 0f)
         {
             moveInput = Vector3.zero;
-            // ”í’e–³ŒøŠÔ‚ÌƒJƒEƒ“ƒgƒ_ƒEƒ“
+            // è¢«å¼¾ç„¡åŠ¹æ™‚é–“ã®ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³
             if (hitDisableTimer > 0f)
             {
                 hitDisableTimer -= Time.deltaTime;
@@ -82,36 +81,37 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
-        // ‰ñ”ğ’†A‰ñ”ğŠJn‘Ò‚¿’†A‚Ü‚½‚ÍƒN[ƒ‹ƒ^ƒCƒ€’†‚Í’Êí“ü—Í‚ğˆ—‚µ‚È‚¢
+        // å›é¿ä¸­ã€å›é¿é–‹å§‹å¾…ã¡ä¸­ã€ã¾ãŸã¯ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ ä¸­ã¯é€šå¸¸å…¥åŠ›ã‚’å‡¦ç†ã—ãªã„
         if (isDodging || isDodgePending || dodgeCooldownTimer > 0f)
         {
             moveInput = Vector3.zero;
+            return;
         }
 
         UpdateMoveInput(kb);
 
-        // ƒXƒy[ƒX‚Å‰ñ”ğŠJn
+        // ã‚¹ãƒšãƒ¼ã‚¹ã§å›é¿é–‹å§‹
         if (kb.spaceKey.wasPressedThisFrame && !attack.IsAttacking && !isDodging && !isDodgePending && dodgeCooldownTimer <= 0f)
         {
             StartDodge();
         }
     }
 
-    // ŠO•”‚©‚ç”í’eó‘Ô‚ğİ’è‚·‚éiduration •bŠÔˆÚ“®‚ğ–³Œø‰»j
+    // å¤–éƒ¨ã‹ã‚‰è¢«å¼¾çŠ¶æ…‹ã‚’è¨­å®šã™ã‚‹ï¼ˆduration ç§’é–“ç§»å‹•ã‚’ç„¡åŠ¹åŒ–ï¼‰
     public void SetBeingHit(float duration)
     {
         isBeingHit = true;
         hitDisableTimer = Mathf.Max(0f, duration);
     }
 
-    // •¨—ˆ—
+    // ç‰©ç†å‡¦ç†
     void FixedUpdate()
     {
-        if (attack.IsAttacking) return;
+        if (attack.IsAttacking || isBeingHit) return;
 
         float dt = Time.fixedDeltaTime;
 
-        // ‰ñ”ğŠJn‘Ò‚¿‚Ìˆ—: ƒAƒjƒ[ƒVƒ‡ƒ“‚ªn‚Ü‚Á‚Ä‚©‚çˆÚ“®‚ğŠJn‚·‚é‚½‚ß‚Ì’x‰„
+        // å›é¿é–‹å§‹å¾…ã¡ã®å‡¦ç†: ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒå§‹ã¾ã£ã¦ã‹ã‚‰ç§»å‹•ã‚’é–‹å§‹ã™ã‚‹ãŸã‚ã®é…å»¶
         if (isDodgePending)
         {
             dodgePendingTimer -= dt;
@@ -121,11 +121,11 @@ public class PlayerMove : MonoBehaviour
                 isDodging = true;
                 dodgeTimer = dodgeDuration;
                 dodgeSpeed = dodgeDistance / Mathf.Max(0.0001f, dodgeDuration);
-                // Animator ‚Ì bool ‚ÍŠù‚É true ‚É‚µ‚Ä‚¢‚é‚Í‚¸
+                // Animator ã® bool ã¯æ—¢ã« true ã«ã—ã¦ã„ã‚‹ã¯ãš
             }
         }
 
-        // ƒN[ƒ‹ƒ^ƒCƒ€‚ÌƒJƒEƒ“ƒgƒ_ƒEƒ“
+        // ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ ã®ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³
         if (dodgeCooldownTimer > 0f)
         {
             dodgeCooldownTimer -= dt;
@@ -134,9 +134,9 @@ public class PlayerMove : MonoBehaviour
 
         if (isDodging)
         {
-            // ‰ñ”ğˆÚ“®i‰¡ˆÚ“®{­‚µ’¾‚ß‚Ä‹ó’†‚Å‰ñ‚ç‚È‚¢‚æ‚¤‚É‚·‚éj
+            // å›é¿ç§»å‹•ï¼ˆæ¨ªç§»å‹•ï¼‹å°‘ã—æ²ˆã‚ã¦ç©ºä¸­ã§å›ã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹ï¼‰
             Vector3 next = rb.position + dodgeDirection * dodgeSpeed * dt;
-            // sink ‚ªc‚Á‚Ä‚¢‚éŠÔ‚¾‚¯‰º‚°‚é
+            // sink ãŒæ®‹ã£ã¦ã„ã‚‹é–“ã ã‘ä¸‹ã’ã‚‹
             if (dodgeSinkTimer > 0f)
             {
                 next.y = dodgeBaseY - dodgeSink;
@@ -149,7 +149,7 @@ public class PlayerMove : MonoBehaviour
             }
             rb.MovePosition(next);
 
-            // ‰ñ”ğ’†‚Íí‚ÉˆÚ“®•ûŒü‚ğŒü‚­‚æ‚¤‚É‰ñ“]‚ğŒÅ’è‚·‚é
+            // å›é¿ä¸­ã¯å¸¸ã«ç§»å‹•æ–¹å‘ã‚’å‘ãã‚ˆã†ã«å›è»¢ã‚’å›ºå®šã™ã‚‹
             Quaternion targetRot = Quaternion.LookRotation(dodgeDirection);
             Quaternion rot = Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
             rb.MoveRotation(rot);
@@ -162,9 +162,9 @@ public class PlayerMove : MonoBehaviour
                 {
                     playerAnimation.SetDodge(false);
                 }
-                // ‰ñ”ğI—¹‚ÅƒN[ƒ‹ƒ^ƒCƒ€ŠJn
+                // å›é¿çµ‚äº†ã§ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ é–‹å§‹
                 dodgeCooldownTimer = dodgeCooldown;
-                // ‚‚³‚ğŒ³‚É–ß‚·
+                // é«˜ã•ã‚’å…ƒã«æˆ»ã™
                 rb.MovePosition(new Vector3(rb.position.x, dodgeBaseY, rb.position.z));
             }
 
@@ -174,14 +174,14 @@ public class PlayerMove : MonoBehaviour
         MovePlayer();
     }
 
-    // ˆÚ“®“ü—Í
+    // ç§»å‹•å…¥åŠ›
     void UpdateMoveInput(Keyboard kb)
     {
         moveInput = Vector3.zero;
 
         Transform camT = Camera.main.transform;
 
-        // Œü‚¢‚Ä‚¢‚é•û‚Éi‚Ş
+        // å‘ã„ã¦ã„ã‚‹æ–¹ã«é€²ã‚€
         Vector3 camForward = camT.forward;
         camForward.y = 0;
         camForward.Normalize();
@@ -190,7 +190,7 @@ public class PlayerMove : MonoBehaviour
         camRight.y = 0;
         camRight.Normalize();
 
-        // Œã‰Ÿ‚µ—Dæ
+        // å¾ŒæŠ¼ã—å„ªå…ˆ
         if (kb.aKey.wasPressedThisFrame)
         {
             lastHorizontalKey = Key.A;
@@ -201,7 +201,7 @@ public class PlayerMove : MonoBehaviour
             lastHorizontalKey = Key.D;
         }
 
-        // ‘OŒã
+        // å‰å¾Œ
         if (kb.wKey.isPressed)
         {
             moveInput += camForward;
@@ -212,7 +212,7 @@ public class PlayerMove : MonoBehaviour
             moveInput -= camForward;
         }
 
-        // ¶‰E
+        // å·¦å³
         bool a = kb.aKey.isPressed;
         bool d = kb.dKey.isPressed;
 
@@ -242,7 +242,7 @@ public class PlayerMove : MonoBehaviour
         moveInput.Normalize();
     }
 
-    // ƒvƒŒƒCƒ„[ˆÚ“®
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç§»å‹•
     void MovePlayer()
     {
         if (moveInput == Vector3.zero) return;
@@ -259,16 +259,16 @@ public class PlayerMove : MonoBehaviour
 
     }
 
-    // ‰ñ”ğŠJn
+    // å›é¿é–‹å§‹
     void StartDodge()
     {
-        // Œ»İŒü‚¢‚Ä‚¢‚é•ûŒü‚Ö‰ñ”ğ‚·‚é
+        // ç¾åœ¨å‘ã„ã¦ã„ã‚‹æ–¹å‘ã¸å›é¿ã™ã‚‹
         Vector3 dir = transform.forward;
         dir.y = 0f;
         dir.Normalize();
 
         dodgeDirection = dir;
-        // ƒAƒjƒ[ƒVƒ‡ƒ“‚ªn‚Ü‚Á‚Ä‚©‚çˆÚ“®‚ğn‚ß‚é‚½‚ß‚É‘Ò‹@ó‘Ô‚É‚·‚é
+        // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒå§‹ã¾ã£ã¦ã‹ã‚‰ç§»å‹•ã‚’å§‹ã‚ã‚‹ãŸã‚ã«å¾…æ©ŸçŠ¶æ…‹ã«ã™ã‚‹
         isDodgePending = true;
         isDodging = false;
         dodgePendingTimer = dodgeStartDelay;
