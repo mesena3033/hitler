@@ -5,23 +5,30 @@ public class PlayerAnimation : MonoBehaviour
     private Animator animator;
     private PlayerMove move;
     private PlayerAttack attack;
+    private PlayerStatus status;
     [SerializeField] private string dodgeBool = "IsDodging";
 
     public RuntimeAnimatorController mainController;
+    bool moving;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         move = GetComponent<PlayerMove>();
         attack = GetComponent<PlayerAttack>();
+        status = GetComponent<PlayerStatus>();
     }
 
     void Update()
     {
-        bool moving = move.MoveInput != Vector3.zero;
+        moving = move.MoveInput != Vector3.zero;
 
         animator.SetBool("IsMoving", moving);
         animator.SetBool("IsIdling", !moving && !attack.IsAttacking);
+
+        bool isDead = status.IsPlayerDead;
+        animator.SetBool("IsDead",status.IsPlayerDead);
+      
     }
 
     public void SetDodge(bool value)
@@ -55,4 +62,6 @@ public class PlayerAnimation : MonoBehaviour
         if (animator != null) animator.SetBool("IsDamaged", false);
         damagedPlaying = false;
     }
+
+
 }

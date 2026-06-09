@@ -81,8 +81,9 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
-        // 回避中、回避開始待ち中、またはクールタイム中は通常入力を処理しない
-        if (isDodging || isDodgePending || dodgeCooldownTimer > 0f)
+        // 回避中または回避開始待ち中は通常入力を処理しない
+        // クールタイム中でも移動は可能にして、次回回避のみ制限する
+        if (isDodging || isDodgePending)
         {
             moveInput = Vector3.zero;
             return;
@@ -94,6 +95,7 @@ public class PlayerMove : MonoBehaviour
         if (kb.spaceKey.wasPressedThisFrame && !attack.IsAttacking && !isDodging && !isDodgePending && dodgeCooldownTimer <= 0f)
         {
             StartDodge();
+            attack.ResetCombo();
         }
     }
 
