@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody rb;
     private PlayerAttack attack;
     private PlayerAnimation playerAnimation;
+    private PlayerStatus status;
 
     // 入力保持
     private Vector3 moveInput;
@@ -54,6 +55,7 @@ public class PlayerMove : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         attack = GetComponent<PlayerAttack>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        status = GetComponent<PlayerStatus>();
     }
 
     // 入力処理
@@ -64,7 +66,7 @@ public class PlayerMove : MonoBehaviour
         if (kb == null) return;
 
         // 攻撃中または被弾中は入力を無効化
-        if (attack.IsAttacking || hitDisableTimer > 0f)
+        if (attack.IsAttacking || hitDisableTimer > 0f || status.IsPlayerDead)
         {
             moveInput = Vector3.zero;
             // 被弾無効時間のカウントダウン

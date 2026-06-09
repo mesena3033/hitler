@@ -12,6 +12,8 @@ public class PlayerAttack : MonoBehaviour
     private SwordHit swordHitComponent;
     private HashSet<int> hitTargets = new HashSet<int>();
 
+    private PlayerStatus status;
+
     private bool attackInput;   // 攻撃入力状態か
     private bool isAttacking;   // 攻撃中か
     private bool isComboQueued;   // コンボ受付時間か
@@ -28,6 +30,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
+        status = GetComponent<PlayerStatus>();  
         animator = GetComponent<Animator>();
         currentAttack = 0f;
         // try to find SwordHit component in children and init
@@ -44,6 +47,8 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        if(status.IsPlayerDead) return;
+
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             attackInput = true;
