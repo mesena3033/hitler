@@ -31,6 +31,12 @@ public class PlayerStatus : MonoBehaviour
         currentHP -= damage;
         if (currentHP < 0) currentHP = 0;
         // TODO: 死亡処理など
+        // 被弾時に移動無効を通知（プレイヤー自身の場合）
+        var mover = GetComponent<PlayerMove>();
+        if (mover != null)
+        {
+            mover.SetBeingHit(0.5f);
+        }
     }
 
     // デバッグ用: 現在のステータスを文字列で返す

@@ -113,8 +113,8 @@ public class PlayerAttack : MonoBehaviour
         // 攻撃時に剣の当たり判定を有効化
         if (swordCollider != null) swordCollider.enabled = true;
 
-        //Debug.Log("Combo = " + comboCount);
     }
+
 
     void EndAttack()
     {
@@ -138,7 +138,19 @@ public class PlayerAttack : MonoBehaviour
         if (swordCollider != null) swordCollider.enabled = false;
     }
 
-    // Called by SwordHit when collider hits something
+    // 外部からコンボを強制リセットする（被弾時など）
+    public void ResetCombo()
+    {
+        isAttacking = false;
+        comboCount = 0;
+        isComboQueued = false;
+        attackTimer = 0f;
+        currentAttack = attackCT;
+
+        if (swordCollider != null) swordCollider.enabled = false;
+    }
+
+    // 剣オブジェクトのスクリプトで呼び出す
     public void OnSwordHit(Collider other)
     {
         if (other == null) return;
@@ -168,6 +180,7 @@ public class PlayerAttack : MonoBehaviour
 
         Debug.Log($"PlayerHP={playerHP} EnemyHP={enemyHP} PlayerATK={playerAtk} EnemyDEF={targetDefense} Damage={dmg}");
     }
+
     private int CalculateDamage(float targetDefense)
     {
         var status = GetComponent<PlayerStatus>();
@@ -184,8 +197,13 @@ public class PlayerAttack : MonoBehaviour
 // ダメージ計算
 // ダメージ = 攻撃力 - 防御力
 /*
- *  基礎攻撃力、攻撃力　、バフ、実際の攻撃力が、　１０・１．５＝１５
- *  １０　　　　　　　　　１．５
-/*
+ *  基礎攻撃力、攻撃力　、バフ、防御力
+ *  
+ *  攻撃力　＝基礎攻撃力×バフ倍率
+ *  ダメージ量＝攻撃力－防御力
+ *  
+ * 例) 基礎攻撃力10、バフ1.5、防御力3の場合
+ *  ダメージ＝(10×1.5)－3＝12
+ *  バフなしは　1.0　を掛ける
  */
 

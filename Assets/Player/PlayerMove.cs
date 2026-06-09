@@ -21,13 +21,22 @@ public class PlayerMove : MonoBehaviour
     // 最後に押した横キー
     private Key lastHorizontalKey = Key.None;
 
+    // 被弾
+    private bool isBeingHit = false;
+    public bool IsBeingHit {
+        get { return isBeingHit; }
+        set { isBeingHit = value; }
+    }
+    private float hitDisableTimer = 0f;
+    [SerializeField] private float hitDisableDuration = 0.5f;
+
     // 回避
     [Header("回避")]
     [SerializeField] private float dodgeDistance = 5f;
     [SerializeField] private float dodgeDuration = 0.3f;
     [SerializeField] private float dodgeStartDelay = 0.08f; // アニメーション開始後に移動を始める遅延（秒）
     [SerializeField] private float dodgeCooldown = 1.5f; // 回避のクールタイム（秒）
-    [SerializeField] private float dodgeSink = 0.15f; // 回避時に少し下げるYオフセット
+    [SerializeField] private float dodgeSink = 0.15f; // 回避時に下げるYオフセット
    
 
     private bool isDodging = false;
@@ -55,10 +64,21 @@ public class PlayerMove : MonoBehaviour
 
         if (kb == null) return;
 
-        // 攻撃中は移動停止
-        if (attack.IsAttacking)
+        // 攻撃中または被弾中は入力を無効化
+        if (attack.IsAttacking || isBeingHit)
         {
             moveInput = Vector3.zero;
+            // 被弾無効時間のカウントダウン
+            if (hitDisableTimer > 0f)
+            {
+                hitDisableTimer -= Time.deltaTime;
+                if (hitDisableTimer <= 0f)
+                {
+                    isBeingHit = false;
+                    hitDisableTimer = 0f;
+                }
+            }
+
             return;
         }
 
@@ -75,7 +95,13 @@ public class PlayerMove : MonoBehaviour
         {
             StartDodge();
         }
+    }
 
+    // 外部から被弾状態を設定する（duration 秒間移動を無効化）
+    public void SetBeingHit(float duration)
+    {
+        isBeingHit = true;
+        hitDisableTimer = Mathf.Max(0f, duration);
     }
 
     // 物理処理
@@ -85,7 +111,7 @@ public class PlayerMove : MonoBehaviour
 
         float dt = Time.fixedDeltaTime;
 
-        // 回避開始待ちの処理　アニメーションが始まってから移動を開始するための遅延
+        // 回避開始待ちの処理: アニメーションが始まってから移動を開始するための遅延
         if (isDodgePending)
         {
             dodgePendingTimer -= dt;
