@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerAnimation : MonoBehaviour
 {
@@ -7,8 +6,8 @@ public class PlayerAnimation : MonoBehaviour
     private PlayerMove move;
     private PlayerAttack attack;
     [SerializeField] private string dodgeBool = "IsDodging";
-    [SerializeField] private string dodgeClipName = "Dodge"; // 回避アニメーションのクリップ名
 
+    public RuntimeAnimatorController mainController;
 
     private void Start()
     {
@@ -22,31 +21,7 @@ public class PlayerAnimation : MonoBehaviour
         bool moving = move.MoveInput != Vector3.zero;
 
         animator.SetBool("IsMoving", moving);
-
         animator.SetBool("IsIdling", !moving && !attack.IsAttacking);
-
-        if (Keyboard.current.kKey.isPressed) 
-        {
-            // 直接ダメージアニメーションを再生して優先させる
-            if (animator != null)
-            {
-                animator.Play("Damaged", 0, 0f);
-                // 0.5秒間移動できないようにする
-                // 移動無効を PlayerMove 側で扱う
-                move.SetBeingHit(1.5f);
-                Invoke(nameof(ResetHit), 1.5f);
-
-            }
-            animator.SetBool("IsDamaged", true);
-            // 移動無効はすでに PlayerMove.SetBeingHit で設定済み
-            attack.ResetCombo();
-        }
-
-        else
-        {
-            animator.SetBool("IsDamaged", false);
-            move.IsBeingHit = false;
-        }
     }
 
     public void SetDodge(bool value)
@@ -55,11 +30,29 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool(dodgeBool, value);
     }
 
-    // 追加: Invoke から呼ばれるメソッドを定義
-    private void ResetHit()
-    {
-        if (move != null) move.IsBeingHit = false;
-        if (animator != null) animator.SetBool("IsDamaged", false);
+    private float lastDamagedTime = -10f;
+    [SerializeField] private float damagedCooldown = 0.6f; // 同種の被弾で連続再生しない閾値
+    private bool damagedPlaying = false;
 
+    public void PlayDamagedOnce()
+    {
+        if (animator == null) return;
+        if (damagedPlaying) return;
+        if (Time.time - lastDamagedTime < damagedCooldown) return;
+
+        damagedPlaying = true;
+        lastDamagedTime = Time.time;
+
+        animator.Play("Damaged", 0, 0f);
+        animator.SetBool("IsDamaged", true);
+        // 自動で IsDamaged/playing を解除
+        CancelInvoke(nameof(ResetDamaged));
+        Invoke(nameof(ResetDamaged), damagedCooldown);
+    }
+
+    private void ResetDamaged()
+    {
+        if (animator != null) animator.SetBool("IsDamaged", false);
+        damagedPlaying = false;
     }
 }
