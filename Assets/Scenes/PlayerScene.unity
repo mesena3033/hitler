@@ -348,11 +348,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!95 &800639130 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 924694910680825824, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
-  m_PrefabInstance: {fileID: 914666732}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &914666732
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -361,18 +356,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 924694910680825824, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: daf3738502eeb6547870462f00f07d53, type: 2}
-    - target: {fileID: 1432794403666122791, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
-      propertyPath: mainAnimator
-      value: 
-      objectReference: {fileID: 800639130}
-    - target: {fileID: 1432794403666122791, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
-      propertyPath: mainController
-      value: 
-      objectReference: {fileID: 9100000, guid: daf3738502eeb6547870462f00f07d53, type: 2}
     - target: {fileID: 3599890172395690983, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
