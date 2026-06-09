@@ -2445,11 +2445,11 @@ GameObject:
   - component: {fileID: 1432794403666122791}
   - component: {fileID: 924694910680825824}
   - component: {fileID: 4773840149367445570}
-  - component: {fileID: 8609273771276772238}
   - component: {fileID: 3626289831011476668}
   - component: {fileID: 3818481857907155673}
   - component: {fileID: 1557731360118922239}
-  - component: {fileID: 7402615480957965010}
+  - component: {fileID: 2821517605998552217}
+  - component: {fileID: 610280399201383930}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2529,25 +2529,6 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
---- !u!114 &8609273771276772238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6413236398695696505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0671dba86c3206446b6b79a825c57f14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 8
-  rotateSpeed: 800
-  dodgeDistance: 5
-  dodgeDuration: 0.3
-  dodgeStartDelay: 0.08
-  dodgeCooldown: 1.5
-  dodgeSink: 0.15
 --- !u!65 &3626289831011476668
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2611,7 +2592,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 96
   m_CollisionDetection: 0
---- !u!114 &7402615480957965010
+--- !u!114 &2821517605998552217
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2620,7 +2601,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6413236398695696505}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f2ded48a4acd404781175760cf98a6a, type: 3}
+  m_Script: {fileID: 11500000, guid: ad051164e7dc00941a4190a37028629a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 100
@@ -2628,6 +2609,25 @@ MonoBehaviour:
   baseAttackPower: 10
   buffMultiplier: 1
   defensePower: 5
+--- !u!114 &610280399201383930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6413236398695696505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca58cea5506d27f4b8d8209547f9b49f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  rotateSpeed: 600
+  dodgeDistance: 5
+  dodgeDuration: 0.3
+  dodgeStartDelay: 0.08
+  dodgeCooldown: 1.5
+  dodgeSink: 0.15
 --- !u!1 &6603474418225993939
 GameObject:
   m_ObjectHideFlags: 0

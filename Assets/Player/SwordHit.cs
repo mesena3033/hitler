@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class SwordHit : MonoBehaviour
 {
+    // 剣オブジェクトにアタッチ
     private PlayerAttack owner;
 
     public void Init(PlayerAttack ownerAttack)

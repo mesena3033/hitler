@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerAnimation : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class PlayerAnimation : MonoBehaviour
     private PlayerAttack attack;
     [SerializeField] private string dodgeBool = "IsDodging";
     [SerializeField] private string dodgeClipName = "Dodge"; // 回避アニメーションのクリップ名
+
 
     private void Start()
     {
@@ -19,10 +21,32 @@ public class PlayerAnimation : MonoBehaviour
     {
         bool moving = move.MoveInput != Vector3.zero;
 
-        animator.SetBool("IsMove", moving);
+        animator.SetBool("IsMoving", moving);
 
-        animator.SetBool("IsIdle", !moving && !attack.IsAttacking);
+        animator.SetBool("IsIdling", !moving && !attack.IsAttacking);
 
+        if (Keyboard.current.kKey.isPressed) 
+        {
+            // 直接ダメージアニメーションを再生して優先させる
+            if (animator != null)
+            {
+                animator.Play("Damaged", 0, 0f);
+                // 0.5秒間移動できないようにする
+                // 移動無効を PlayerMove 側で扱う
+                move.SetBeingHit(1.5f);
+                Invoke(nameof(ResetHit), 1.5f);
+
+            }
+            animator.SetBool("IsDamaged", true);
+            // 移動無効はすでに PlayerMove.SetBeingHit で設定済み
+            attack.ResetCombo();
+        }
+
+        else
+        {
+            animator.SetBool("IsDamaged", false);
+            move.IsBeingHit = false;
+        }
     }
 
     public void SetDodge(bool value)
@@ -31,15 +55,11 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool(dodgeBool, value);
     }
 
-    public float GetDodgeClipLength()
+    // 追加: Invoke から呼ばれるメソッドを定義
+    private void ResetHit()
     {
-        if (animator == null || animator.runtimeAnimatorController == null) return 0f;
-        var clips = animator.runtimeAnimatorController.animationClips;
-        for (int i = 0; i < clips.Length; i++)
-        {
-            if (clips[i].name == dodgeClipName)
-                return clips[i].length;
-        }
-        return 0f;
+        if (move != null) move.IsBeingHit = false;
+        if (animator != null) animator.SetBool("IsDamaged", false);
+
     }
 }
