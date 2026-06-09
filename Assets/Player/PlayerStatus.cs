@@ -8,6 +8,9 @@ public class PlayerStatus : MonoBehaviour
 
     public int CurrentHP => currentHP;
 
+    private bool isPlayerDead = false;
+    public bool IsPlayerDead => isPlayerDead;
+
     // 攻撃力
     [SerializeField] private float baseAttackPower = 10f;
     [SerializeField] private float buffMultiplier = 1f; // バフ倍率（デフォルト1）
@@ -18,12 +21,6 @@ public class PlayerStatus : MonoBehaviour
     // 防御力
     [SerializeField] private float defensePower = 5f;
     public float DefensePower => defensePower;
-
-    void Awake()
-    {
-        // 保証: currentHP 初期化
-        if (currentHP <= 0) currentHP = maxHP;
-    }
 
     void Start()
     {
@@ -51,10 +48,16 @@ public class PlayerStatus : MonoBehaviour
     public void ApplyDamage(int damage)
     {
         currentHP -= damage;
-        if (currentHP < 0) currentHP = 0;
-        // TODO: 死亡処理など
-        // 被弾時に移動無効を通知（プレイヤー自身の場合）
-        var mover = GetComponent<PlayerMove>();
+        if (currentHP < 0)
+        {
+            Debug.Log("player dead");
+            currentHP = 0;
+            isPlayerDead = true;
+            return;
+        }
+            // TODO: 死亡処理など
+            // 被弾時に移動無効を通知（プレイヤー自身の場合）
+            var mover = GetComponent<PlayerMove>();
         if (mover != null)
         {
             mover.SetBeingHit(0.5f);
