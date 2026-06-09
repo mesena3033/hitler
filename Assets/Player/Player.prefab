@@ -2491,7 +2491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dodgeBool: IsDodging
-  dodgeClipName: Dodge
+  mainController: {fileID: 9100000, guid: daf3738502eeb6547870462f00f07d53, type: 2}
   damagedCooldown: 0.6
 --- !u!95 &924694910680825824
 Animator:
