@@ -48,7 +48,7 @@ public class PlayerStatus : MonoBehaviour
     public void ApplyDamage(int damage)
     {
         currentHP -= damage;
-        if (currentHP < 0)
+        if (currentHP <= 0)
         {
             Debug.Log("player dead");
             currentHP = 0;

@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
@@ -27,7 +28,7 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool("IsIdling", !moving && !attack.IsAttacking);
 
         bool isDead = status.IsPlayerDead;
-        animator.SetBool("IsDead",status.IsPlayerDead);
+        animator.SetBool("IsDied",status.IsPlayerDead);
       
     }
 
@@ -50,8 +51,12 @@ public class PlayerAnimation : MonoBehaviour
         damagedPlaying = true;
         lastDamagedTime = Time.time;
 
-        animator.Play("Damaged", 0, 0f);
-        animator.SetBool("IsDamaged", true);
+        if (!status.IsPlayerDead)
+        {
+            animator.Play("Damaged", 0, 0f);
+            animator.SetBool("IsDamaged", true);
+        }
+
         // 自動で IsDamaged/playing を解除
         CancelInvoke(nameof(ResetDamaged));
         Invoke(nameof(ResetDamaged), damagedCooldown);
