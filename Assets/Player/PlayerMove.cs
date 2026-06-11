@@ -56,6 +56,8 @@ public class PlayerMove : MonoBehaviour
         attack = GetComponent<PlayerAttack>();
         playerAnimation = GetComponent<PlayerAnimation>();
         status = GetComponent<PlayerStatus>();
+        // Rigidbody の補間を有効にして、物理移動とアニメーションのズレを軽減
+        if (rb != null) rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
     // 入力処理
