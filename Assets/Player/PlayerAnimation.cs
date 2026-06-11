@@ -17,6 +17,8 @@ public class PlayerAnimation : MonoBehaviour
         animator = GetComponent<Animator>();
         move = GetComponent<PlayerMove>();
         attack = GetComponent<PlayerAttack>();
+        // アニメーターを物理と同期
+        if (animator != null) animator.updateMode = AnimatorUpdateMode.Fixed;
         status = GetComponent<PlayerStatus>();
     }
 
