@@ -6,6 +6,7 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField] private int maxHP = 100;
     [SerializeField] private int currentHP;
 
+    private PlayerMove move;
     public int CurrentHP => currentHP;
 
     private bool isPlayerDead = false;
@@ -25,7 +26,7 @@ public class PlayerStatus : MonoBehaviour
     void Start()
     {
         currentHP = maxHP;
-
+        move = GetComponent<PlayerMove>();
     }
 
     void Update()
@@ -47,20 +48,22 @@ public class PlayerStatus : MonoBehaviour
     // ダメージ処理
     public void ApplyDamage(int damage)
     {
-        currentHP -= damage;
-        if (currentHP <= 0)
+        if (!move.IsDodging)
         {
-            Debug.Log("player dead");
-            currentHP = 0;
-            isPlayerDead = true;
-            return;
-        }
+            currentHP -= damage;
+            if (currentHP <= 0)
+            {
+                currentHP = 0;
+                isPlayerDead = true;
+                return;
+            }
             // TODO: 死亡処理など
             // 被弾時に移動無効を通知（プレイヤー自身の場合）
             var mover = GetComponent<PlayerMove>();
-        if (mover != null)
-        {
-            mover.SetBeingHit(0.5f);
+            if (mover != null)
+            {
+                mover.SetBeingHit(0.5f);
+            }
         }
     }
 

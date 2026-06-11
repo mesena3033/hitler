@@ -2623,13 +2623,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca58cea5506d27f4b8d8209547f9b49f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  rotateSpeed: 700
+  speed: 10
+  rotateSpeed: 900
   dodgeDistance: 5
   dodgeDuration: 0.3
   dodgeStartDelay: 0.08
   dodgeCooldown: 1.5
-  dodgeSink: 0.15
 --- !u!114 &8824642603359847127
 MonoBehaviour:
   m_ObjectHideFlags: 0
