@@ -70,7 +70,6 @@ public class PlayerAttack : MonoBehaviour
             // 初回攻撃
             if (!isAttacking && currentAttack <= 0f)
             {
-                Debug.Log("StartAttack");
                 StartAttack();
             }
 

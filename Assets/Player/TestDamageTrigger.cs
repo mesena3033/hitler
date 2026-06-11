@@ -51,7 +51,6 @@ public class TestDamageTrigger : MonoBehaviour
                 attack.ResetCombo();
             }
 
-            Debug.Log($"TestDamageTrigger: applied attack {enemyAttackPower}");
         }
     }
 }
