@@ -9,15 +9,15 @@ public class SkillManager : MonoBehaviour
 
     public Animator animator;
     public EffectManager effectManager;
+    public PlayerAnimation playerAnimation;
 
     private Dictionary<int, SkillData> skillDict =
         new Dictionary<int, SkillData>();
 
-    // 別スクリプトにある Animatorを保存
-    private Animator externalAnimator;
-
     private Dictionary<int, float> cooldowns =
         new Dictionary<int, float>();
+
+    public float AnimatorChangeTime = 0.1f;
 
     // スキル終了処理
     bool skillActive = false;
@@ -79,6 +79,7 @@ public class SkillManager : MonoBehaviour
             {
                 animator.SetBool(data.animatorBool, true);
                 StartCoroutine(ResetBool(data.animatorBool, data.resetTime));
+                StartCoroutine(ResetAnimator(data.animatorController.name, AnimatorChangeTime));
             }
         }
 
@@ -100,4 +101,13 @@ public class SkillManager : MonoBehaviour
         animator.SetBool("IsIdle", true);
     }
 
+    private IEnumerator ResetAnimator(string name, float time)
+    {
+        yield return new WaitForSeconds(time);
+        // 保存したPlayerAnimationを呼び出して、Animatorに格納
+        if (animator.runtimeAnimatorController != null)
+        {
+            animator.runtimeAnimatorController = playerAnimation.mainController;
+        }
+    }
 }

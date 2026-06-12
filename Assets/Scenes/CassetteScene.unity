@@ -414,7 +414,11 @@ PrefabInstance:
     - target: {fileID: 924694910680825824, guid: cac4a1df111e83c47baeebcf0ce04c54, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: e3d96aa724415f042abb5bd53514043e, type: 2}
+      objectReference: {fileID: 9100000, guid: daf3738502eeb6547870462f00f07d53, type: 2}
+    - target: {fileID: 1432794403666122791, guid: cac4a1df111e83c47baeebcf0ce04c54, type: 3}
+      propertyPath: mainController
+      value: 
+      objectReference: {fileID: 9100000, guid: daf3738502eeb6547870462f00f07d53, type: 2}
     - target: {fileID: 3599890172395690983, guid: cac4a1df111e83c47baeebcf0ce04c54, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.3
@@ -627,6 +631,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   rotateSpeed: 360
+  dodgeDistance: 5
+  dodgeDuration: 0.3
+  dodgeStartDelay: 0.08
+  dodgeCooldown: 1.5
+  dodgeSink: 0.15
 --- !u!114 &2100294173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,7 +650,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 100
   currentHP: 0
-  attackPower: 10
+  baseAttackPower: 10
+  buffMultiplier: 1
   defensePower: 5
 --- !u!114 &2100294174
 MonoBehaviour:
@@ -672,21 +682,31 @@ MonoBehaviour:
   - skillID: 1
     animatorController: {fileID: 9100000, guid: 6ddb366d48e7da6499787af261091818, type: 2}
     animatorBool: skillNo1
-    resetTime: 0.1
+    resetTime: 5
     effectPrefab: {fileID: 1205478487176026167, guid: 8436419d5cd706242bb810378b8a8835, type: 3}
     effectSpawnPoint: {fileID: 294381660}
     effectDelay: 0.5
-    cooldown: 1
+    cooldown: 5
   - skillID: 2
     animatorController: {fileID: 9100000, guid: 6ddb366d48e7da6499787af261091818, type: 2}
     animatorBool: skillNo2
-    resetTime: 0.1
+    resetTime: 5
     effectPrefab: {fileID: 158789456559184324, guid: 87167b19fb4a32a4e8e4f2c5f40a40b3, type: 3}
     effectSpawnPoint: {fileID: 294381660}
     effectDelay: 0.5
-    cooldown: 1
+    cooldown: 5
+  - skillID: 3
+    animatorController: {fileID: 9100000, guid: 6ddb366d48e7da6499787af261091818, type: 2}
+    animatorBool: skillNo3
+    resetTime: 0.1
+    effectPrefab: {fileID: 0}
+    effectSpawnPoint: {fileID: 294381660}
+    effectDelay: 0.5
+    cooldown: 5
   animator: {fileID: 2100294169}
   effectManager: {fileID: 2100294174}
+  playerAnimation: {fileID: 2100294182}
+  AnimatorChangeTime: 1.5
 --- !u!114 &2100294176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -700,6 +720,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillManager: {fileID: 2100294175}
+--- !u!114 &2100294182 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1432794403666122791, guid: cac4a1df111e83c47baeebcf0ce04c54, type: 3}
+  m_PrefabInstance: {fileID: 1152112894}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100294163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94052c7aa46ac9940923942244177af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
