@@ -65,11 +65,11 @@ public class PlayerMove : MonoBehaviour
     {
         if(isDodging)
         {
-            Debug.Log("muteki");
+            //Debug.Log("muteki");
         }
         else
         {
-            Debug.Log("NOooooooooooooooo");
+            //Debug.Log("NOooooooooooooooo");
         }
         var kb = Keyboard.current;
 
@@ -117,6 +117,7 @@ public class PlayerMove : MonoBehaviour
     {
         isBeingHit = true;
         hitDisableTimer = Mathf.Max(0f, duration);
+
     }
 
     // 物理処理

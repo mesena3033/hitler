@@ -185,6 +185,7 @@ public class PlayerAttack : MonoBehaviour
         Debug.Log($"PlayerHP={playerHP} EnemyHP={enemyHP} PlayerATK={playerAtk} EnemyDEF={targetDefense} Damage={dmg}");
     }
 
+    // ダメージ計算
     private int CalculateDamage(float targetDefense)
     {
         var status = GetComponent<PlayerStatus>();
