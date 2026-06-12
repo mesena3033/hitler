@@ -57,6 +57,13 @@ public class PlayerAnimation : MonoBehaviour
         {
             animator.Play("Damaged", 0, 0f);
             animator.SetBool("IsDamaged", true);
+            // 被弾後無敵
+            float timer = 1f;
+            if (timer > 0f) 
+            {
+                timer-=Time.deltaTime;
+
+            }
         }
 
         // 自動で IsDamaged/playing を解除
