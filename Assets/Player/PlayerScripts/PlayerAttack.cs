@@ -33,7 +33,8 @@ public class PlayerAttack : MonoBehaviour
         status = GetComponent<PlayerStatus>();  
         animator = GetComponent<Animator>();
         currentAttack = 0f;
-        // try to find SwordHit component in children and init
+
+        // 剣のコンポーネントを取得
         swordHitComponent = GetComponentInChildren<SwordHit>();
         if (swordHitComponent != null)
         {
