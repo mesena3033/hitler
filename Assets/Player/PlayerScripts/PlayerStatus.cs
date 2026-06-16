@@ -17,6 +17,9 @@ public class PlayerStatus : MonoBehaviour
 
     // 無敵（被弾無効）
     private bool isInvincible = false;
+    // 被弾判定
+    private bool isDamaged = false;
+    public bool IsDamaged => isDamaged;
     public bool IsInvincible => isInvincible;
     [SerializeField] private float invincibilityDuration = 1f;
     private float invincibilityTimer = 0f;
@@ -81,7 +84,7 @@ public class PlayerStatus : MonoBehaviour
         {
             currentHP = 0;
             isPlayerDead = true;
-            // 被弾時に移動無効を通知（プレイヤー自身の場合）
+            // 被弾時に移動無効
             var deadMover = GetComponent<PlayerMove>();
             if (deadMover != null)
             {
@@ -90,7 +93,7 @@ public class PlayerStatus : MonoBehaviour
             return;
         }
 
-        // 被弾時に移動無効を通知（プレイヤー自身の場合）
+        // 被弾時に移動無効
         var mover = GetComponent<PlayerMove>();
         if (mover != null)
         {
@@ -109,7 +112,7 @@ public class PlayerStatus : MonoBehaviour
         {
             float raw = enemyAttackPower;
             int dmg = Mathf.Max(0, Mathf.FloorToInt(raw - defensePower));
-            
+            isDamaged = true;
             ApplyDamage(dmg);
         }
     }

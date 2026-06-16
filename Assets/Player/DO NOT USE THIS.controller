@@ -287,9 +287,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25000012
-  m_TransitionOffset: 0.015936462
-  m_ExitTime: 0.97920823
+  m_TransitionDuration: 0.0035395622
+  m_TransitionOffset: 0
+  m_ExitTime: 0.99264795
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -508,7 +508,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerAnimation
+  m_Name: DO NOT USE THIS
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: IsIdling
@@ -986,9 +986,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.5392447
-  m_TransitionOffset: 0.003819872
-  m_ExitTime: 0.9802752
+  m_TransitionDuration: 0.06668532
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9857799
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -1122,9 +1122,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.2441605
+  m_TransitionDuration: 0.18029982
   m_TransitionOffset: 0
-  m_ExitTime: 0.58333343
+  m_ExitTime: 0.64542013
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -1308,8 +1308,8 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 3140, y: -1110, z: 0}
+  m_AnyStatePosition: {x: -840, y: -1540, z: 0}
   m_EntryPosition: {x: 710, y: 1480, z: 0}
-  m_ExitPosition: {x: 3070, y: -1490, z: 0}
+  m_ExitPosition: {x: -910, y: -1920, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 4779111960257581188}

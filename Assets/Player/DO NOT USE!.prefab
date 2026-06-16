@@ -2452,7 +2452,7 @@ GameObject:
   - component: {fileID: 610280399201383930}
   - component: {fileID: 8824642603359847127}
   m_Layer: 0
-  m_Name: Player
+  m_Name: DO NOT USE!
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2490,7 +2490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94052c7aa46ac9940923942244177af3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainController: {fileID: 9100000, guid: daf3738502eeb6547870462f00f07d53, type: 2}
+  mainController: {fileID: 9100000, guid: 2762da827a3929a4ebbfbb516298f96b, type: 2}
   damagedCooldown: 0.7
 --- !u!95 &924694910680825824
 Animator:
