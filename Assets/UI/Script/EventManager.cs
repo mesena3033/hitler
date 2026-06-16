@@ -9,37 +9,15 @@ public class EventManager : MonoBehaviour
 
     private string sceneName = null;
 
-    //  DontDestroyOnLoadを1回だけ実行する
-    private bool first;
-
-    private void Awake()
-    {
-        sceneName = SceneManager.GetActiveScene().name;
-
-        if (sceneName == "TitleScene")
-        {
-            first = true;
-        }
-
-        if (first == true)
-        {
-            DontDestroyOnLoad(this.gameObject);
-            DontDestroyOnLoad(canvas);
-
-            first = false;
-        }
-        else if (first == false)
-        {
-        }
-    }
-
     private void Start()
     {
-        Debug.Log(first);
     }
 
     private void Update()
     {
+        //  現在のシーン取得
+        sceneName = SceneManager.GetActiveScene().name;
+
         //  タイトルかゲームか区別
         if (sceneName == "TitleScene")
         {
@@ -51,9 +29,6 @@ public class EventManager : MonoBehaviour
             titlePanel.gameObject.SetActive(false);
             gamePanel.gameObject.SetActive(true);
         }
-
-        //  現在のシーン取得
-        sceneName = SceneManager.GetActiveScene().name;
     }
 
     public void TitleButton()
