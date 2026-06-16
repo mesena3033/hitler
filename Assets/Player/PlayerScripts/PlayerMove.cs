@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -36,8 +37,8 @@ public class PlayerMove : MonoBehaviour
     // 回避
     [Header("回避")]
     [SerializeField] private float dodgeDistance = 5f;
-    [SerializeField] private float dodgeDuration = 0.3f;
-    // Animation Event で回避の移動開始/終了を制御するため、コード側の開始遅延は廃止
+    [SerializeField] private float dodgeDuration = 1.3f;
+    [SerializeField] private float dodgeStartDelay = 0.08f; // アニメーション開始後に移動を始める遅延（秒）
     [SerializeField] private float dodgeCooldown = 1.5f; // 回避のクールタイム（秒）
    
 
@@ -46,7 +47,7 @@ public class PlayerMove : MonoBehaviour
     private Vector3 dodgeDirection = Vector3.zero;
     private float dodgeTimer = 0f;
     private float dodgeSpeed = 0f;
-    // isDodgePending はアニメ開始待ちフラグ。実際の移動開始は OnDodgeAnimStart() で行う。
+    private float dodgePendingTimer = 0f;
     private float dodgeCooldownTimer = 0f;
 
 
@@ -107,7 +108,6 @@ public class PlayerMove : MonoBehaviour
         // スペースで回避開始
         if (kb.spaceKey.wasPressedThisFrame && !attack.IsAttacking && !isDodging && !isDodgePending && dodgeCooldownTimer <= 0f)
         {
-            isDodging = true;
             StartDodge();
             attack.ResetCombo();
         }
@@ -128,10 +128,18 @@ public class PlayerMove : MonoBehaviour
 
         float dt = Time.fixedDeltaTime;
 
-        // 回避開始待ち中は移動や入力を行わない（移動の開始はアニメーションイベントで行う）
+        // 回避開始待ちの処理: アニメーションが始まってから移動を開始するための遅延
         if (isDodgePending)
         {
-            // ここでは何もしない。OnDodgeAnimStart() が呼ばれるのを待つ。
+            dodgePendingTimer -= dt;
+            if (dodgePendingTimer <= 0f)
+            {
+                isDodgePending = false;
+                isDodging = true;
+                dodgeTimer = dodgeDuration;
+                dodgeSpeed = dodgeDistance / Mathf.Max(0.0001f, dodgeDuration);
+                // Animator の bool は既に true にしているはず
+            }
         }
 
         // クールタイムのカウントダウン
@@ -265,9 +273,11 @@ public class PlayerMove : MonoBehaviour
         dir.y = 0f;
         dir.Normalize();
 
+
         dodgeDirection = dir;
         // アニメーションが始まってから移動を始めるために待機状態にする
         isDodgePending = true;
+        dodgePendingTimer = dodgeStartDelay;
 
         if (playerAnimation != null)
         {
@@ -275,31 +285,6 @@ public class PlayerMove : MonoBehaviour
         }
 
         isDodging = false;
-    }
-
-    // Animation Event から呼ばれる: 回避アニメの「移動開始」フレームで呼ぶ
-    public void OnDodgeAnimStart()
-    {
-        if (!isDodgePending) return; // 不要な呼び出しを無視
-
-        isDodgePending = false;
-        isDodging = true;
-        dodgeTimer = dodgeDuration;
-        dodgeSpeed = dodgeDistance / Mathf.Max(0.0001f, dodgeDuration);
-        // dodgeDirection は StartDodge() で設定済み
-    }
-
-    // Animation Event から呼ばれる: 回避アニメの「終了」フレームで呼ぶ
-    public void OnDodgeAnimEnd()
-    {
-        // 確実に回避を終了させる
-        isDodging = false;
-        isDodgePending = false;
-        if (playerAnimation != null)
-        {
-            playerAnimation.SetDodge(false);
-        }
-        dodgeCooldownTimer = dodgeCooldown;
     }
 
 }

@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    private Animator animator;
+    public Animator animator;
     private PlayerMove move;
     private PlayerAttack attack;
     private PlayerStatus status;
 
     public RuntimeAnimatorController mainController;
     bool moving;
+
+    private float dodgingTimer = 1f;
 
     private void Start()
     {
@@ -36,6 +38,11 @@ public class PlayerAnimation : MonoBehaviour
     {
         if (animator == null) return;
         animator.SetBool("IsDodging", value);
+
+        if (value)
+        {
+            animator.SetFloat("DodgeCT", 1f);
+        }
     }
 
     private float lastDamagedTime = -10f;

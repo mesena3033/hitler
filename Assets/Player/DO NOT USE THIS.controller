@@ -565,6 +565,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
+  - m_Name: DodgeCT
+    m_Type: 1
+    m_DefaultFloat: 1
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -724,7 +730,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25000012
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.9735675
   m_HasExitTime: 1
@@ -1287,7 +1293,7 @@ AnimatorStateMachine:
     m_Position: {x: -80, y: -200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6074061276285715481}
-    m_Position: {x: 1320, y: -1490, z: 0}
+    m_Position: {x: 1310, y: -1490, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8317790549255372700}
     m_Position: {x: 200, y: -1340, z: 0}
