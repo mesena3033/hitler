@@ -12,6 +12,7 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody rb;
     private PlayerAttack attack;
     private PlayerAnimation playerAnimation;
+    private Animator animator;
     private PlayerStatus status;
 
     // 入力保持
@@ -38,7 +39,7 @@ public class PlayerMove : MonoBehaviour
     [Header("回避")]
     [SerializeField] private float dodgeDistance = 5f;
     [SerializeField] private float dodgeDuration = 0.3f;
-    [SerializeField] private float dodgeStartDelay = 0.08f; // アニメーション開始後に移動を始める遅延（秒）
+    //[SerializeField] private float dodgeStartDelay = 0.08f; // アニメーション開始後に移動を始める遅延（秒）
     [SerializeField] private float dodgeCooldown = 1.5f; // 回避のクールタイム（秒）
    
 
@@ -50,9 +51,9 @@ public class PlayerMove : MonoBehaviour
     private float dodgePendingTimer = 0f;
     private float dodgeCooldownTimer = 0f;
 
-
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         attack = GetComponent<PlayerAttack>();
         playerAnimation = GetComponent<PlayerAnimation>();
@@ -97,12 +98,12 @@ public class PlayerMove : MonoBehaviour
 
         // 回避中または回避開始待ち中は通常入力を処理しない
         // クールタイム中でも移動は可能にして、次回回避のみ制限する
-        /*if (isDodging || isDodgePending)
+        if (isDodging || isDodgePending)
         {
             moveInput = Vector3.zero;
             return;
         }
-        */
+        
         UpdateMoveInput(kb);
 
         // スペースで回避開始
@@ -121,6 +122,7 @@ public class PlayerMove : MonoBehaviour
         hitDisableTimer = Mathf.Max(0f, duration);
 
     }
+
 
     // 物理処理
     void FixedUpdate()
@@ -152,6 +154,7 @@ public class PlayerMove : MonoBehaviour
 
         if (isDodging)
         {
+            
             // 回避移動（横移動＋少し沈めて空中で回らないようにする）
             Vector3 next = rb.position + dodgeDirection * dodgeSpeed * dt;
             
@@ -269,24 +272,17 @@ public class PlayerMove : MonoBehaviour
     // 回避開始
     void StartDodge()
     {
-        // 現在向いている方向へ回避する
-        Vector3 dir = transform.forward;
-        dir.y = 0f;
-        dir.Normalize();
+        
+        animator.SetBool("IsAttacking",false);
+        dodgeDirection = transform.forward;
 
+        isDodging = true;
 
-        dodgeDirection = dir;
-        // アニメーションが始まってから移動を始めるために待機状態にする
-        isDodgePending = true;
-        //dodgePendingTimer = dodgeStartDelay;
+        dodgeTimer = dodgeDuration;
+        dodgeSpeed = dodgeDistance / dodgeDuration;
 
-        if (playerAnimation != null)
-        {
-            playerAnimation.SetDodge(true);
-        }
-
-        isDodging = false;
+        playerAnimation.SetDodge(true);
+        
     }
-
 
 }

@@ -13,6 +13,7 @@ public class PlayerAttack : MonoBehaviour
     private HashSet<int> hitTargets = new HashSet<int>();
 
     private PlayerStatus status;
+    private PlayerMove move;
 
     private bool attackInput;   // 攻撃入力状態か
     private bool isAttacking;   // 攻撃中か
@@ -30,6 +31,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
+        move = GetComponent<PlayerMove>();
         status = GetComponent<PlayerStatus>();  
         animator = GetComponent<Animator>();
         currentAttack = 0f;
@@ -66,8 +68,9 @@ public class PlayerAttack : MonoBehaviour
 
     void UpdateAttack()
     {
-        if (attackInput) 
+        if (attackInput && !move.IsDodging)
         {
+            animator.SetBool("IsDodging", false);
             // 初回攻撃
             if (!isAttacking && currentAttack <= 0f)
             {
