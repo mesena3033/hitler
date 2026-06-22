@@ -41,7 +41,7 @@ public class PlayerAnimation : MonoBehaviour
 
         if (value)
         {
-            animator.SetFloat("DodgeCT", 1f);
+            animator.SetFloat("DodgeCT",1f);
         }
     }
 
