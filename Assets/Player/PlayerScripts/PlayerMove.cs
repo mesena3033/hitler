@@ -37,7 +37,7 @@ public class PlayerMove : MonoBehaviour
     // 回避
     [Header("回避")]
     [SerializeField] private float dodgeDistance = 5f;
-    [SerializeField] private float dodgeDuration = 1.3f;
+    [SerializeField] private float dodgeDuration = 0.3f;
     [SerializeField] private float dodgeStartDelay = 0.08f; // アニメーション開始後に移動を始める遅延（秒）
     [SerializeField] private float dodgeCooldown = 1.5f; // 回避のクールタイム（秒）
    
@@ -108,6 +108,7 @@ public class PlayerMove : MonoBehaviour
         // スペースで回避開始
         if (kb.spaceKey.wasPressedThisFrame && !attack.IsAttacking && !isDodging && !isDodgePending && dodgeCooldownTimer <= 0f)
         {
+            isDodging = true;
             StartDodge();
             attack.ResetCombo();
         }
@@ -286,5 +287,6 @@ public class PlayerMove : MonoBehaviour
 
         isDodging = false;
     }
+
 
 }
