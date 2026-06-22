@@ -5,15 +5,23 @@ using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
+    [Header("canvasのみアタッチ")]
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject gamePanel = null;
     [SerializeField] private GameObject menuPanel = null;
     [SerializeField] private GameObject menuButton = null;
-    [SerializeField] private TextMeshProUGUI menuText = null;
-    [SerializeField] private GameObject resultText = null;
+    [SerializeField] private GameObject resultPanel = null;
 
     private string sceneName = null;
     private bool menuActive = false;
+
+    private void Awake()
+    {
+        gamePanel = canvas.transform.Find("GamePanel").gameObject;
+        menuPanel = canvas.transform.Find("MenuPanel").gameObject;
+        menuButton = gamePanel.transform.Find("MenuButton").gameObject;
+        resultPanel = canvas.transform.Find("ResultPanel").gameObject;
+    }
 
     private void Start()
     {
@@ -26,11 +34,6 @@ public class EventManager : MonoBehaviour
             {
                 gamePanel.gameObject.SetActive(true);
             }
-        }
-
-        if (menuText != null)
-        {
-            menuText.text = "MenuOpen";
         }
     }
 
@@ -62,19 +65,17 @@ public class EventManager : MonoBehaviour
 
     public void MenuSwicth()
     {
-        if (menuPanel != null && menuText != null)
+        if (menuPanel != null)
         {
             if (menuActive != true)
             {
                 menuPanel.gameObject.SetActive(true);
                 menuButton.gameObject.SetActive(false);
-                menuText.text = "MenuClose";
             }
             else
             {
                 menuPanel.gameObject.SetActive(false);
                 menuButton.gameObject.SetActive(true);
-                menuText.text = "MenuOpen";
             }
         }  
     }
