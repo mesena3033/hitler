@@ -9,9 +9,8 @@ public class PlayerAnimation : MonoBehaviour
     private PlayerStatus status;
 
     public RuntimeAnimatorController mainController;
-    bool moving;
+    bool isMoving;
 
-    private float dodgingTimer = 1f;
 
     private void Start()
     {
@@ -25,10 +24,10 @@ public class PlayerAnimation : MonoBehaviour
 
     void Update()
     {
-        moving = move.MoveInput != Vector3.zero;
+        isMoving = move.MoveInput != Vector3.zero;
 
-        animator.SetBool("IsMoving", moving);
-        animator.SetBool("IsIdling", !moving && !attack.IsAttacking);
+        animator.SetBool("IsMoving", isMoving);
+        animator.SetBool("IsIdling", !isMoving && !attack.IsAttacking);
 
         bool isDead = status.IsPlayerDead;
         animator.SetBool("IsDied", status.IsPlayerDead);
@@ -36,19 +35,8 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetDodge(bool value)
     {
-        /*if (animator == null) return;
-        Debug.Log("SetDodge : " + value);
-        animator.SetBool("IsDodging", value);
-
-        if (value)
-        {
-            animator.SetFloat("DodgeCT",1f);
-        }
-        else
-        {
-            animator.SetFloat("DodgeCT", 0f);
-        }*/
-        Debug.Log("SetDodge : " + value);
+        
+        //Debug.Log("SetDodge : " + value);
 
         if (animator == null) return;
 

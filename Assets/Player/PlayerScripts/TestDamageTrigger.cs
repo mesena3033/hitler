@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class TestDamageTrigger : MonoBehaviour
 {
     [SerializeField] private float enemyAttackPower = 50f;
-    [SerializeField] private float hitDisableDuration = 0.5f;
+    //[SerializeField] private float hitDisableDuration = 0.5f;
 
     private PlayerStatus status;
     private PlayerAnimation anim;
@@ -25,7 +25,7 @@ public class TestDamageTrigger : MonoBehaviour
         var kb = Keyboard.current;
         if (kb == null) return;
 
-        if (kb.kKey.wasPressedThisFrame)
+        if (kb.kKey.wasPressedThisFrame && !status.IsInvincible)
         {
             // ダメージ適用
             if (status != null)
@@ -39,11 +39,11 @@ public class TestDamageTrigger : MonoBehaviour
                 anim.PlayDamagedOnce();
             }
 
-            // 移動無効
+            /*// 移動無効
             if (move != null)
             {
                 move.SetBeingHit(hitDisableDuration);
-            }
+            }*/
 
             // コンボリセット
             if (attack != null)
