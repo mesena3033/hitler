@@ -1,45 +1,81 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
     [SerializeField] private Canvas canvas;
-    [SerializeField] private GameObject titlePanel = null;
     [SerializeField] private GameObject gamePanel = null;
+    [SerializeField] private GameObject menuPanel = null;
+    [SerializeField] private GameObject menuButton = null;
+    [SerializeField] private TextMeshProUGUI menuText = null;
+    [SerializeField] private GameObject resultText = null;
 
     private string sceneName = null;
+    private bool menuActive = false;
 
     private void Start()
     {
+        //  現在のシーン名取得
+        sceneName = SceneManager.GetActiveScene().name;
+
+        if (sceneName != "TitleScene")
+        {
+            if (gamePanel != null)
+            {
+                gamePanel.gameObject.SetActive(true);
+            }
+        }
+
+        if (menuText != null)
+        {
+            menuText.text = "MenuOpen";
+        }
     }
 
     private void Update()
     {
-        //  現在のシーン取得
         sceneName = SceneManager.GetActiveScene().name;
 
-        //  タイトルかゲームか区別
-        if (sceneName == "TitleScene")
-        {
-            titlePanel.gameObject.SetActive(true);
-            gamePanel.gameObject.SetActive(false);
-        }
-        else
-        {
-            titlePanel.gameObject.SetActive(false);
-            gamePanel.gameObject.SetActive(true);
-        }
-    }
+        //  メニューの表示判定
+        menuActive = menuPanel.activeSelf;
 
-    public void TitleButton()
-    {
-        //  スタートクリックで移動
-        SceneManager.LoadScene("PlayerScene");
+        //  メニューの表示/非表示
+        if (false)
+        {
+            //MenuSwicth();
+        }
     }
 
     public void Restart()
     {
         //  現在のシーンのリロード
         SceneManager.LoadScene(sceneName);
+    }
+
+    //  メニューの表示/非表示(UIボタンから)
+    public void MenuButton()
+    {
+        MenuSwicth();
+    }
+
+    public void MenuSwicth()
+    {
+        if (menuPanel != null && menuText != null)
+        {
+            if (menuActive != true)
+            {
+                menuPanel.gameObject.SetActive(true);
+                menuButton.gameObject.SetActive(false);
+                menuText.text = "MenuClose";
+            }
+            else
+            {
+                menuPanel.gameObject.SetActive(false);
+                menuButton.gameObject.SetActive(true);
+                menuText.text = "MenuOpen";
+            }
+        }  
     }
 }
