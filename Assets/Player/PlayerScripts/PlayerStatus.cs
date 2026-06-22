@@ -2,6 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class PlayerStatus : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField] private int maxHP = 100;
     [SerializeField] private int currentHP;
 
+    private float hitDisableDuration = 0.5f;
     private PlayerMove move;
     public int CurrentHP => currentHP;
 
@@ -47,6 +49,7 @@ public class PlayerStatus : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(currentHP);
         // 無敵タイマーの処理
         if (isInvincible)
         {
@@ -68,6 +71,8 @@ public class PlayerStatus : MonoBehaviour
                 respawn.PlayerDied();
             }
         }
+
+        CheatingHeal();
     }
 
     // ダメージ処理
@@ -97,7 +102,7 @@ public class PlayerStatus : MonoBehaviour
         var mover = GetComponent<PlayerMove>();
         if (mover != null)
         {
-            mover.SetBeingHit(0.5f);
+            mover.SetBeingHit(1.2f);
         }
 
         // 被弾後に一定時間無敵にする
@@ -114,6 +119,14 @@ public class PlayerStatus : MonoBehaviour
             int dmg = Mathf.Max(0, Mathf.FloorToInt(raw - defensePower));
             isDamaged = true;
             ApplyDamage(dmg);
+        }
+    }
+
+    private void CheatingHeal()
+    {
+        if (Keyboard.current.hKey.wasPressedThisFrame)
+        {
+            currentHP += 100;
         }
     }
 

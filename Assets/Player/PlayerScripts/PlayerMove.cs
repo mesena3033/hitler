@@ -40,7 +40,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float dodgeDistance = 5f;
     [SerializeField] private float dodgeDuration = 0.3f;
     //[SerializeField] private float dodgeStartDelay = 0.08f; // アニメーション開始後に移動を始める遅延（秒）
-    [SerializeField] private float dodgeCooldown = 1.5f; // 回避のクールタイム（秒）
+    [SerializeField] private float dodgeCooldown = 1f; // 回避のクールタイム（秒）
    
 
     private bool isDodging = false;
@@ -98,7 +98,7 @@ public class PlayerMove : MonoBehaviour
 
         // 回避中または回避開始待ち中は通常入力を処理しない
         // クールタイム中でも移動は可能にして、次回回避のみ制限する
-        if (isDodging || isDodgePending)
+        if (isDodging /*|| isDodgePending*/)
         {
             moveInput = Vector3.zero;
             return;
@@ -109,7 +109,6 @@ public class PlayerMove : MonoBehaviour
         // スペースで回避開始
         if (kb.spaceKey.wasPressedThisFrame && !attack.IsAttacking && !isDodging && !isDodgePending && dodgeCooldownTimer <= 0f)
         {
-            isDodging = true;
             StartDodge();
             attack.ResetCombo();
         }
@@ -161,9 +160,9 @@ public class PlayerMove : MonoBehaviour
             rb.MovePosition(next);
 
             // 回避中は常に移動方向を向くように回転を固定する
-            //Quaternion targetRot = Quaternion.LookRotation(dodgeDirection);
-            //Quaternion rot = Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
-            //rb.MoveRotation(rot);
+            Quaternion targetRot = Quaternion.LookRotation(dodgeDirection);
+            Quaternion rot = Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
+            rb.MoveRotation(rot);
 
             dodgeTimer -= dt;
             if (dodgeTimer <= 0f)
