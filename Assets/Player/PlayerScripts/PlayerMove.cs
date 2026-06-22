@@ -46,7 +46,7 @@ public class PlayerMove : MonoBehaviour
     private bool isDodgePending = false;
     private Vector3 dodgeDirection = Vector3.zero;
     private float dodgeTimer = 0f;
-    private float dodgeSpeed = 0f;
+    private float dodgeSpeed = 5f;
     private float dodgePendingTimer = 0f;
     private float dodgeCooldownTimer = 0f;
 
@@ -97,12 +97,12 @@ public class PlayerMove : MonoBehaviour
 
         // 回避中または回避開始待ち中は通常入力を処理しない
         // クールタイム中でも移動は可能にして、次回回避のみ制限する
-        if (isDodging || isDodgePending)
+        /*if (isDodging || isDodgePending)
         {
             moveInput = Vector3.zero;
             return;
         }
-
+        */
         UpdateMoveInput(kb);
 
         // スペースで回避開始
@@ -158,9 +158,9 @@ public class PlayerMove : MonoBehaviour
             rb.MovePosition(next);
 
             // 回避中は常に移動方向を向くように回転を固定する
-            Quaternion targetRot = Quaternion.LookRotation(dodgeDirection);
-            Quaternion rot = Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
-            rb.MoveRotation(rot);
+            //Quaternion targetRot = Quaternion.LookRotation(dodgeDirection);
+            //Quaternion rot = Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
+            //rb.MoveRotation(rot);
 
             dodgeTimer -= dt;
             if (dodgeTimer <= 0f)
@@ -278,7 +278,7 @@ public class PlayerMove : MonoBehaviour
         dodgeDirection = dir;
         // アニメーションが始まってから移動を始めるために待機状態にする
         isDodgePending = true;
-        dodgePendingTimer = dodgeStartDelay;
+        //dodgePendingTimer = dodgeStartDelay;
 
         if (playerAnimation != null)
         {
