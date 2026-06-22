@@ -36,13 +36,23 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetDodge(bool value)
     {
-        if (animator == null) return;
+        /*if (animator == null) return;
+        Debug.Log("SetDodge : " + value);
         animator.SetBool("IsDodging", value);
 
         if (value)
         {
             animator.SetFloat("DodgeCT",1f);
         }
+        else
+        {
+            animator.SetFloat("DodgeCT", 0f);
+        }*/
+        Debug.Log("SetDodge : " + value);
+
+        if (animator == null) return;
+
+        animator.SetBool("IsDodging", value);
     }
 
     private float lastDamagedTime = -10f;
