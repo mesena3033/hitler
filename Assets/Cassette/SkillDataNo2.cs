@@ -1,26 +1,24 @@
 using UnityEngine;
-public enum SkillType
+
+[System.Serializable]
+public class SkillDataNo2
 {
-    Attack,
-    Buff,
-    Support
-}
+    [Header("Animator Controller")]
+    public RuntimeAnimatorController animatorController;
 
-[CreateAssetMenu]
-public class SkillDataNo2 : MonoBehaviour
-{
-    public int id;
-
-    public SkillType skilltype;
-
+    [Header("Animator Bool")]
     public string animatorBool;
-    public float resetTime;
+    public float resetTime = 0.1f;
 
+    [Header("エフェクト")]
     public GameObject effectPrefab;
 
+    [Header("発生位置")]
     public Transform effectSpawnPoint;
 
+    [Header("発生遅延")]
     public float effectDelay;
 
-    public float cooldown;
+    [Header("クールタイム")]
+    public float cooldown = 1f;
 }
