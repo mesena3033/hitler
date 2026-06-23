@@ -7,20 +7,56 @@ public class EventManager : MonoBehaviour
 {
     [Header("canvasのみアタッチ")]
     [SerializeField] private Canvas canvas;
-    [SerializeField] private GameObject gamePanel = null;
-    [SerializeField] private GameObject menuPanel = null;
-    [SerializeField] private GameObject menuButton = null;
+
+    //  スクリプトでアタッチ
+    [Header("アタッチ不要")]
+    //  各パネル、UIアタッチ用
+    [SerializeField]private GameObject gamePanel = null;
+    [SerializeField] private Button menuButton = null;
+
+    [SerializeField]private GameObject menuPanel = null;
+    [SerializeField]private Button closeButton = null;
+
     [SerializeField] private GameObject resultPanel = null;
+    [SerializeField]private Button resultButton = null;
 
     private string sceneName = null;
     private bool menuActive = false;
 
     private void Awake()
     {
-        gamePanel = canvas.transform.Find("GamePanel").gameObject;
-        menuPanel = canvas.transform.Find("MenuPanel").gameObject;
-        menuButton = gamePanel.transform.Find("MenuButton").gameObject;
-        resultPanel = canvas.transform.Find("ResultPanel").gameObject;
+        //  game
+        if (canvas.transform.Find("GamePanel") != null)
+        {
+            gamePanel = canvas.transform.Find("GamePanel").gameObject;
+
+            if (gamePanel.transform.Find("MenuButton") == null)
+            {
+                menuButton = gamePanel.transform.Find("MenuButton").GetComponent<Button>();
+            }
+        }
+
+        //  menu
+        if(canvas.transform.Find("MenuPanel") != null)
+        {
+            menuPanel = canvas.transform.Find("MenuPanel").gameObject;
+
+            if (menuPanel.transform.Find("CloseButton") != null)
+            {
+                closeButton = menuPanel.transform.Find("CloseButton").GetComponent<Button>();
+            }
+        }
+
+        //  result
+        if (canvas.transform.Find("ResultPanel") != null)
+        {
+            resultPanel = canvas.transform.Find("ResultPanel").gameObject;
+
+            if (resultPanel.transform.Find("RestartButton") != null)
+            {
+                resultButton = resultPanel.transform.Find("RestartButton").GetComponent<Button>();
+            }
+        }
     }
 
     private void Start()
@@ -63,6 +99,7 @@ public class EventManager : MonoBehaviour
         MenuSwicth();
     }
 
+    //  メニューのON/OFF切り替え
     public void MenuSwicth()
     {
         if (menuPanel != null)
