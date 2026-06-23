@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
@@ -269,12 +270,16 @@ public class PlayerMove : MonoBehaviour
     // 回避開始
     void StartDodge()
     {
-        
-        animator.SetBool("IsAttacking",false);
-        dodgeDirection = transform.forward;
-
+        if(moveInput != Vector3.zero)
+        {
+            dodgeDirection = moveInput.normalized;
+        }
+        else
+        {
+            dodgeDirection = transform.forward;
+        }
+        //animator.SetBool("IsAttacking",false);
         isDodging = true;
-
         dodgeTimer = dodgeDuration;
         dodgeSpeed = dodgeDistance / dodgeDuration;
 
