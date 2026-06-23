@@ -44,7 +44,7 @@ public class PlayerAnimation : MonoBehaviour
     }
 
     private float lastDamagedTime = -10f;
-    [SerializeField] private float damagedCooldown = 1f; // 同種の被弾で連続再生しない閾値
+    private float damagedCooldown = 1.2f; // 同種の被弾で連続再生しない閾値
     private bool damagedPlaying = false;
 
     public void PlayDamagedOnce()
