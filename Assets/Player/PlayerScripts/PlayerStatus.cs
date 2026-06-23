@@ -7,10 +7,10 @@ using UnityEngine.InputSystem;
 public class PlayerStatus : MonoBehaviour
 {
     // HP
-    [SerializeField] private int maxHP = 100;
-    [SerializeField] private int currentHP;
+    private int maxHP = 100;
+    private int currentHP;
 
-    private float hitDisableDuration = 0.5f;
+    //private float hitDisableDuration = 0.5f;
     private PlayerMove move;
     public int CurrentHP => currentHP;
 
@@ -23,21 +23,23 @@ public class PlayerStatus : MonoBehaviour
     private bool isDamaged = false;
     public bool IsDamaged => isDamaged;
     public bool IsInvincible => isInvincible;
-    [SerializeField] private float invincibilityDuration = 1f;
+    [SerializeField] private float invincibilityDuration = 3.5f;
     private float invincibilityTimer = 0f;
+
+    private float hitStunTime = 1.2f;
 
     // スキルID取得して格納
     // UI
 
     // 攻撃力
-    [SerializeField] private float baseAttackPower = 10f;
-    [SerializeField] private float buffMultiplier = 1f; // バフ倍率（デフォルト1）
+    private float baseAttackPower = 10f;
+    private float buffMultiplier = 1f; // バフ倍率（デフォルト1）
     public float BaseAttackPower => baseAttackPower;
     public float BuffMultiplier => buffMultiplier;
     public float AttackPower => baseAttackPower * Mathf.Max(0.0001f, buffMultiplier);
     
     // 防御力
-    [SerializeField] private float defensePower = 5f;
+    private float defensePower = 5f;
     public float DefensePower => defensePower;
 
     void Start()
@@ -78,6 +80,7 @@ public class PlayerStatus : MonoBehaviour
     // ダメージ処理
     public void ApplyDamage(int damage)
     {
+        //Debug.Log("Damage");
         // 無敵中はダメージを受けない
         if (isInvincible) return;
 
@@ -93,7 +96,7 @@ public class PlayerStatus : MonoBehaviour
             var deadMover = GetComponent<PlayerMove>();
             if (deadMover != null)
             {
-                deadMover.SetBeingHit(0.5f);
+                deadMover.SetBeingHit(1.2f); 
             }
             return;
         }
@@ -102,7 +105,7 @@ public class PlayerStatus : MonoBehaviour
         var mover = GetComponent<PlayerMove>();
         if (mover != null)
         {
-            mover.SetBeingHit(1.2f);
+            mover.SetBeingHit(hitStunTime);
         }
 
         // 被弾後に一定時間無敵にする
@@ -121,7 +124,9 @@ public class PlayerStatus : MonoBehaviour
             ApplyDamage(dmg);
         }
     }
-
+    /// <summary>
+    /// ////////////////////////実装前に消す/////////////////////////////////////
+    /// </summary>
     private void CheatingHeal()
     {
         if (Keyboard.current.hKey.wasPressedThisFrame)

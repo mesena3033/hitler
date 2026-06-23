@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private float attackDuration = .8f;
-    [SerializeField] private int maxCombo = 3;
+    private float attackDuration = .8f;
+    private int maxCombo = 3;
 
     private Animator animator;
     [SerializeField] private Collider swordCollider;
@@ -23,18 +23,16 @@ public class PlayerAttack : MonoBehaviour
 
     // 攻撃CT
     private float attackCT = 0.5f;
-    private float currentAttack;
+    private float currentAttack = 0f;
 
     // プロパティ
     public bool IsAttacking => isAttacking;
-    public int ComboCount => comboCount;
 
     void Start()
     {
         move = GetComponent<PlayerMove>();
         status = GetComponent<PlayerStatus>();  
         animator = GetComponent<Animator>();
-        currentAttack = 0f;
 
         // 剣のコンポーネントを取得
         swordHitComponent = GetComponentInChildren<SwordHit>();
@@ -52,12 +50,14 @@ public class PlayerAttack : MonoBehaviour
     {
         if(status.IsPlayerDead) return;
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (!move.IsDodging && !move.IsBeingHit
+            && !status.IsPlayerDead && 
+            Mouse.current.leftButton.wasPressedThisFrame)
         {
             attackInput = true;
         }
 
-        if(currentAttack > 0f)
+        if (currentAttack > 0f)
         {
             currentAttack -= Time.deltaTime;
         }
@@ -68,6 +68,12 @@ public class PlayerAttack : MonoBehaviour
 
     void UpdateAttack()
     {
+        if (move.IsDodging || move.IsBeingHit)
+        {
+            attackInput = false;
+            return; // 回避時は攻撃しない
+        }
+
         if (attackInput && !move.IsDodging)
         {
             animator.SetBool("IsDodging", false);
@@ -149,13 +155,15 @@ public class PlayerAttack : MonoBehaviour
     // 外部からコンボを強制リセットする（被弾時など）
     public void ResetCombo()
     {
+        attackInput = false;
         isAttacking = false;
         comboCount = 0;
         isComboQueued = false;
         attackTimer = 0f;
         currentAttack = attackCT;
 
-        if (swordCollider != null) swordCollider.enabled = false;
+        if (swordCollider != null) 
+            swordCollider.enabled = false;
     }
 
     // 剣オブジェクトのスクリプトで呼び出す

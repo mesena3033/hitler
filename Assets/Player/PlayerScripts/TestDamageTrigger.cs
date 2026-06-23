@@ -5,18 +5,15 @@ using UnityEngine.InputSystem;
 public class TestDamageTrigger : MonoBehaviour
 {
     [SerializeField] private float enemyAttackPower = 50f;
-    //[SerializeField] private float hitDisableDuration = 0.5f;
 
     private PlayerStatus status;
     private PlayerAnimation anim;
-    private PlayerMove move;
     private PlayerAttack attack;
 
     void Start()
     {
         status = GetComponent<PlayerStatus>();
         anim = GetComponent<PlayerAnimation>();
-        move = GetComponent<PlayerMove>();
         attack = GetComponent<PlayerAttack>();
     }
 

@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 public class PlayerMove : MonoBehaviour
 {
     [Header("移動")]
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float rotateSpeed = 360f;
+    private float speed = 12f;
+    private float rotateSpeed = 800f;
 
     private Rigidbody rb;
     private PlayerAttack attack;
@@ -25,10 +25,7 @@ public class PlayerMove : MonoBehaviour
 
     // 被弾
     private bool isBeingHit = false;
-    public bool IsBeingHit {
-        get { return isBeingHit; }
-        set { isBeingHit = value; }
-    }
+    public bool IsBeingHit => isBeingHit;
 
     // 無敵タイマー
     private float hitDisableTimer = 1f;
@@ -37,17 +34,16 @@ public class PlayerMove : MonoBehaviour
 
     // 回避
     [Header("回避")]
-    [SerializeField] private float dodgeDistance = 5f;
-    [SerializeField] private float dodgeDuration = 0.3f;
-    //[SerializeField] private float dodgeStartDelay = 0.08f; // アニメーション開始後に移動を始める遅延（秒）
-    [SerializeField] private float dodgeCooldown = 1f; // 回避のクールタイム（秒）
+    private float dodgeDistance = 15f;
+    private float dodgeDuration = 1.2f;
+    private float dodgeCooldown = 1f; // 回避のクールタイム（秒）
    
 
     private bool isDodging = false;
     private bool isDodgePending = false;
     private Vector3 dodgeDirection = Vector3.zero;
     private float dodgeTimer = 0f;
-    private float dodgeSpeed = 5f;
+    private float dodgeSpeed = 10f;
     private float dodgePendingTimer = 0f;
     private float dodgeCooldownTimer = 0f;
 
@@ -88,6 +84,7 @@ public class PlayerMove : MonoBehaviour
                 hitDisableTimer -= Time.deltaTime;
                 if (hitDisableTimer <= 0f)
                 {
+                    Debug.Log("Hit End");
                     isBeingHit = false;
                     hitDisableTimer = 0f;
                 }
@@ -117,6 +114,7 @@ public class PlayerMove : MonoBehaviour
     // 外部から被弾状態を設定する（duration 秒間移動を無効化）
     public void SetBeingHit(float duration)
     {
+        Debug.Log("Hit Start : " + duration);
         isBeingHit = true;
         hitDisableTimer = Mathf.Max(0f, duration);
 
