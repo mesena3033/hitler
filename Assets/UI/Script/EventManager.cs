@@ -34,6 +34,7 @@ public class EventManager : MonoBehaviour
             if (gamePanel.transform.Find("GameMenuButton") != null)
             {
                 gameMenuButton = gamePanel.transform.Find("GameMenuButton").GetComponent<Button>();
+                gameMenuButton.onClick.AddListener(MenuButton);
             }
         }
 
@@ -45,6 +46,7 @@ public class EventManager : MonoBehaviour
             if (menuPanel.transform.Find("MenuButton") != null)
             {
                 menuButton = menuPanel.transform.Find("MenuButton").GetComponent<Button>();
+                menuButton.onClick.AddListener(MenuButton);
             }
         }
 
@@ -56,6 +58,7 @@ public class EventManager : MonoBehaviour
             if (resultPanel.transform.Find("RestartButton") != null)
             {
                 resultButton = resultPanel.transform.Find("RestartButton").GetComponent<Button>();
+                resultButton.onClick.AddListener(RestartButton);
             }
         }
     }
@@ -88,7 +91,7 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public void Restart()
+    public void RestartButton()
     {
         //  現在のシーンのリロード
         SceneManager.LoadScene(sceneName);
@@ -122,5 +125,11 @@ public class EventManager : MonoBehaviour
     public bool GetMenuActive()
     {
         return menuActive;
+    }
+
+    //  プレイヤーが死んだらresultの表示
+    public void PlayerDespawn()
+    {
+        resultPanel.gameObject.SetActive(true);
     }
 }
