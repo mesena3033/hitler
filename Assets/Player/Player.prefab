@@ -2578,7 +2578,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 924694910680825824}
   mainController: {fileID: 9100000, guid: daf3738502eeb6547870462f00f07d53, type: 2}
-  damagedCooldown: 1
 --- !u!114 &2748988486013152344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2591,12 +2590,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca58cea5506d27f4b8d8209547f9b49f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  rotateSpeed: 360
-  dodgeDistance: 5
-  dodgeDuration: 1.3
-  dodgeStartDelay: 0.8
-  dodgeCooldown: 1.5
 --- !u!114 &4291304831388720993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2609,8 +2602,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b6f2474dde7eb4182127241f303d62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDuration: 0.8
-  maxCombo: 3
   swordCollider: {fileID: 4632821376057008636}
 --- !u!114 &1519583082011728661
 MonoBehaviour:
@@ -2624,12 +2615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad051164e7dc00941a4190a37028629a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 100
-  currentHP: 0
-  invincibilityDuration: 1
-  baseAttackPower: 10
-  buffMultiplier: 1
-  defensePower: 5
+  invincibilityDuration: 1.5
 --- !u!114 &5179416102852184202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2643,7 +2629,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAttackPower: 50
-  hitDisableDuration: 0.5
 --- !u!1 &6603474418225993939
 GameObject:
   m_ObjectHideFlags: 0
@@ -3248,8 +3233,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8537130377468154220}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.062985264, y: 0.000000031013343, z: 0.00000000195727, w: 0.99801445}
-  m_LocalPosition: {x: 0, y: 1.0023527, z: -3.1790566}
+  m_LocalRotation: {x: 0.0321364, y: -8.802511e-10, z: 2.8302773e-11, w: 0.9994835}
+  m_LocalPosition: {x: 0, y: 1.6690195, z: -3.1790566}
   m_LocalScale: {x: 0.33333337, y: 0.33333334, z: 0.3333333}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3310,7 +3295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetOffset: {x: 0, y: 0, z: 0}
+  TargetOffset: {x: 0, y: 2, z: 0}
   TrackerSettings:
     BindingMode: 4
     PositionDamping: {x: 0, y: 1, z: 0}
@@ -3344,7 +3329,7 @@ MonoBehaviour:
   VerticalAxis:
     Value: 17.5
     Center: 17.5
-    Range: {x: -10, y: 30}
+    Range: {x: -10, y: 50}
     Wrap: 0
     Recentering:
       Enabled: 0

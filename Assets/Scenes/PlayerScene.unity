@@ -492,26 +492,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1519583082011728661, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
-      propertyPath: invincibilityDuration
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2748988486013152344, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
-      propertyPath: rotateSpeed
-      value: 800
-      objectReference: {fileID: 0}
-    - target: {fileID: 2748988486013152344, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
-      propertyPath: dodgeCooldown
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2748988486013152344, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
-      propertyPath: dodgeDistance
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2748988486013152344, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
-      propertyPath: dodgeDuration
-      value: 1.1
-      objectReference: {fileID: 0}
     - target: {fileID: 3599890172395690983, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -709,8 +689,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1332544299}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.062985264, y: 0.000000031013343, z: 0.00000000195727, w: 0.99801445}
-  m_LocalPosition: {x: 0, y: 4.007058, z: -9.537169}
+  m_LocalRotation: {x: 0.032136403, y: -8.802511e-10, z: 2.8302721e-11, w: 0.9994835}
+  m_LocalPosition: {x: 0, y: 6.007058, z: -9.537169}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -12,10 +13,10 @@ public class EventManager : MonoBehaviour
     [Header("アタッチ不要")]
     //  各パネル、UIアタッチ用
     [SerializeField]private GameObject gamePanel = null;
-    [SerializeField] private Button menuButton = null;
+    [SerializeField] private Button gameMenuButton = null;
 
     [SerializeField]private GameObject menuPanel = null;
-    [SerializeField]private Button closeButton = null;
+    [SerializeField]private Button menuButton = null;
 
     [SerializeField] private GameObject resultPanel = null;
     [SerializeField]private Button resultButton = null;
@@ -30,9 +31,9 @@ public class EventManager : MonoBehaviour
         {
             gamePanel = canvas.transform.Find("GamePanel").gameObject;
 
-            if (gamePanel.transform.Find("MenuButton") == null)
+            if (gamePanel.transform.Find("GameMenuButton") != null)
             {
-                menuButton = gamePanel.transform.Find("MenuButton").GetComponent<Button>();
+                gameMenuButton = gamePanel.transform.Find("GameMenuButton").GetComponent<Button>();
             }
         }
 
@@ -41,9 +42,9 @@ public class EventManager : MonoBehaviour
         {
             menuPanel = canvas.transform.Find("MenuPanel").gameObject;
 
-            if (menuPanel.transform.Find("CloseButton") != null)
+            if (menuPanel.transform.Find("MenuButton") != null)
             {
-                closeButton = menuPanel.transform.Find("CloseButton").GetComponent<Button>();
+                menuButton = menuPanel.transform.Find("MenuButton").GetComponent<Button>();
             }
         }
 
@@ -81,9 +82,9 @@ public class EventManager : MonoBehaviour
         menuActive = menuPanel.activeSelf;
 
         //  メニューの表示/非表示
-        if (false)
+        if (Keyboard.current.uKey.wasPressedThisFrame)
         {
-            //MenuSwicth();
+            MenuSwicth();
         }
     }
 
@@ -107,13 +108,19 @@ public class EventManager : MonoBehaviour
             if (menuActive != true)
             {
                 menuPanel.gameObject.SetActive(true);
-                menuButton.gameObject.SetActive(false);
+                gameMenuButton.gameObject.SetActive(false);
             }
             else
             {
                 menuPanel.gameObject.SetActive(false);
-                menuButton.gameObject.SetActive(true);
+                gameMenuButton.gameObject.SetActive(true);
             }
         }  
+    }
+
+    //  外部からメニューon/offの検出
+    public bool GetMenuActive()
+    {
+        return menuActive;
     }
 }
