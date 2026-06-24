@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,9 @@ public class PlayerAttack : MonoBehaviour
 
     private PlayerStatus status;
     private PlayerMove move;
+
+
+
 
     private bool attackInput;   // 攻撃入力状態か
     private bool isAttacking;   // 攻撃中か
@@ -31,7 +35,7 @@ public class PlayerAttack : MonoBehaviour
     void Start()
     {
         move = GetComponent<PlayerMove>();
-        status = GetComponent<PlayerStatus>();  
+        status = GetComponent<PlayerStatus>();
         animator = GetComponent<Animator>();
 
         // 剣のコンポーネントを取得
@@ -48,10 +52,10 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if(status.IsPlayerDead) return;
+        if (status.IsPlayerDead) return;
 
         if (!move.IsDodging && !move.IsBeingHit
-            && !status.IsPlayerDead && 
+            && !status.IsPlayerDead &&
             Mouse.current.leftButton.wasPressedThisFrame)
         {
             attackInput = true;
@@ -84,7 +88,7 @@ public class PlayerAttack : MonoBehaviour
             }
 
             // コンボ攻撃
-            else if (isAttacking && comboCount < maxCombo && attackTimer <= 0.4f) 
+            else if (isAttacking && comboCount < maxCombo && attackTimer <= 0.4f)
             {
                 isComboQueued = true;
             }
@@ -93,18 +97,18 @@ public class PlayerAttack : MonoBehaviour
 
         }
 
-        
+
         if (!isAttacking) return;
 
         // コンボ受付時間
         attackTimer -= Time.deltaTime;
 
         // 攻撃終了
-        if(attackTimer < 0f)
+        if (attackTimer < 0f)
         {
             EndAttack();
         }
-        
+
     }
 
     void StartAttack()
@@ -132,7 +136,7 @@ public class PlayerAttack : MonoBehaviour
 
     void EndAttack()
     {
-        if (isComboQueued && comboCount < maxCombo )
+        if (isComboQueued && comboCount < maxCombo)
         {
             comboCount++;
 
@@ -162,7 +166,7 @@ public class PlayerAttack : MonoBehaviour
         attackTimer = 0f;
         currentAttack = attackCT;
 
-        if (swordCollider != null) 
+        if (swordCollider != null)
             swordCollider.enabled = false;
     }
 
@@ -170,6 +174,7 @@ public class PlayerAttack : MonoBehaviour
     public void OnSwordHit(Collider other)
     {
         if (other == null) return;
+
 
         int id = other.gameObject.GetInstanceID();
         if (hitTargets.Contains(id)) return; // 既にヒット済み
@@ -209,8 +214,14 @@ public class PlayerAttack : MonoBehaviour
         int dmg = Mathf.Max(0, Mathf.FloorToInt(attackPower - defense));
         return dmg;
     }
-}
 
+
+    private int SkillDamage(int amount)
+    {
+
+        return 0;
+    }
+}
 // ダメージ計算
 // ダメージ = 攻撃力 - 防御力
 /*
@@ -224,3 +235,4 @@ public class PlayerAttack : MonoBehaviour
  *  バフなしは　1.0　を掛ける
  */
 
+//////////////////////////////スキルダメージと通常ダメージの計算分け
