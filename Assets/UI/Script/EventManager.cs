@@ -122,7 +122,7 @@ public class EventManager : MonoBehaviour
     }
 
     //  外部からメニューon/offの検出
-    public bool GetMenuActive()
+    public bool GetPanelActive()
     {
         return menuActive;
     }

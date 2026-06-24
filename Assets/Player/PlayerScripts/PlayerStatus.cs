@@ -89,7 +89,7 @@ public class PlayerStatus : MonoBehaviour
         var brain = Camera.main.GetComponent<CinemachineBrain>();
 
         //  メニューがない時だけAltキーでマウス呼出し
-        if (_event.GetMenuActive() == false)
+        if (_event.GetPanelActive() == false)
         {
             //  Altキーでマウス呼び出し
             if (Keyboard.current.altKey.isPressed)
