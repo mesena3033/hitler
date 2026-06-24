@@ -63,10 +63,6 @@ public class PlayerStatus : MonoBehaviour
         currentHP = maxHP;
         move = GetComponent<PlayerMove>();
 
-        //  マウス非表示 + 中央固定
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         //  EventManagerから引っ張れる
         _event = FindAnyObjectByType<EventManager>();
     }
@@ -88,12 +84,13 @@ public class PlayerStatus : MonoBehaviour
         //カメラ制御用
         var brain = Camera.main.GetComponent<CinemachineBrain>();
 
-        //  メニューがない時だけAltキーでマウス呼出し
-        if (_event.GetMenuActive() == false)
+        //  ゲーム以外のパネルがない時だけAltキーでマウス呼出し
+        if (_event.CheckPanelActive() == false)
         {
             //  Altキーでマウス呼び出し
             if (Keyboard.current.altKey.isPressed)
             {
+                //  マウス表示
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Confined;
 
@@ -103,6 +100,7 @@ public class PlayerStatus : MonoBehaviour
                 return;
             }
 
+            //  マウス非表示 + 中央固定
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
 
