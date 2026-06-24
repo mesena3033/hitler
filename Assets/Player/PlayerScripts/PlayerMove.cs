@@ -79,7 +79,7 @@ public class PlayerMove : MonoBehaviour
                 hitDisableTimer -= Time.deltaTime;
                 if (hitDisableTimer <= 0f)
                 {
-                    Debug.Log("Hit End");
+                    //Debug.Log("Hit End");
                     isBeingHit = false;
                     hitDisableTimer = 0f;
                 }

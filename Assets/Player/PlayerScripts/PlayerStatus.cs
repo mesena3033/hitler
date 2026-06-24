@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Unity.Cinemachine;
 using UnityEditor;
@@ -47,7 +48,7 @@ public class PlayerStatus : MonoBehaviour
 
     //  マウス制御関数
     //  メニュー監視
-    EventManager ivent = null;
+    EventManager _event = null;
 
     private void Start()
     {
@@ -59,12 +60,12 @@ public class PlayerStatus : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         //  EventManagerから引っ張れる
-        ivent = FindAnyObjectByType<EventManager>();
+        _event = FindAnyObjectByType<EventManager>();
     }
 
     private void Update()
     {
-        Debug.Log(currentHP);
+        //Debug.Log(currentHP);
         // 無敵タイマーの処理
         if (isInvincible)
         {
@@ -80,7 +81,7 @@ public class PlayerStatus : MonoBehaviour
         var brain = Camera.main.GetComponent<CinemachineBrain>();
 
         //  メニューがない時だけAltキーでマウス呼出し
-        if (ivent.GetMenuActive() == false)
+        if (_event.GetMenuActive() == false)
         {
             //  Altキーでマウス呼び出し
             if (Keyboard.current.altKey.isPressed)
@@ -111,7 +112,7 @@ public class PlayerStatus : MonoBehaviour
     }
 
     // ダメージ処理
-    public void ApplyDamage(int damage)
+    public async Task ApplyDamage(int damage)
     {
         //Debug.Log("Damage");
         // 無敵中はダメージを受けない
@@ -129,12 +130,12 @@ public class PlayerStatus : MonoBehaviour
             var deadMover = GetComponent<PlayerMove>();
             if (deadMover != null)
             {
-                deadMover.SetBeingHit(1.2f); 
+                deadMover.SetBeingHit(1.2f);
             }
 
-            //  ここに作ってねよろ
-            ivent.PlayerDespawn();
-
+            //  ここに作ってねよろ--------------------------------
+            await Task.Delay(3000); // 3秒待機
+            _event.PlayerDespawn();
             return;
         }
 
@@ -162,7 +163,6 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    
 
     /// <summary>
     /// ////////////////////////実装前に消す/////////////////////////////////////
