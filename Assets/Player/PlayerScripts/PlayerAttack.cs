@@ -186,7 +186,7 @@ public class PlayerAttack : MonoBehaviour
         var targetStatus = other.GetComponent<PlayerStatus>();
         if (targetStatus != null) targetDefense = targetStatus.DefensePower;
 
-        int dmg = CalculateDamage(targetDefense);
+        int dmg = CalculateDamage(targetDefense, true);
         damageable.ApplyDamage(dmg);
 
         // デバッグ出力: プレイヤーHP, 敵HP, プレイヤー攻撃力, 敵防御力
@@ -214,19 +214,35 @@ public class PlayerAttack : MonoBehaviour
 
 
     // ダメージ計算
-    private int CalculateDamage(float targetDefense)
+    private int CalculateDamage(float targetDefense, bool isSkill, int skillPower = 0)
     {
         var status = GetComponent<PlayerStatus>();
         if (status == null) return 0;
+        float attackPower = 0f;
+        int dmg = 0;
 
-        float attackPower = status.AttackPower * status.BuffMuktiPlier; // 基礎攻撃力 * バフ
-        float defense = targetDefense;
+        
 
-        int dmg = Mathf.Max(0, Mathf.FloorToInt(attackPower - defense));
+        // 通常攻撃
+        if (!isSkill)
+        {
+            attackPower = status.AttackPower * status.BuffMuktiPlier; // 基礎攻撃力 * バフ
+
+        }
+
+        // スキルの場合
+        else
+        {
+            attackPower = skillPower;
+        }
+
+        dmg = Mathf.Max(0, Mathf.FloorToInt(attackPower - targetDefense));
         return dmg;
     }
 
 }
+
+
 // ダメージ計算
 // ダメージ = 攻撃力 - 防御力
 /*
