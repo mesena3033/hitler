@@ -47,7 +47,7 @@ public class PlayerStatus : MonoBehaviour
 
     //  マウス制御関数
     //  メニュー監視
-    EventManager menu = null;
+    EventManager ivent = null;
 
     private void Start()
     {
@@ -59,7 +59,7 @@ public class PlayerStatus : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         //  EventManagerから引っ張れる
-        menu = FindAnyObjectByType<EventManager>();
+        ivent = FindAnyObjectByType<EventManager>();
     }
 
     private void Update()
@@ -76,22 +76,11 @@ public class PlayerStatus : MonoBehaviour
             }
         }
 
-        // プレイヤーが死んだら
-        if (currentHP <= 0)
-        {
-            // 死亡処理を呼び出す
-            var respawn = GetComponent<PlayerRespawn>();
-            if (respawn != null)
-            {
-                respawn.PlayerDied();
-            }
-        }
-
         //カメラ制御用
         var brain = Camera.main.GetComponent<CinemachineBrain>();
 
         //  メニューがない時だけAltキーでマウス呼出し
-        if (menu.GetMenuActive() == false)
+        if (ivent.GetMenuActive() == false)
         {
             //  Altキーでマウス呼び出し
             if (Keyboard.current.altKey.isPressed)
@@ -142,6 +131,10 @@ public class PlayerStatus : MonoBehaviour
             {
                 deadMover.SetBeingHit(1.2f); 
             }
+
+            //  ここに作ってねよろ
+            ivent.PlayerDespawn();
+
             return;
         }
 
