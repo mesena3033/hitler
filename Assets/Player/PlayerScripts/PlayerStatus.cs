@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
+using Unity.Cinemachine;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerStatus : MonoBehaviour
 {
@@ -85,6 +87,9 @@ public class PlayerStatus : MonoBehaviour
             }
         }
 
+        //カメラ制御用
+        var brain = Camera.main.GetComponent<CinemachineBrain>();
+
         //  メニューがない時だけAltキーでマウス呼出し
         if (menu.GetMenuActive() == false)
         {
@@ -95,17 +100,22 @@ public class PlayerStatus : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
 
                 //  呼出し中カメラ動かさない
+                brain.enabled = false; // 停止
+
+                return;
             }
-            else
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-            }
+
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+
+            brain.enabled = true;  // 再開
         }
         else
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
+
+            brain.enabled = false; // 停止
         }
 
             CheatingHeal();
