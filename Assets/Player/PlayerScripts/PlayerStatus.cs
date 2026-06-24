@@ -1,7 +1,8 @@
-using NUnit.Framework;
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerStatus : MonoBehaviour
@@ -42,14 +43,24 @@ public class PlayerStatus : MonoBehaviour
     private float defensePower = 5f;
     public float DefensePower => defensePower;
 
-    void Start()
+    //  マウス制御関数
+    //  メニュー監視
+    EventManager menu = null;
+
+    private void Start()
     {
         currentHP = maxHP;
         move = GetComponent<PlayerMove>();
+
+        //  マウス非表示 + 中央固定
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        //  EventManagerから引っ張れる
+        menu = FindAnyObjectByType<EventManager>();
     }
 
-    void Update()
+    private void Update()
     {
         Debug.Log(currentHP);
         // 無敵タイマーの処理
@@ -74,7 +85,30 @@ public class PlayerStatus : MonoBehaviour
             }
         }
 
-        CheatingHeal();
+        //  メニューがない時だけAltキーでマウス呼出し
+        if (menu.GetMenuActive() == false)
+        {
+            //  Altキーでマウス呼び出し
+            if (Keyboard.current.altKey.isPressed)
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
+
+                //  呼出し中カメラ動かさない
+            }
+            else
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+
+            CheatingHeal();
     }
 
     // ダメージ処理

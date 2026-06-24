@@ -48,6 +48,9 @@ public class PlayerMove : MonoBehaviour
     private float dodgePendingTimer = 0f;
     private float dodgeCooldownTimer = 0f;
 
+    //  時間管理用
+    private float dt = 0.0f;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -127,7 +130,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (attack.IsAttacking || isBeingHit) return;
 
-        float dt = Time.fixedDeltaTime;
+        dt = Time.fixedDeltaTime;
 
         // 回避開始待ちの処理: アニメーションが始まってから移動を開始するための遅延
         if (isDodgePending)
@@ -254,7 +257,6 @@ public class PlayerMove : MonoBehaviour
     void MovePlayer()
     {
         if (moveInput == Vector3.zero) return;
-        float dt = Time.fixedDeltaTime;
 
         rb.MovePosition(rb.position + moveInput * speed * dt);
 
