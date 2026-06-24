@@ -65,15 +65,6 @@ public class PlayerMove : MonoBehaviour
     // 入力処理
     void Update()
     {
-        // 回避中判定
-        if(isDodging)
-        {
-            Debug.Log("muteki");
-        }
-        else
-        {
-            Debug.Log("NOooooooooooooooo");
-        }
         var kb = Keyboard.current;
 
         if (kb == null) return;
