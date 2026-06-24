@@ -10,7 +10,8 @@ public class EventManager : MonoBehaviour
     [SerializeField] private Canvas canvas;
 
     //  スクリプトでアタッチ
-    [Header("アタッチ確認")]
+    [Header("アタッチ不要")]
+    //  各パネル、UIアタッチ用
     [SerializeField]private GameObject gamePanel = null;
     [SerializeField] private Button gameMenuButton = null;
 
@@ -21,8 +22,6 @@ public class EventManager : MonoBehaviour
     [SerializeField]private Button resultButton = null;
 
     private string sceneName = null;
-
-    //  パネル状態の確認
     private bool menuActive = false;
 
     private void Awake()
@@ -122,29 +121,15 @@ public class EventManager : MonoBehaviour
         }  
     }
 
+    //  外部からメニューon/offの検出
+    public bool GetMenuActive()
+    {
+        return menuActive;
+    }
+
     //  プレイヤーが死んだらresultの表示
     public void PlayerDespawn()
     {
         resultPanel.gameObject.SetActive(true);
-    }
-
-    //  任意のパネルがあるか確認
-    public bool CheckPanelActive()
-    {
-        foreach (Transform child in canvas.transform)
-        {
-            if (child.gameObject == gamePanel)
-                continue;
-
-            if ((child.gameObject.tag != "Panel"))
-                continue;
-
-            if (child.gameObject.activeSelf)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

@@ -7,7 +7,6 @@ TagManager:
   - Enemy
   - OnlyEvent
   - OnlyCanvas
-  - Panel
   layers:
   - Default
   - TransparentFX
