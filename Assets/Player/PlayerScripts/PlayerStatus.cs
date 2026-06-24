@@ -20,7 +20,7 @@ public class PlayerStatus : MonoBehaviour
 
     private bool isPlayerDead = false;
     public bool IsPlayerDead => isPlayerDead;
-
+    
     // 無敵（被弾無効）
     private bool isInvincible = false;
     // 被弾判定
@@ -37,7 +37,16 @@ public class PlayerStatus : MonoBehaviour
 
     // 攻撃力
     private float baseAttackPower = 10f;
+
+    private float skillPower = 0f;
     private float buffMultiplier = 1f; // バフ倍率（デフォルト1）
+
+    public float BuffMuktiPlier
+    {
+        get {return buffMultiplier;}
+        set { buffMultiplier = value; }
+    }
+
     public float BaseAttackPower => baseAttackPower;
     public float BuffMultiplier => buffMultiplier;
     public float AttackPower => baseAttackPower * Mathf.Max(0.0001f, buffMultiplier);
