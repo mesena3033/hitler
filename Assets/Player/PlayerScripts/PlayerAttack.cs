@@ -16,9 +16,6 @@ public class PlayerAttack : MonoBehaviour
     private PlayerStatus status;
     private PlayerMove move;
 
-
-
-
     private bool attackInput;   // 攻撃入力状態か
     private bool isAttacking;   // 攻撃中か
     private bool isComboQueued;   // コンボ受付時間か
@@ -202,25 +199,33 @@ public class PlayerAttack : MonoBehaviour
         Debug.Log($"PlayerHP={playerHP} EnemyHP={enemyHP} PlayerATK={playerAtk} EnemyDEF={targetDefense} Damage={dmg}");
     }
 
+
+    // 攻撃系スキルメソッド
+    public int SkillDamage(int amount)
+    {
+        return amount;
+    }
+
+    // バフ系スキルメソッド
+    public float GetSkillDamage(float amount)
+    {
+        return amount;
+    }
+
+
     // ダメージ計算
     private int CalculateDamage(float targetDefense)
     {
         var status = GetComponent<PlayerStatus>();
         if (status == null) return 0;
 
-        float attackPower = status.AttackPower; // 基礎攻撃力 * バフ
+        float attackPower = status.AttackPower * status.BuffMuktiPlier; // 基礎攻撃力 * バフ
         float defense = targetDefense;
 
         int dmg = Mathf.Max(0, Mathf.FloorToInt(attackPower - defense));
         return dmg;
     }
 
-
-    private int SkillDamage(int amount)
-    {
-
-        return 0;
-    }
 }
 // ダメージ計算
 // ダメージ = 攻撃力 - 防御力
