@@ -43,12 +43,11 @@ public class PlayerStatus : MonoBehaviour
 
     public float BuffMuktiPlier
     {
-        get {return buffMultiplier;}
+        get { return buffMultiplier; }
         set { buffMultiplier = value; }
     }
 
     public float BaseAttackPower => baseAttackPower;
-    public float BuffMultiplier => buffMultiplier;
     public float AttackPower => baseAttackPower * Mathf.Max(0.0001f, buffMultiplier);
     
     // 防御力
