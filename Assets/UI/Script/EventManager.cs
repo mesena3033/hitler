@@ -124,7 +124,20 @@ public class EventManager : MonoBehaviour
     //  外部からメニューon/offの検出
     public bool GetPanelActive()
     {
-        return menuActive;
+        foreach (Transform child in canvas.transform)
+        {
+            // GamePanel は除外
+            if (child.gameObject == gamePanel)
+                continue;
+
+            if (child.gameObject.tag != "Panel")
+                continue;
+
+            // アクティブなら true
+            if (child.gameObject.activeSelf)
+                return true;
+        }
+        return false;
     }
 
     //  プレイヤーが死んだらresultの表示
