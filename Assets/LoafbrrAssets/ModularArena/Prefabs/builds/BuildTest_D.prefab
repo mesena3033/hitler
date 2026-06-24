@@ -61,10 +61,11 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 29d80d85ca8e34442883f6aea9baaf04, type: 2}
+  - {fileID: 2100000, guid: 174f1504797833042bbf5fe9c2a710b6, type: 2}
   - {fileID: 2100000, guid: 2d136d308e4a3cc4d9359fb6398bcd23, type: 2}
   - {fileID: 2100000, guid: f48b7f9d4ce9f8d4584a8c04a7327488, type: 2}
   m_StaticBatchInfo:

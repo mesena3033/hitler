@@ -124,6 +124,9 @@ public class PlayerStatus : MonoBehaviour
             ApplyDamage(dmg);
         }
     }
+
+    
+
     /// <summary>
     /// ////////////////////////実装前に消す/////////////////////////////////////
     /// </summary>
