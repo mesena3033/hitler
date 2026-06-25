@@ -186,7 +186,7 @@ public class PlayerAttack : MonoBehaviour
         var targetStatus = other.GetComponent<PlayerStatus>();
         if (targetStatus != null) targetDefense = targetStatus.DefensePower;
 
-        int dmg = CalculateDamage(targetDefense, true);
+        int dmg = CalculateDamage(targetDefense, false);
         damageable.ApplyDamage(dmg);
 
         // デバッグ出力: プレイヤーHP, 敵HP, プレイヤー攻撃力, 敵防御力
@@ -196,7 +196,7 @@ public class PlayerAttack : MonoBehaviour
         int enemyHP = -1;
         if (targetStatus != null) enemyHP = targetStatus.CurrentHP;
 
-        Debug.Log($"PlayerHP={playerHP} EnemyHP={enemyHP} PlayerATK={playerAtk} EnemyDEF={targetDefense} Damage={dmg}");
+        //Debug.Log($"PlayerHP={playerHP} EnemyHP={enemyHP} PlayerATK={playerAtk} EnemyDEF={targetDefense} Damage={dmg}");
     }
 
 
@@ -239,6 +239,8 @@ public class PlayerAttack : MonoBehaviour
         dmg = Mathf.Max(0, Mathf.FloorToInt(attackPower - targetDefense));
         return dmg;
     }
+
+
 
 }
 
