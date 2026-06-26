@@ -7,13 +7,12 @@ using UnityEngine.InputSystem;
 public class PlayerMove : MonoBehaviour
 {
     [Header("移動")]
-    private float speed = 12f;
+    private float speed = 10f;   // 10を超えると貫通する
     private float rotateSpeed = 800f;
 
     private Rigidbody rb;
     private PlayerAttack attack;
     private PlayerAnimation playerAnimation;
-    private Animator animator;
     private PlayerStatus status;
 
     // 入力保持
@@ -53,7 +52,6 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
-        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         attack = GetComponent<PlayerAttack>();
         playerAnimation = GetComponent<PlayerAnimation>();
