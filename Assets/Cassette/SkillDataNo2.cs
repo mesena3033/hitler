@@ -1,8 +1,17 @@
 using UnityEngine;
+public enum SkillType
+{
+    Attack,
+    Buff,
+    Support
+}
 
 [System.Serializable]
 public class SkillDataNo2
 {
+    [Header("属性")]
+    public SkillType type;
+
     [Header("Animator Controller")]
     public RuntimeAnimatorController animatorController;
 
@@ -21,4 +30,8 @@ public class SkillDataNo2
 
     [Header("クールタイム")]
     public float cooldown = 1f;
+
+    public int damage;        // Attack 用
+    public float buffValue;   // Buff 用
+    public float healValue;   // Support 用
 }
