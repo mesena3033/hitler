@@ -196,7 +196,7 @@ public class PlayerAttack : MonoBehaviour
         int enemyHP = -1;
         if (targetStatus != null) enemyHP = targetStatus.CurrentHP;
 
-        //Debug.Log($"PlayerHP={playerHP} EnemyHP={enemyHP} PlayerATK={playerAtk} EnemyDEF={targetDefense} Damage={dmg}");
+        // Debug.Log($"PlayerHP={playerHP} EnemyHP={enemyHP} PlayerATK={playerAtk} EnemyDEF={targetDefense} Damage={dmg}");
     }
 
 
