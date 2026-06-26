@@ -43,6 +43,7 @@ public class NEWSkillMane : MonoBehaviour
     {
         skillDict.Clear();
 
+        // スキルリストを辞書に変換
         for (int i = 0; i < skillList.Count; i++)
         {
             var s = skillList[i];
@@ -52,11 +53,14 @@ public class NEWSkillMane : MonoBehaviour
         }
     }
 
+    // スキルを使用するメソッド
     public bool UseSkill(int id)
     {
+        // スキルが存在するか確認
         if (!skillDict.TryGetValue(id, out var data))
             return false;
 
+        // スキルのクールダウンがあるか確認
         if (cooldowns.TryGetValue(id, out float end))
         {
             if (Time.time < end)
@@ -65,7 +69,21 @@ public class NEWSkillMane : MonoBehaviour
 
         cooldowns[id] = Time.time + data.cooldown;
 
-        Execute(data);
+        // スキルの分類に応じて処理を分岐
+        switch (data.type)
+        {
+            case SkillType.Attack:
+                ExecuteAttack(data);
+                break;
+
+            case SkillType.Buff:
+                ExecuteBuff(data);
+                break;
+
+            case SkillType.Support:
+                ExecuteSupport(data);
+                break;
+        }
 
         return true;
     }
@@ -112,5 +130,29 @@ public class NEWSkillMane : MonoBehaviour
         {
             animator.runtimeAnimatorController = playerAnimation.mainController;
         }
+    }
+
+    private void ExecuteAttack(SkillDataNo2 data)
+    {
+        Execute(data);
+        PlayerAttack playerAttack = GetComponent<PlayerAttack>();
+        if (playerAttack != null)
+        {
+            playerAttack.SkillDamage(data.damage);
+        }
+    }
+    private void ExecuteBuff(SkillDataNo2 data)
+    {
+        Execute(data);
+        PlayerAttack playerAttack = GetComponent<PlayerAttack>();
+        if (playerAttack != null)
+        {
+            playerAttack.GetSkillDamage(data.buffValue);
+        }
+    }
+    private void ExecuteSupport(SkillDataNo2 data)
+    {
+        Execute(data);
+       
     }
 }
