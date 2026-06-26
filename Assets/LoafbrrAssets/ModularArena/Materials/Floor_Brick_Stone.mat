@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Floor_Brick_Stone
-  m_Shader: {fileID: -6465566751694194690, guid: 3c128416ae485854d857ecd328e8e200, type: 3}
+  m_Shader: {fileID: 4800000, guid: 0ca6dca7396eb48e5849247ffd444914, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -18,7 +18,7 @@ Material:
   m_LightmapFlags: 6
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2450
   stringTagMap:
     RenderType: TransparentCutout
   disabledShaderPasses:
@@ -28,6 +28,14 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: db15c4b57d454724ea706439ff7c1a45, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -66,13 +74,16 @@ Material:
     m_Ints: []
     m_Floats:
     - _AO_Strength: 0.25
+    - _AddPrecomputedVelocity: 0
     - _AlphaClip: 1
     - _AlphaClipping: 0.9
     - _AlphaToMask: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
+    - _BlendOp: 0
     - _CastShadows: 1
     - _Cull: 2
+    - _Cutoff: 0.5
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _Metallic: 0
@@ -89,7 +100,8 @@ Material:
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.030129153, g: 0.10943389, b: 0.017137751, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _NoiseColor: {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 0}
     - _UV_Tiling: {r: 1, g: 1, b: 0, a: 0}
