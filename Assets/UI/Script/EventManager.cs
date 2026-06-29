@@ -10,8 +10,8 @@ public class EventManager : MonoBehaviour
     [SerializeField] private Canvas canvas;
 
     //  スクリプトでアタッチ
-    [Header("アタッチ不要")]
     [Header("以下アタッチ確認用")]
+    [Header("アタッチ不要")]
     //  各パネル、UIアタッチ用
     private GameObject gamePanel = null;
     private Button gameMenuButton = null;
@@ -20,6 +20,8 @@ public class EventManager : MonoBehaviour
     private Button menuButton = null;
 
     private GameObject resultPanel = null;
+    [SerializeField] private Button nextButton = null;
+    [SerializeField]private Button titleBackButton = null;
     private Button resultButton = null;
 
     //  判定用関数
@@ -58,6 +60,16 @@ public class EventManager : MonoBehaviour
         {
             resultPanel = canvas.transform.Find("ResultPanel").gameObject;
 
+            if (resultPanel.transform.Find("NextButton") != null)
+            {
+                resultButton = resultPanel.transform.Find("NextButton").GetComponent<Button>();
+                resultButton.onClick.AddListener(RestartButton);
+            }
+            if (resultPanel.transform.Find("TitleBackButton") != null)
+            {
+                resultButton = resultPanel.transform.Find("TitleBackButton").GetComponent<Button>();
+                resultButton.onClick.AddListener(RestartButton);
+            }
             if (resultPanel.transform.Find("RestartButton") != null)
             {
                 resultButton = resultPanel.transform.Find("RestartButton").GetComponent<Button>();
@@ -79,7 +91,11 @@ public class EventManager : MonoBehaviour
         menuActive = menuPanel.activeSelf;
 
         //  メニューの表示/非表示
+#if UNITY_EDITOR
         if (Keyboard.current.uKey.wasPressedThisFrame)
+#else
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+#endif
         {
             MenuSwicth();
         }
@@ -89,6 +105,10 @@ public class EventManager : MonoBehaviour
     {
         //  現在のシーンのリロード
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void NextButton()
+    {
     }
 
     //  メニューの表示/非表示(UIボタン、Escape(予定)から)
