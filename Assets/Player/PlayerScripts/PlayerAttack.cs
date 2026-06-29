@@ -26,6 +26,9 @@ public class PlayerAttack : MonoBehaviour
     private float attackCT = 0.5f;
     private float currentAttack = 0f;
 
+    // プレイヤー動作可能状態
+    private bool canNotMove;
+
     // プロパティ
     public bool IsAttacking => isAttacking;
 
@@ -50,6 +53,9 @@ public class PlayerAttack : MonoBehaviour
     void Update()
     {
         if (status.IsPlayerDead) return;
+
+        canNotMove = Cursor.visible;
+        if (canNotMove) return;
 
         if (!move.IsDodging && !move.IsBeingHit
             && !status.IsPlayerDead &&
