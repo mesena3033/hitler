@@ -10,8 +10,6 @@ public class EventManager : MonoBehaviour
     [SerializeField] private Canvas canvas;
 
     //  スクリプトでアタッチ
-    [Header("以下アタッチ確認用")]
-    [Header("アタッチ不要")]
     //  各パネル、UIアタッチ用
     private GameObject gamePanel = null;
     private Button gameMenuButton = null;
@@ -20,9 +18,9 @@ public class EventManager : MonoBehaviour
     private Button menuButton = null;
 
     private GameObject resultPanel = null;
-    [SerializeField] private Button nextButton = null;
-    [SerializeField]private Button titleBackButton = null;
+    private Button nextButton = null;
     private Button resultButton = null;
+    private Button titleBackButton = null;
 
     //  判定用関数
     private string sceneName = null;
@@ -62,18 +60,17 @@ public class EventManager : MonoBehaviour
 
             if (resultPanel.transform.Find("NextButton") != null)
             {
-                resultButton = resultPanel.transform.Find("NextButton").GetComponent<Button>();
-                resultButton.onClick.AddListener(RestartButton);
-            }
-            if (resultPanel.transform.Find("TitleBackButton") != null)
-            {
-                resultButton = resultPanel.transform.Find("TitleBackButton").GetComponent<Button>();
-                resultButton.onClick.AddListener(RestartButton);
+                nextButton = resultPanel.transform.Find("NextButton").GetComponent<Button>();
             }
             if (resultPanel.transform.Find("RestartButton") != null)
             {
                 resultButton = resultPanel.transform.Find("RestartButton").GetComponent<Button>();
                 resultButton.onClick.AddListener(RestartButton);
+            }
+            if (resultPanel.transform.Find("TitleBackButton") != null)
+            {
+                titleBackButton = resultPanel.transform.Find("TitleBackButton").GetComponent<Button>();
+                titleBackButton.onClick.AddListener(TitleBackButton);
             }
         }
 
@@ -109,6 +106,11 @@ public class EventManager : MonoBehaviour
 
     public void NextButton()
     {
+    }
+
+    public void TitleBackButton()
+    {
+        SceneManager.LoadScene("TitleScene");
     }
 
     //  メニューの表示/非表示(UIボタン、Escape(予定)から)
