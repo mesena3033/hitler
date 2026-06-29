@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 
+// スキルの管理と実行、スキルの仕訳を行うクラス
 public class NEWSkillMane : MonoBehaviour
 {
     [SerializeField]
@@ -16,6 +17,8 @@ public class NEWSkillMane : MonoBehaviour
 
     private Dictionary<int, float> cooldowns =
         new Dictionary<int, float>();
+
+    public int skillID;
 
     public float AnimatorChangeTime = 0.1f;
 
@@ -33,11 +36,6 @@ public class NEWSkillMane : MonoBehaviour
         Rebuild();
     }
 #endif
-
-    private void Start()
-    {
-        int skillID = skillList.Count;
-    }
 
     private void Rebuild()
     {

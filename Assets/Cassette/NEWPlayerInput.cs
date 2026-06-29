@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// スキル発動のためのキーボード入力を監視するスクリプト
 public class NewMonoBehaviourScript : MonoBehaviour
 {
     [SerializeField]
