@@ -15,6 +15,8 @@ public class PlayerMove : MonoBehaviour
     private PlayerAnimation playerAnimation;
     private PlayerStatus status;
 
+    
+
     // 入力保持
     private Vector3 moveInput;
     // 入力プロパティ
@@ -32,12 +34,17 @@ public class PlayerMove : MonoBehaviour
 
     public bool IsDodging => isDodging;
 
+    // プレイヤー動作可能状態
+    private bool canNotMove;
+
     // 回避
     [Header("回避")]
-    private float dodgeDistance = 15f;
-    private float dodgeDuration = 1.2f;
+    private float dodgeDistance = 10f;  // 10より大きくすると貫通する
+    private float dodgeDuration = 1.1f;   // 予備動作の猶予時間
     private float dodgeCooldown = 1f; // 回避のクールタイム（秒）
-   
+    private float dodgeMoveTime;
+    private float dodgeMoveTimer = .7f;
+    private float dodgeAnimationTime;
 
     private bool isDodging = false;
     private bool isDodgePending = false;
@@ -63,6 +70,9 @@ public class PlayerMove : MonoBehaviour
     // 入力処理
     void Update()
     {
+        canNotMove = Cursor.visible;
+        if (canNotMove) return;
+
         var kb = Keyboard.current;
 
         if (kb == null) return;
@@ -144,12 +154,15 @@ public class PlayerMove : MonoBehaviour
 
         if (isDodging)
         {
-            
-            // 回避移動（横移動＋少し沈めて空中で回らないようにする）
-            Vector3 next = rb.position + dodgeDirection * dodgeSpeed * dt;
-            
-            rb.MovePosition(next);
 
+            // 回避移動（横移動＋少し沈めて空中で回らないようにする）
+            if (dodgeMoveTimer > 0f)
+            {
+                dodgeMoveTimer -= dt;
+                Vector3 next = rb.position + dodgeDirection * dodgeSpeed * dt;
+
+                rb.MovePosition(next);
+            }
             // 回避中は常に移動方向を向くように回転を固定する
             Quaternion targetRot = Quaternion.LookRotation(dodgeDirection);
             Quaternion rot = Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
@@ -165,7 +178,6 @@ public class PlayerMove : MonoBehaviour
                 }
                 // 回避終了でクールタイム開始
                 dodgeCooldownTimer = dodgeCooldown;
-                
             }
 
             return;
@@ -177,6 +189,7 @@ public class PlayerMove : MonoBehaviour
     // 移動入力
     void UpdateMoveInput(Keyboard kb)
     {
+        if (canNotMove) return;
         moveInput = Vector3.zero;
 
         Transform camT = Camera.main.transform;
@@ -269,10 +282,12 @@ public class PlayerMove : MonoBehaviour
         {
             dodgeDirection = transform.forward;
         }
-        //animator.SetBool("IsAttacking",false);
+
         isDodging = true;
-        dodgeTimer = dodgeDuration;
-        dodgeSpeed = dodgeDistance / dodgeDuration;
+        dodgeMoveTimer = dodgeMoveTime;
+        dodgeTimer = dodgeAnimationTime;
+
+        dodgeSpeed = dodgeDistance / dodgeMoveTime;
 
         playerAnimation.SetDodge(true);
         
