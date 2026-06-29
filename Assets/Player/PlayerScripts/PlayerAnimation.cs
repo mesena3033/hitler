@@ -11,7 +11,6 @@ public class PlayerAnimation : MonoBehaviour
     public RuntimeAnimatorController mainController;
     bool isMoving;
 
-
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -24,18 +23,22 @@ public class PlayerAnimation : MonoBehaviour
 
     void Update()
     {
+        //move.CanNotMoving();
+
         isMoving = move.MoveInput != Vector3.zero;
 
-        animator.SetBool("IsMoving", isMoving);
-        animator.SetBool("IsIdling", !isMoving && !attack.IsAttacking);
-
+        if (!move.canNotMove)
+        {
+            animator.SetBool("IsMoving", isMoving);
+            animator.SetBool("IsIdling", !isMoving && !attack.IsAttacking);
+        }
         bool isDead = status.IsPlayerDead;
         animator.SetBool("IsDied", status.IsPlayerDead);
     }
 
     public void SetDodge(bool value)
     {
-        
+        move.CanNotMoving();
         //Debug.Log("SetDodge : " + value);
 
         if (animator == null) return;

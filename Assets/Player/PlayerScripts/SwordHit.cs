@@ -15,6 +15,12 @@ public class SwordHit : MonoBehaviour
     {
         if (owner == null) return;
 
+        if (other.CompareTag("Object"))
+        {
+            owner.OnWallHit();
+        }
+
         owner.OnSwordHit(other);
     }
+
 }

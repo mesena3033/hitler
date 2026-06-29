@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -52,6 +53,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        //move.CanNotMoving();
         if (status.IsPlayerDead) return;
 
         canNotMove = Cursor.visible;
@@ -134,6 +136,9 @@ public class PlayerAttack : MonoBehaviour
         // 攻撃時に剣の当たり判定を有効化
         if (swordCollider != null) swordCollider.enabled = true;
 
+        // オブジェクトに当たったら判定を無効化
+        //if()
+
     }
 
 
@@ -205,6 +210,16 @@ public class PlayerAttack : MonoBehaviour
         // Debug.Log($"PlayerHP={playerHP} EnemyHP={enemyHP} PlayerATK={playerAtk} EnemyDEF={targetDefense} Damage={dmg}");
     }
 
+    public void OnWallHit()
+    {
+        if (swordCollider != null)
+        {
+            swordCollider.enabled = false;
+        }
+        
+
+    }
+
 
     // 攻撃系スキルメソッド
     public int SkillDamage(int amount)
@@ -228,7 +243,6 @@ public class PlayerAttack : MonoBehaviour
         int dmg = 0;
 
         
-
         // 通常攻撃
         if (!isSkill)
         {

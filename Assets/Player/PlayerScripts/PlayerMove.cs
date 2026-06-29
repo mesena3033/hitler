@@ -35,7 +35,7 @@ public class PlayerMove : MonoBehaviour
     public bool IsDodging => isDodging;
 
     // プレイヤー動作可能状態
-    private bool canNotMove;
+    public bool canNotMove;
 
     // 回避
     [Header("回避")]
@@ -62,20 +62,19 @@ public class PlayerMove : MonoBehaviour
         status = GetComponent<PlayerStatus>();
         // Rigidbody の補間を有効にして、物理移動とアニメーションのズレを軽減
         if (rb != null) rb.interpolation = RigidbodyInterpolation.Interpolate;
+        
     }
 
     // 入力処理
     void Update()
     {
-        canNotMove = Cursor.visible;
-        if (canNotMove) return;
-
+        //CanNotMoving();
         var kb = Keyboard.current;
 
         if (kb == null) return;
 
         // 攻撃中または被弾中は入力を無効化
-        if (attack.IsAttacking || hitDisableTimer > 0f || status.IsPlayerDead)
+        if (attack.IsAttacking || hitDisableTimer > 0f || status.IsPlayerDead )
         {
             moveInput = Vector3.zero;
             // 被弾無効時間のカウントダウン
@@ -124,6 +123,7 @@ public class PlayerMove : MonoBehaviour
     // 物理処理
     void FixedUpdate()
     {
+        //CanNotMoving();
         if (attack.IsAttacking || isBeingHit) return;
 
         dt = Time.fixedDeltaTime;
@@ -181,6 +181,7 @@ public class PlayerMove : MonoBehaviour
     // 移動入力
     void UpdateMoveInput(Keyboard kb)
     {
+        canNotMove = Cursor.visible;
         if (canNotMove) return;
         moveInput = Vector3.zero;
 
@@ -250,6 +251,8 @@ public class PlayerMove : MonoBehaviour
     // プレイヤー移動
     void MovePlayer()
     {
+        canNotMove = Cursor.visible;
+        if (canNotMove) return;
         if (moveInput == Vector3.zero) return;
 
         rb.MovePosition(rb.position + moveInput * speed * dt);
@@ -281,5 +284,11 @@ public class PlayerMove : MonoBehaviour
 
         playerAnimation.SetDodge(true);
 
+    }
+
+    public void CanNotMoving()
+    {
+        canNotMove = Cursor.visible;
+        if (canNotMove) return;
     }
 }
