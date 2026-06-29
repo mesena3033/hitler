@@ -11,22 +11,20 @@ public class EventManager : MonoBehaviour
 
     //  スクリプトでアタッチ
     [Header("アタッチ不要")]
+    [Header("以下アタッチ確認用")]
     //  各パネル、UIアタッチ用
-    [SerializeField]private GameObject gamePanel = null;
-    [SerializeField] private Button gameMenuButton = null;
+    private GameObject gamePanel = null;
+    private Button gameMenuButton = null;
 
-    [SerializeField]private GameObject menuPanel = null;
-    [SerializeField]private Button menuButton = null;
+    private GameObject menuPanel = null;
+    private Button menuButton = null;
 
-    [SerializeField] private GameObject resultPanel = null;
-    [SerializeField]private Button resultButton = null;
+    private GameObject resultPanel = null;
+    private Button resultButton = null;
 
+    //  判定用関数
     private string sceneName = null;
     private bool menuActive = false;
-
-    private void Awake()
-    {
-    }
 
     private void Start()
     {
@@ -70,14 +68,7 @@ public class EventManager : MonoBehaviour
         //  現在のシーン名取得
         sceneName = SceneManager.GetActiveScene().name;
 
-        //  タイトルでないならgamePanelを展開
-        if (sceneName != "TitleScene")
-        {
-            if (gamePanel != null)
-            {
-                gamePanel.gameObject.SetActive(true);
-            }
-        }
+        gamePanel.gameObject.SetActive(true);
     }
 
     private void Update()
@@ -100,7 +91,7 @@ public class EventManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-    //  メニューの表示/非表示(UIボタンから)
+    //  メニューの表示/非表示(UIボタン、Escape(予定)から)
     public void MenuButton()
     {
         MenuSwicth();
