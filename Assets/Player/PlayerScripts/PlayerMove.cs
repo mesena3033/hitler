@@ -15,7 +15,7 @@ public class PlayerMove : MonoBehaviour
     private PlayerAnimation playerAnimation;
     private PlayerStatus status;
 
-    
+
 
     // 入力保持
     private Vector3 moveInput;
@@ -40,18 +40,15 @@ public class PlayerMove : MonoBehaviour
     // 回避
     [Header("回避")]
     private float dodgeDistance = 10f;  // 10より大きくすると貫通する
-    private float dodgeDuration = 1.1f;   // 予備動作の猶予時間
+    private float dodgeDuration = 1f;   // 回避再生時間
     private float dodgeCooldown = 1f; // 回避のクールタイム（秒）
-    private float dodgeMoveTime;
-    private float dodgeMoveTimer = .7f;
-    private float dodgeAnimationTime;
 
     private bool isDodging = false;
     private bool isDodgePending = false;
     private Vector3 dodgeDirection = Vector3.zero;
     private float dodgeTimer = 0f;
     private float dodgeSpeed = 10f;
-    private float dodgePendingTimer = 0f;
+    private float dodgePendingTimer = 0.4f;
     private float dodgeCooldownTimer = 0f;
 
     //  時間管理用
@@ -103,7 +100,7 @@ public class PlayerMove : MonoBehaviour
             moveInput = Vector3.zero;
             return;
         }
-        
+
         UpdateMoveInput(kb);
 
         // スペースで回避開始
@@ -141,7 +138,7 @@ public class PlayerMove : MonoBehaviour
                 isDodging = true;
                 dodgeTimer = dodgeDuration;
                 dodgeSpeed = dodgeDistance / Mathf.Max(0.0001f, dodgeDuration);
-                // Animator の bool は既に true にしているはず
+
             }
         }
 
@@ -156,13 +153,8 @@ public class PlayerMove : MonoBehaviour
         {
 
             // 回避移動（横移動＋少し沈めて空中で回らないようにする）
-            if (dodgeMoveTimer > 0f)
-            {
-                dodgeMoveTimer -= dt;
-                Vector3 next = rb.position + dodgeDirection * dodgeSpeed * dt;
-
-                rb.MovePosition(next);
-            }
+            Vector3 next = rb.position + dodgeDirection * dodgeSpeed * dt;
+            rb.MovePosition(next);
             // 回避中は常に移動方向を向くように回転を固定する
             Quaternion targetRot = Quaternion.LookRotation(dodgeDirection);
             Quaternion rot = Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * dt);
@@ -274,7 +266,7 @@ public class PlayerMove : MonoBehaviour
     // 回避開始
     void StartDodge()
     {
-        if(moveInput != Vector3.zero)
+        if (moveInput != Vector3.zero)
         {
             dodgeDirection = moveInput.normalized;
         }
@@ -284,13 +276,10 @@ public class PlayerMove : MonoBehaviour
         }
 
         isDodging = true;
-        dodgeMoveTimer = dodgeMoveTime;
-        dodgeTimer = dodgeAnimationTime;
-
-        dodgeSpeed = dodgeDistance / dodgeMoveTime;
+        dodgeTimer = dodgeDuration;
+        dodgeSpeed = dodgeDistance / dodgeDuration;
 
         playerAnimation.SetDodge(true);
-        
-    }
 
+    }
 }
