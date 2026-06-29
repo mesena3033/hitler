@@ -26,6 +26,11 @@ public class EventManager : MonoBehaviour
 
     private void Awake()
     {
+    }
+
+    private void Start()
+    {
+        //  各canvas直下のUIを走査 + アタッチ
         //  game
         if (canvas.transform.Find("GamePanel") != null)
         {
@@ -39,7 +44,7 @@ public class EventManager : MonoBehaviour
         }
 
         //  menu
-        if(canvas.transform.Find("MenuPanel") != null)
+        if (canvas.transform.Find("MenuPanel") != null)
         {
             menuPanel = canvas.transform.Find("MenuPanel").gameObject;
 
@@ -61,13 +66,11 @@ public class EventManager : MonoBehaviour
                 resultButton.onClick.AddListener(RestartButton);
             }
         }
-    }
 
-    private void Start()
-    {
         //  現在のシーン名取得
         sceneName = SceneManager.GetActiveScene().name;
 
+        //  タイトルでないならgamePanelを展開
         if (sceneName != "TitleScene")
         {
             if (gamePanel != null)
