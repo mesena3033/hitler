@@ -31,6 +31,11 @@ public class SkillDataNo2
     [Header("クールタイム")]
     public float cooldown = 1f;
 
+    [Header("スキルの名前&アイコン")]
+    public string skillName;
+    public Sprite Icon;
+
+    [Header("スキルの効果")]
     public int damage;        // Attack 用
     public float buffValue;   // Buff 用
     public float healValue;   // Support 用

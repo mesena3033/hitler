@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+// エフェクト発動を管理するクラス
 public class EffectManager : MonoBehaviour
 {
     [SerializeField]
