@@ -9,8 +9,7 @@ public class EventManager : MonoBehaviour
     [Header("canvasのみアタッチ")]
     [SerializeField] private Canvas canvas;
 
-    //  スクリプトでアタッチ
-    //  各パネル、UIアタッチ用
+    //  スクリプトでアタッチするUI
     private GameObject gamePanel = null;
     private Button gameMenuButton = null;
 
@@ -61,6 +60,7 @@ public class EventManager : MonoBehaviour
             if (resultPanel.transform.Find("NextButton") != null)
             {
                 nextButton = resultPanel.transform.Find("NextButton").GetComponent<Button>();
+                nextButton.onClick.AddListener(NextButton);
             }
             if (resultPanel.transform.Find("RestartButton") != null)
             {
@@ -87,7 +87,7 @@ public class EventManager : MonoBehaviour
         //  メニューの表示判定
         menuActive = menuPanel.activeSelf;
 
-        //  メニューの表示/非表示
+        //  メニューの表示/非表示 //  ビルド時はEscapeで反応
 #if UNITY_EDITOR
         if (Keyboard.current.uKey.wasPressedThisFrame)
 #else
@@ -98,29 +98,37 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public void RestartButton()
+    private void RestartButton()
     {
         //  現在のシーンのリロード
         SceneManager.LoadScene(sceneName);
     }
 
-    public void NextButton()
+    private void NextButton()
     {
+        //  PlayerScene => Stage1
+        if (sceneName == "PlayerScene")
+        {
+            SceneManager.LoadScene("Stage1");
+        }
+        //  Stage1 => ?
+        else if (sceneName == "Stage1")
+        {
+        }
     }
 
-    public void TitleBackButton()
+    private void TitleBackButton()
     {
+        //  タイトルバック
         SceneManager.LoadScene("TitleScene");
     }
 
-    //  メニューの表示/非表示(UIボタン、Escape(予定)から)
-    public void MenuButton()
+    private void MenuButton()    //  メニューの表示/非表示(UIボタン、Escape(ビルド時))
     {
         MenuSwicth();
     }
 
-    //  メニューのON/OFF切り替え
-    public void MenuSwicth()
+    private void MenuSwicth()    //  メニューのON/OFF切り替え
     {
         if (menuPanel != null)
         {
@@ -137,8 +145,7 @@ public class EventManager : MonoBehaviour
         }  
     }
 
-    //  外部からメニューon/offの検出
-    public bool GetPanelActive()
+    public bool GetPanelActive()    //  外部からメニューon/offの検出
     {
         foreach (Transform child in canvas.transform)
         {
@@ -146,6 +153,7 @@ public class EventManager : MonoBehaviour
             if (child.gameObject == gamePanel)
                 continue;
 
+            //  Panelタグに限定
             if (child.gameObject.tag != "Panel")
                 continue;
 
@@ -156,9 +164,9 @@ public class EventManager : MonoBehaviour
         return false;
     }
 
-    //  プレイヤーが死んだらresultの表示
     public void PlayerDespawn()
     {
+        //  プレイヤーが死んだらresultの表示
         resultPanel.gameObject.SetActive(true);
     }
 }
