@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -68,7 +69,14 @@ public class PlayerMove : MonoBehaviour
     // 入力処理
     void Update()
     {
-        //CanNotMoving();
+        if (CanNotMoving())
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
         var kb = Keyboard.current;
 
         if (kb == null) return;
@@ -181,8 +189,8 @@ public class PlayerMove : MonoBehaviour
     // 移動入力
     void UpdateMoveInput(Keyboard kb)
     {
-        canNotMove = Cursor.visible;
-        if (canNotMove) return;
+        if (CanNotMoving()) return;
+
         moveInput = Vector3.zero;
 
         Transform camT = Camera.main.transform;
@@ -269,6 +277,7 @@ public class PlayerMove : MonoBehaviour
     // 回避開始
     void StartDodge()
     {
+        if (CanNotMoving()) return;
         if (moveInput != Vector3.zero)
         {
             dodgeDirection = moveInput.normalized;
@@ -286,9 +295,14 @@ public class PlayerMove : MonoBehaviour
 
     }
 
-    public void CanNotMoving()
+    public bool CanNotMoving()
     {
         canNotMove = Cursor.visible;
-        if (canNotMove) return;
+        if (canNotMove) return canNotMove;
+
+        else
+        {
+            return false;
+        }
     }
 }

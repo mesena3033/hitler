@@ -124,7 +124,7 @@ public class PlayerStatus : MonoBehaviour
     {
         //Debug.Log("Damage");
         // 無敵中はダメージを受けない
-        if (isInvincible) return;
+        if (isInvincible || Cursor.visible) return;
 
         // 回避中はダメージを受けない
         if (move != null && move.IsDodging) return;
@@ -162,12 +162,12 @@ public class PlayerStatus : MonoBehaviour
     // 敵の攻撃力でダメージを受ける（攻撃力 - 防御力）
     public void ReceiveAttack(float enemyAttackPower)
     {
-        if (!isInvincible)
+        if (!isInvincible || move.CanNotMoving())
         {
             float raw = enemyAttackPower;
             int dmg = Mathf.Max(0, Mathf.FloorToInt(raw - defensePower));
             isDamaged = true;
-            ApplyDamage(dmg);
+            Task task = ApplyDamage(dmg);
         }
     }
 
