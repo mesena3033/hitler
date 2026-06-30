@@ -93,7 +93,7 @@ public class PlayerAttack : MonoBehaviour
             }
 
             // コンボ攻撃
-            else if (isAttacking && comboCount < maxCombo && attackTimer <= 0.4f)
+            else if (isAttacking && comboCount < maxCombo && attackTimer <= 0.4f) 
             {
                 isComboQueued = true;
             }

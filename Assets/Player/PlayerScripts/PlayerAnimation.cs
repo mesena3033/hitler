@@ -23,7 +23,14 @@ public class PlayerAnimation : MonoBehaviour
 
     void Update()
     {
-        //move.CanNotMoving();
+        if (move.CanNotMoving())
+        {
+            animator.speed = 0f;
+        }
+        else
+        {
+            animator.speed = 1f;
+        }
 
         isMoving = move.MoveInput != Vector3.zero;
 
@@ -38,10 +45,10 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetDodge(bool value)
     {
-        move.CanNotMoving();
+        
         //Debug.Log("SetDodge : " + value);
 
-        if (animator == null) return;
+        if (animator == null || move.CanNotMoving()) return;
 
         animator.SetBool("IsDodging", value);
     }
@@ -52,7 +59,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public void PlayDamagedOnce()
     {
-        if (animator == null) return;
+        if (animator == null || move.CanNotMoving()) return;
         if (damagedPlaying) return;
         if (Time.time - lastDamagedTime < damagedCooldown) return;
 
