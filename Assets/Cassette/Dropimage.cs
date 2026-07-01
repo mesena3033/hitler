@@ -9,13 +9,19 @@ public class Dropimage : MonoBehaviour
     public void OnDrop(PointerEventData eventData)
     {
         var draggedObj = eventData.pointerDrag;
-        if (draggedObj != null)
-        {
-            // ÉhÉçÉbÉvÇ≥ÇÍÇΩ Image ÇÃ Sprite ÇÇ±ÇÃ Slot Ç…à⁄Ç∑
-            Image draggedImage = draggedObj.GetComponent<Image>();
-            Image slotImage = GetComponent<Image>();
+        if (draggedObj != null) return;
 
-            slotImage.sprite = draggedImage.sprite;
-        }
+        SkillItem skillItem = draggedObj.GetComponent<SkillItem>();
+        if (skillItem == null) return;
+
+        SlotItem slot = GetComponent<SlotItem>();
+        if (slot == null) return;
+
+        Image draggedImage = draggedObj.GetComponent<Image>();
+        slot.iconImage.sprite = draggedImage.sprite;
+
+        slot.skillID = skillItem.skillID;
+
+        draggedObj.GetComponent<DragImage>().MarkDropped();
     }
 }
