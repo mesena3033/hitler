@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 // imageをドラッグするためのスクリプト
 public class DragImage : MonoBehaviour,
@@ -9,7 +10,15 @@ public class DragImage : MonoBehaviour,
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
 
+    private Transform originalParent;
     private Vector2 originalPosition;
+
+    private SlotItem originalSlot;
+
+    private bool dropped = false;
+
+    public UsedSkills usedSkills;
+    public Image usedSprite; // 黒色の使用済み画像
 
     void Awake()
     {
@@ -24,9 +33,17 @@ public class DragImage : MonoBehaviour,
     // ドラッグ開始時の処理
     public void OnPointerDown(PointerEventData eventData)
     {
+        originalParent = transform.parent;
         originalPosition = rectTransform.anchoredPosition;
+
+        originalSlot = originalParent.GetComponent<SlotItem>();
+
+        transform.SetParent(canvas.transform, true);
+
         canvasGroup.alpha = 0.6f; // 半透明にしてドラッグ中を分かりやすく
         canvasGroup.blocksRaycasts = false; // ドロップ先が Raycast を受け取れるように
+
+        dropped = false;
     }
     // ドラッグ中のimageの位置を更新する処理
     public void OnDrag(PointerEventData eventData)
@@ -39,7 +56,38 @@ public class DragImage : MonoBehaviour,
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
 
+        transform.SetParent(originalParent, true);
         // ドロップ成功していなければ元の位置に戻す
         rectTransform.anchoredPosition = originalPosition;
+
+        if (!dropped)
+        {
+            // ドロップ失敗 → 黒色にする
+            originalSlot.iconImage = usedSprite;
+
+            int skillID = GetComponent<SkillItem>().skillID;
+            usedSkills.MarkUsed(skillID);
+
+            // 他の同じスキルも黒くする
+            MarkAllSameSkillUsed(skillID);
+        }
+    }
+
+    private void MarkAllSameSkillUsed(int skillID)
+    {
+        SlotItem[] slots = FindObjectsOfType<SlotItem>();
+
+        foreach (var slot in slots)
+        {
+            if (slot.skillID == skillID)
+            {
+                slot.iconImage = usedSprite;
+            }
+        }
+    }
+
+    public void MarkDropped()
+    {
+        dropped = true;
     }
 }
