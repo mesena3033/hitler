@@ -17,6 +17,7 @@ public class EventManager : MonoBehaviour
     private Button menuButton = null;
 
     private GameObject resultPanel = null;
+    private TextMeshProUGUI resultText = null;
     private Button nextButton = null;
     private Button resultButton = null;
     private Button titleBackButton = null;
@@ -57,6 +58,10 @@ public class EventManager : MonoBehaviour
         {
             resultPanel = canvas.transform.Find("ResultPanel").gameObject;
 
+            if(resultPanel.transform.Find("ResultText") != null)
+            {
+                resultText = resultPanel.transform.Find("ResultText").GetComponent<TextMeshProUGUI>();
+            }
             if (resultPanel.transform.Find("NextButton") != null)
             {
                 nextButton = resultPanel.transform.Find("NextButton").GetComponent<Button>();
@@ -104,9 +109,9 @@ public class EventManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-    private void NextButton()
+    private void NextButton()   //  Stageが増えたら追記
     {
-        //  PlayerScene => Stage1
+       //  PlayerScene => Stage1
         if (sceneName == "PlayerScene")
         {
             SceneManager.LoadScene("Stage1");
@@ -168,5 +173,22 @@ public class EventManager : MonoBehaviour
     {
         //  プレイヤーが死んだらresultの表示
         resultPanel.gameObject.SetActive(true);
+
+        //  デス時はリスタート
+        resultText.text = "Never Give Up";
+
+        nextButton.gameObject.SetActive(false);
+        resultButton.gameObject.SetActive(true);
+    }
+
+    public void GameClear()
+    {
+        resultPanel.gameObject.SetActive(true);
+
+        //  クリア時はリザルトと、Next
+        resultText.text = "Stage Clear!";
+
+        nextButton.gameObject.SetActive(true);
+        resultButton.gameObject.SetActive(false);
     }
 }
