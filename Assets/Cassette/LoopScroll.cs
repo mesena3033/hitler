@@ -3,52 +3,59 @@ using UnityEngine.UI;
 
 public class LoopScroll : MonoBehaviour
 {
-    public ScrollRect scrollRect;
-    public RectTransform viewPortcontent;
-    public RectTransform contentPanelTrans;
-    public HorizontalLayoutGroup HLG;
+    [Header("UI")]
+    [SerializeField] private ScrollRect scrollRect;
+    [SerializeField] private RectTransform viewPortContent;
+    [SerializeField] private RectTransform contentPanelTrans;
+    [SerializeField] private HorizontalLayoutGroup HLG;
 
-    public RectTransform[] contentItems;
+    [Header("Prefab")]
+    [SerializeField] private SkillItem skillItemPrefab;
 
-    public NEWSkillMane skillManager;
+    [Header("Skill")]
+    [SerializeField] private NEWSkillMane skillManager;
 
     Vector2 OldVelocity;
     bool isUpdated;
+
+    private float ItemWidth =>
+        skillItemPrefab.GetComponent<RectTransform>().rect.width + HLG.spacing;
+
+
+    private int SkillCount => skillManager.SkillCount;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         isUpdated = false;
         OldVelocity = Vector2.zero;
-        int ItemToAdd = Mathf.CeilToInt(viewPortcontent.rect.width / (contentItems[0].rect.width + HLG.spacing));
+        int ItemToAdd =
+            Mathf.CeilToInt(viewPortContent.rect.width / ItemWidth);
 
-        for (int i = 0;i < ItemToAdd; i++)
+        for (int i = 0; i < SkillCount; i++)
         {
-            int skillID = i % contentItems.Length;
-
-            RectTransform RT = Instantiate(contentItems[i % contentItems.Length], contentPanelTrans);
-            RT.SetAsLastSibling();
-
-            // skillID ‚ð•t—^
-            SkillItem si = RT.gameObject.AddComponent<SkillItem>();
-            si.skillID = skillID;
+            CreateItem(i, false);
         }
 
         for (int i = 0; i < ItemToAdd; i++)
         {
-            int skillID = contentItems.Length - i - 1;
-            while (skillID < 0)
-                skillID += contentItems.Length;
-
-            RectTransform RT = Instantiate(contentItems[skillID], contentPanelTrans);
-            RT.SetAsFirstSibling();
-
-            SkillItem si = RT.gameObject.AddComponent<SkillItem>();
-            si.skillID = skillID;
+            int id = i % SkillCount;
+            CreateItem(id, false);
         }
-            contentPanelTrans.localPosition = new Vector3((0 - (contentItems[0].rect.width + HLG.spacing)* ItemToAdd),
-            contentPanelTrans.localPosition.y,
-            contentPanelTrans.localPosition.z
-            );
+        for (int i = 0; i < ItemToAdd; i++)
+        {
+            int id = SkillCount - i - 1;
+
+            while (id < 0)
+                id += SkillCount;
+
+            CreateItem(id, true);
+        }
+        contentPanelTrans.localPosition =
+            new Vector3(
+                -ItemWidth * ItemToAdd,
+                contentPanelTrans.localPosition.y,
+                contentPanelTrans.localPosition.z);
     }
 
     void Update()
@@ -59,19 +66,44 @@ public class LoopScroll : MonoBehaviour
             isUpdated = false;
         }
 
+        float loopWidth = SkillCount * ItemWidth;
+
         if (contentPanelTrans.localPosition.x > 0)
         {
             Canvas.ForceUpdateCanvases();
+
             OldVelocity = scrollRect.velocity;
-            contentPanelTrans.localPosition -= new Vector3(contentItems.Length * (contentItems[0].rect.width + HLG.spacing), 0, 0);
+
+            contentPanelTrans.localPosition -=
+                new Vector3(loopWidth, 0, 0);
+
             isUpdated = true;
         }
-        else if (contentPanelTrans.localPosition.x < 0 - (contentItems.Length * (contentItems[0].rect.width + HLG.spacing)))
+        else if (contentPanelTrans.localPosition.x < -loopWidth)
         {
             Canvas.ForceUpdateCanvases();
+
             OldVelocity = scrollRect.velocity;
-            contentPanelTrans.localPosition += new Vector3(contentItems.Length * (contentItems[0].rect.width + HLG.spacing), 0, 0);
+
+            contentPanelTrans.localPosition +=
+                new Vector3(loopWidth, 0, 0);
+
             isUpdated = true;
         }
+    }
+
+    private void CreateItem(int skillID, bool firstSibling)
+    {
+        SkillItem item =
+            Instantiate(skillItemPrefab, contentPanelTrans);
+
+        item.Setup(
+            skillID,
+            skillManager.GetSkill(skillID));
+
+        if (firstSibling)
+            item.transform.SetAsFirstSibling();
+        else
+            item.transform.SetAsLastSibling();
     }
 }

@@ -62,14 +62,15 @@ public class DragImage : MonoBehaviour,
 
         if (!dropped)
         {
-            // ドロップ失敗 → 黒色にする
-            originalSlot.iconImage = usedSprite;
+            if (originalSlot != null)
+            {
+                originalSlot.SetUsed();
 
-            int skillID = GetComponent<SkillItem>().skillID;
-            usedSkills.MarkUsed(skillID);
+                int skillID = GetComponent<SkillItem>().SkillID;
+                usedSkills.MarkUsed(skillID);
 
-            // 他の同じスキルも黒くする
-            MarkAllSameSkillUsed(skillID);
+                MarkAllSameSkillUsed(skillID);
+            }
         }
     }
 
@@ -81,7 +82,7 @@ public class DragImage : MonoBehaviour,
         {
             if (slot.skillID == skillID)
             {
-                slot.iconImage = usedSprite;
+                slot.SetUsed();
             }
         }
     }

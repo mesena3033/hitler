@@ -18,6 +18,11 @@ public class NEWSkillMane : MonoBehaviour
     private Dictionary<int, float> cooldowns =
         new Dictionary<int, float>();
 
+    private Dictionary<SkillDataNo2, int> idDict = 
+        new Dictionary<SkillDataNo2, int>();
+
+    public int SkillCount => skillList.Count;
+
     public int skillID;
 
     public float AnimatorChangeTime = 0.1f;
@@ -49,6 +54,11 @@ public class NEWSkillMane : MonoBehaviour
 
             skillDict[i] = s;
         }
+    }
+
+    public SkillDataNo2 GetSkill(int id)
+    {
+        return skillDict[id];
     }
 
     // スキルを使用するメソッド
