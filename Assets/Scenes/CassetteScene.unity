@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 37327360}
   - component: {fileID: 37327359}
   - component: {fileID: 37327361}
+  - component: {fileID: 37327362}
   m_Layer: 5
   m_Name: Fire
   m_TagString: Untagged
@@ -326,6 +327,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usedSkills: {fileID: 764556579}
   usedSprite: {fileID: 1155551144}
+--- !u!114 &37327362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37327357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a737052bc0331e48aeb4037c2a04ede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillID: -1
+  usedImagePrefab: {fileID: 1155551143}
 --- !u!1 &49635869
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,8 +581,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a737052bc0331e48aeb4037c2a04ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 0}
   skillID: -1
+  usedImagePrefab: {fileID: 1155551143}
 --- !u!1 &764556573
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,13 +638,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollRect: {fileID: 1229994381}
-  viewPortcontent: {fileID: 2009339727}
+  viewPortContent: {fileID: 2009339727}
   contentPanelTrans: {fileID: 764556574}
   HLG: {fileID: 764556577}
-  contentItems:
-  - {fileID: 37327358}
-  - {fileID: 833120904}
-  - {fileID: 1693526006}
+  skillItemPrefab: {fileID: 0}
   skillManager: {fileID: 8778280}
 --- !u!114 &764556577
 MonoBehaviour:
@@ -695,6 +707,7 @@ GameObject:
   - component: {fileID: 833120906}
   - component: {fileID: 833120905}
   - component: {fileID: 833120907}
+  - component: {fileID: 833120908}
   m_Layer: 5
   m_Name: GroundSmash
   m_TagString: Untagged
@@ -774,6 +787,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usedSkills: {fileID: 764556579}
   usedSprite: {fileID: 1155551144}
+--- !u!114 &833120908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833120903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a737052bc0331e48aeb4037c2a04ede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillID: -1
+  usedImagePrefab: {fileID: 1155551143}
 --- !u!224 &879748101 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5630217422838044987, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
@@ -1283,6 +1310,7 @@ GameObject:
   - component: {fileID: 1693526008}
   - component: {fileID: 1693526007}
   - component: {fileID: 1693526009}
+  - component: {fileID: 1693526010}
   m_Layer: 5
   m_Name: Up Dance
   m_TagString: Untagged
@@ -1362,6 +1390,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usedSkills: {fileID: 764556579}
   usedSprite: {fileID: 1155551144}
+--- !u!114 &1693526010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693526005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a737052bc0331e48aeb4037c2a04ede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillID: -1
+  usedImagePrefab: {fileID: 1155551143}
 --- !u!1 &1702955056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1476,8 +1518,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a737052bc0331e48aeb4037c2a04ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 0}
   skillID: -1
+  usedImagePrefab: {fileID: 1155551143}
 --- !u!1001 &1755043252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2111,8 +2153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a737052bc0331e48aeb4037c2a04ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 0}
   skillID: -1
+  usedImagePrefab: {fileID: 1155551143}
 --- !u!1 &2134332580
 GameObject:
   m_ObjectHideFlags: 0
