@@ -10,25 +10,47 @@ public class EventManager : MonoBehaviour
     [SerializeField] private Canvas canvas;
 
     //  スクリプトでアタッチするUI
-    private GameObject gamePanel = null;
-    private Button gameMenuButton = null;
+    [Header("アタッチ確認用")]
+    private GameObject titlePanel;
+    private Button titleButton;
+    private Button titleMenuButton;
 
-    private GameObject menuPanel = null;
-    private Button menuButton = null;
+    private GameObject gamePanel;
+    private Button gameMenuButton;
 
-    private GameObject resultPanel = null;
-    private TextMeshProUGUI resultText = null;
-    private Button nextButton = null;
-    private Button resultButton = null;
-    private Button titleBackButton = null;
+    private GameObject menuPanel;
+    private Button menuButton;
+
+    private GameObject resultPanel;
+    private TextMeshProUGUI resultText;
+    private Button nextButton;
+    private Button restartButton;
+    private Button titleBackButton;
 
     //  判定用関数
-    private string sceneName = null;
+    private string sceneName;
     private bool menuActive = false;
 
     private void Start()
     {
         //  各canvas直下のUIを走査 + アタッチ
+        //  title
+        if (canvas.transform.Find("TitlePanel") != null)
+        {
+            titlePanel = canvas.transform.Find("TitlePanel").gameObject;
+
+            if(titlePanel.transform.Find("TitleButton") != null)
+            {
+                titleButton=titlePanel.transform.Find("TitleButton").GetComponent<Button>();
+                titleButton.onClick.AddListener(TitleButton);
+            }
+
+            if (titlePanel.transform.Find("TitleMenuButton") != null)
+            {
+                titleMenuButton = titlePanel.transform.Find("TitleMenuButton").GetComponent<Button>();
+                titleMenuButton.onClick.AddListener(MenuButton);
+            }
+        }
         //  game
         if (canvas.transform.Find("GamePanel") != null)
         {
@@ -69,8 +91,8 @@ public class EventManager : MonoBehaviour
             }
             if (resultPanel.transform.Find("RestartButton") != null)
             {
-                resultButton = resultPanel.transform.Find("RestartButton").GetComponent<Button>();
-                resultButton.onClick.AddListener(RestartButton);
+                restartButton = resultPanel.transform.Find("RestartButton").GetComponent<Button>();
+                restartButton.onClick.AddListener(RestartButton);
             }
             if (resultPanel.transform.Find("TitleBackButton") != null)
             {
@@ -82,7 +104,15 @@ public class EventManager : MonoBehaviour
         //  現在のシーン名取得
         sceneName = SceneManager.GetActiveScene().name;
 
-        gamePanel.gameObject.SetActive(true);
+        //  タイトルシーンの時タイトル表示
+        if(titlePanel != null && sceneName == "TitleScene")
+        {
+            titlePanel.gameObject.SetActive(true);
+        }
+        else if(gamePanel != null)
+        {
+            gamePanel.gameObject.SetActive(true);
+        }
     }
 
     private void Update()
@@ -90,17 +120,26 @@ public class EventManager : MonoBehaviour
         sceneName = SceneManager.GetActiveScene().name;
 
         //  メニューの表示判定
-        menuActive = menuPanel.activeSelf;
+        if (menuPanel != null)
+        {
+            menuActive = menuPanel.activeSelf;
 
-        //  メニューの表示/非表示 //  ビルド時はEscapeで反応
+            //  メニューの表示/非表示 //  ビルド時はEscapeで反応
 #if UNITY_EDITOR
-        if (Keyboard.current.uKey.wasPressedThisFrame)
+            if (Keyboard.current.uKey.wasPressedThisFrame)
 #else
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
 #endif
-        {
-            MenuSwicth();
+            {
+                MenuButton();
+            }
         }
+    }
+
+    private void TitleButton()
+    {
+        //  ボタンクリックで移動
+        SceneManager.LoadScene("PlayerScene");
     }
 
     private void RestartButton()
@@ -128,24 +167,37 @@ public class EventManager : MonoBehaviour
         SceneManager.LoadScene("TitleScene");
     }
 
-    private void MenuButton()    //  メニューの表示/非表示(UIボタン、Escape(ビルド時))
-    {
-        MenuSwicth();
-    }
-
-    private void MenuSwicth()    //  メニューのON/OFF切り替え
+    private void MenuButton()    //  メニューのON/OFF切り替え
     {
         if (menuPanel != null)
         {
             if (menuActive != true)
             {
                 menuPanel.gameObject.SetActive(true);
-                gameMenuButton.gameObject.SetActive(false);
+
+                //  タイトルシーンの時はタイトルにあるボタンを消す
+                if (sceneName == "TitleScene")
+                {
+                    titleMenuButton.gameObject.SetActive(false);
+                }
+                else
+                {
+                    gameMenuButton.gameObject.SetActive(false);
+                }
+                    
             }
             else
             {
                 menuPanel.gameObject.SetActive(false);
-                gameMenuButton.gameObject.SetActive(true);
+
+                if (sceneName == "TitleScene")
+                {
+                    titleMenuButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    gameMenuButton.gameObject.SetActive(true);
+                }
             }
         }  
     }
@@ -171,24 +223,37 @@ public class EventManager : MonoBehaviour
 
     public void PlayerDespawn()
     {
-        //  プレイヤーが死んだらresultの表示
-        resultPanel.gameObject.SetActive(true);
+        if (resultPanel != null)
+        {
+            //  プレイヤーが死んだらresultの表示
+            resultPanel.gameObject.SetActive(true);
 
-        //  デス時はリスタート
-        resultText.text = "Never Give Up";
+            //  デス時はリスタート
+            resultText.text = "Never Give Up";
 
-        nextButton.gameObject.SetActive(false);
-        resultButton.gameObject.SetActive(true);
+            nextButton.gameObject.SetActive(false);
+            restartButton.gameObject.SetActive(true);
+        }
+    }
+
+    public void StageClear()
+    {
+        if (resultPanel != null)
+        {
+            resultPanel.gameObject.SetActive(true);
+
+            //  クリア時はリザルトと、Next
+            resultText.text = "Stage Clear!";
+
+            nextButton.gameObject.SetActive(true);
+            restartButton.gameObject.SetActive(false);
+        }
     }
 
     public void GameClear()
     {
-        resultPanel.gameObject.SetActive(true);
-
-        //  クリア時はリザルトと、Next
-        resultText.text = "Stage Clear!";
-
-        nextButton.gameObject.SetActive(true);
-        resultButton.gameObject.SetActive(false);
+        if (resultPanel != null)
+        {
+        }
     }
 }
