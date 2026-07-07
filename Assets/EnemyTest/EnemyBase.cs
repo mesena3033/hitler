@@ -5,9 +5,10 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected float attackRange = 5f;
 
     protected Transform player;
-    private NavMeshAgent agent;
+    protected NavMeshAgent agent;
     protected Animator animator;
 
+    protected bool isAttacking = false;
 
     protected void Awake()
     {
@@ -24,6 +25,8 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (player == null) return;
 
+        this.transform.LookAt(player.transform);
+
         // 距離を計算
         float distance = Vector3.Distance(transform.position, player.position);
 
@@ -31,6 +34,7 @@ public abstract class EnemyBase : MonoBehaviour
         if (distance <= attackRange) 
         {
             agent.isStopped = true;
+            isAttacking = true;
             Attack();
         }
 
@@ -52,8 +56,23 @@ public abstract class EnemyBase : MonoBehaviour
             
         }
 
-        animator.SetFloat("Speed", agent.velocity.magnitude);
+        if (isAttacking)
+        {
+            agent.isStopped = true;
+        }
+
+        else
+        {
+            agent.isStopped = false;
+        }
+
+
     }
 
     protected abstract void Attack();
+
+    public void OnAttackEnd()
+    {
+        isAttacking = false;
+    }
 }
