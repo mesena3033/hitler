@@ -136,9 +136,6 @@ public class PlayerAttack : MonoBehaviour
         // 攻撃時に剣の当たり判定を有効化
         if (swordCollider != null) swordCollider.enabled = true;
 
-        // オブジェクトに当たったら判定を無効化
-        //if()
-
     }
 
 
