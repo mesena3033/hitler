@@ -34,7 +34,7 @@ public class PlayerAnimation : MonoBehaviour
 
         isMoving = move.MoveInput != Vector3.zero;
 
-        if (!move.canNotMove)
+        if (!move.CanNotMove)
         {
             animator.SetBool("IsMoving", isMoving);
             animator.SetBool("IsIdling", !isMoving && !attack.IsAttacking);

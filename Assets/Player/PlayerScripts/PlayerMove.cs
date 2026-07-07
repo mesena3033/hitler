@@ -36,13 +36,17 @@ public class PlayerMove : MonoBehaviour
     public bool IsDodging => isDodging;
 
     // プレイヤー動作可能状態
-    public bool canNotMove;
+    private bool canNotMove;
+    public bool CanNotMove => canNotMove;
 
     // 回避
     [Header("回避")]
     private float dodgeDistance = 10f;  // 10より大きくすると貫通する
     private float dodgeDuration = 1f;   // 回避再生時間
     private float dodgeCooldown = 1f; // 回避のクールタイム（秒）
+
+    // 回避のクールタイムプロパティ
+    public float DodgeCooldown => dodgeCooldown;
 
     private bool isDodging = false;
     private bool isDodgePending = false;
