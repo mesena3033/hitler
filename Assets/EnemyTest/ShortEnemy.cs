@@ -5,6 +5,7 @@ public class ShortEnemy : EnemyBase
     [SerializeField] private int attackDamage = 10;
     protected override void Attack()
     {
-        Debug.Log("近距離攻撃！");
+        animator.SetTrigger("isAttacking");
     }
+
 }

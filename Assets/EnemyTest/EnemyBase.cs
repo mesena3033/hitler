@@ -8,6 +8,7 @@ public abstract class EnemyBase : MonoBehaviour
     private NavMeshAgent agent;
     protected Animator animator;
 
+
     protected void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -22,6 +23,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected void Update()
     {
         if (player == null) return;
+
         // 距離を計算
         float distance = Vector3.Distance(transform.position, player.position);
 
@@ -35,6 +37,8 @@ public abstract class EnemyBase : MonoBehaviour
         // 範囲外で詰めてくる
         else if (distance > attackRange)
         {
+            animator.SetBool("isIdling", false);
+            animator.SetBool("isMoving", true);
             agent.isStopped = false;
             agent.SetDestination(player.position);
         }
@@ -42,7 +46,10 @@ public abstract class EnemyBase : MonoBehaviour
         // プレイヤーがいない場合は停止
         else
         {
+            animator.SetBool("isIdling", true);
+            animator.SetBool("isMoving", false);
             agent.isStopped = false;
+            
         }
 
         animator.SetFloat("Speed", agent.velocity.magnitude);
