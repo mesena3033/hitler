@@ -93,9 +93,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
-  gamePanel: {fileID: 0}
-  gameMenuButton: {fileID: 0}
-  menuPanel: {fileID: 0}
-  menuButton: {fileID: 0}
-  resultPanel: {fileID: 0}
-  resultButton: {fileID: 0}
+  titleSceneName: TitleScene
+  gameSceneName1: PlayerScene
+  gameSceneName2: Stage1

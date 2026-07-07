@@ -9,23 +9,33 @@ public class EventManager : MonoBehaviour
     [Header("canvasのみアタッチ")]
     [SerializeField] private Canvas canvas;
 
+    [SerializeField] private string titleSceneName;
+    [SerializeField] private string gameSceneName1;
+    [SerializeField] private string gameSceneName2;
+    [SerializeField] private string gameSceneName3; //  予備
+
     //  スクリプトでアタッチするUI
-    [Header("アタッチ確認用")]
+    //  タイトルパネル
     private GameObject titlePanel;
     private Button titleButton;
     private Button titleMenuButton;
 
+    //  ゲームパネル
     private GameObject gamePanel;
     private Button gameMenuButton;
 
+    //  メニューパネル
     private GameObject menuPanel;
     private Button menuButton;
 
+    //  リザルトパネル
     private GameObject resultPanel;
     private TextMeshProUGUI resultText;
     private Button nextButton;
     private Button restartButton;
     private Button titleBackButton;
+
+    //  クリアパネル(未実装)
 
     //  判定用関数
     private string sceneName;
@@ -139,7 +149,7 @@ public class EventManager : MonoBehaviour
     private void TitleButton()
     {
         //  ボタンクリックで移動
-        SceneManager.LoadScene("PlayerScene");
+        SceneManager.LoadScene(gameSceneName1);
     }
 
     private void RestartButton()
@@ -151,12 +161,12 @@ public class EventManager : MonoBehaviour
     private void NextButton()   //  Stageが増えたら追記
     {
        //  PlayerScene => Stage1
-        if (sceneName == "PlayerScene")
+        if (sceneName == gameSceneName1)
         {
-            SceneManager.LoadScene("Stage1");
+            SceneManager.LoadScene(gameSceneName2);
         }
         //  Stage1 => ?
-        else if (sceneName == "Stage1")
+        else if (sceneName == gameSceneName2)
         {
         }
     }
@@ -164,19 +174,34 @@ public class EventManager : MonoBehaviour
     private void TitleBackButton()
     {
         //  タイトルバック
-        SceneManager.LoadScene("TitleScene");
+        SceneManager.LoadScene(titleSceneName);
+    }
+
+    public bool MenuActiveLock()    //  メニューを反応させていいタイミングか判定
+    {
+        foreach (Transform child in canvas.transform)
+        {
+            //  Panelタグに限定
+            if (child.gameObject.tag != "Panel")
+                continue;
+
+            // アクティブなら true
+            if (child.gameObject.activeSelf)
+                return true;
+        }
+        return false;
     }
 
     private void MenuButton()    //  メニューのON/OFF切り替え
     {
-        if (menuPanel != null)
+        if (MenuActiveLock() != true)
         {
-            if (menuActive != true)
+            if (menuPanel != null && menuActive != true)
             {
                 menuPanel.gameObject.SetActive(true);
 
                 //  タイトルシーンの時はタイトルにあるボタンを消す
-                if (sceneName == "TitleScene")
+                if (sceneName == titleSceneName)
                 {
                     titleMenuButton.gameObject.SetActive(false);
                 }
@@ -184,13 +209,12 @@ public class EventManager : MonoBehaviour
                 {
                     gameMenuButton.gameObject.SetActive(false);
                 }
-                    
             }
             else
             {
                 menuPanel.gameObject.SetActive(false);
 
-                if (sceneName == "TitleScene")
+                if (sceneName == titleSceneName)
                 {
                     titleMenuButton.gameObject.SetActive(true);
                 }
@@ -199,17 +223,13 @@ public class EventManager : MonoBehaviour
                     gameMenuButton.gameObject.SetActive(true);
                 }
             }
-        }  
+        }
     }
 
-    public bool GetPanelActive()    //  外部からメニューon/offの検出
+    public bool GetPanelActive()    //  外部から任意パネルのon/offの検出
     {
         foreach (Transform child in canvas.transform)
         {
-            // GamePanel は除外
-            if (child.gameObject == gamePanel)
-                continue;
-
             //  Panelタグに限定
             if (child.gameObject.tag != "Panel")
                 continue;
@@ -236,6 +256,7 @@ public class EventManager : MonoBehaviour
         }
     }
 
+    //  クリア2つはエネミー関係が進んでから
     public void StageClear()
     {
         if (resultPanel != null)
