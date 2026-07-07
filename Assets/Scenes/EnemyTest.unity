@@ -851,6 +851,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3393457945810342629, guid: 65ce49a27af510f4591426821618f35f, type: 3}
+      propertyPath: m_Size.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393457945810342629, guid: 65ce49a27af510f4591426821618f35f, type: 3}
+      propertyPath: m_Size.y
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393457945810342629, guid: 65ce49a27af510f4591426821618f35f, type: 3}
+      propertyPath: m_Size.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6436561224937613279, guid: 65ce49a27af510f4591426821618f35f, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7389923134980997987, guid: 65ce49a27af510f4591426821618f35f, type: 3}
       propertyPath: m_Name
       value: testEnemy1
