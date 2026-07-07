@@ -170,7 +170,7 @@ public class PlayerStatus : MonoBehaviour
             Task task = ApplyDamage(dmg);
         }
     }
-
+    
 
     /// <summary>
     /// ////////////////////////実装前に消す/////////////////////////////////////
