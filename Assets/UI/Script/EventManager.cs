@@ -181,6 +181,9 @@ public class EventManager : MonoBehaviour
     {
         foreach (Transform child in canvas.transform)
         {
+            if (child.gameObject == menuPanel)
+                continue;
+
             //  Panelタグに限定
             if (child.gameObject.tag != "Panel")
                 continue;
@@ -230,6 +233,9 @@ public class EventManager : MonoBehaviour
     {
         foreach (Transform child in canvas.transform)
         {
+            if (child.gameObject == gamePanel)
+                continue;
+
             //  Panelタグに限定
             if (child.gameObject.tag != "Panel")
                 continue;
