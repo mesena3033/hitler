@@ -171,8 +171,8 @@ MonoBehaviour:
     effectSpawnPoint: {fileID: 938959115}
     effectDelay: 0.5
     cooldown: 5
+    Icon: {fileID: 21300000, guid: 613d41d6b1ca7764cb365bfc29ef1864, type: 3}
     skillName: Fire
-    Icon: {fileID: 0}
     damage: 15
     buffValue: 0
     healValue: 0
@@ -184,8 +184,8 @@ MonoBehaviour:
     effectSpawnPoint: {fileID: 938959115}
     effectDelay: 0.5
     cooldown: 5
+    Icon: {fileID: 21300000, guid: 613d41d6b1ca7764cb365bfc29ef1864, type: 3}
     skillName: Smash
-    Icon: {fileID: 0}
     damage: 12
     buffValue: 0
     healValue: 0
@@ -197,8 +197,8 @@ MonoBehaviour:
     effectSpawnPoint: {fileID: 938959115}
     effectDelay: 0.5
     cooldown: 5
+    Icon: {fileID: 21300000, guid: 613d41d6b1ca7764cb365bfc29ef1864, type: 3}
     skillName: ATKUp
-    Icon: {fileID: 0}
     damage: 0
     buffValue: 1.2
     healValue: 0
@@ -246,8 +246,8 @@ GameObject:
   - component: {fileID: 37327358}
   - component: {fileID: 37327360}
   - component: {fileID: 37327359}
-  - component: {fileID: 37327361}
   - component: {fileID: 37327362}
+  - component: {fileID: 37327363}
   m_Layer: 5
   m_Name: Fire
   m_TagString: Untagged
@@ -288,14 +288,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 613d41d6b1ca7764cb365bfc29ef1864, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -313,20 +313,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37327357}
   m_CullTransparentMesh: 1
---- !u!114 &37327361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 37327357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89d6b687d35f5564b9434a6689ce244e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  usedSkills: {fileID: 764556579}
-  usedSprite: {fileID: 1155551144}
 --- !u!114 &37327362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,6 +327,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillID: -1
   usedImagePrefab: {fileID: 1155551143}
+--- !u!114 &37327363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37327357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d4b1368d81625d4a9c5d1f5225cd483, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 37327359}
+  skillName: {fileID: 2137652294}
 --- !u!1 &49635869
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,7 +478,6 @@ GameObject:
   - component: {fileID: 585286748}
   - component: {fileID: 585286750}
   - component: {fileID: 585286749}
-  - component: {fileID: 585286751}
   - component: {fileID: 585286752}
   - component: {fileID: 585286753}
   m_Layer: 5
@@ -545,18 +544,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 585286747}
   m_CullTransparentMesh: 1
---- !u!114 &585286751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 585286747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8baef1369a0f9c74d9609ffc3a243638, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!225 &585286752
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -637,11 +624,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11cf9c304d7436419d75498357fb144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollRect: {fileID: 1229994381}
-  viewPortContent: {fileID: 2009339727}
-  contentPanelTrans: {fileID: 764556574}
-  HLG: {fileID: 764556577}
-  skillItemPrefab: {fileID: 0}
+  content: {fileID: 764556574}
+  itemPrefab: {fileID: 37327363}
   skillManager: {fileID: 8778280}
 --- !u!114 &764556577
 MonoBehaviour:
@@ -706,8 +690,8 @@ GameObject:
   - component: {fileID: 833120904}
   - component: {fileID: 833120906}
   - component: {fileID: 833120905}
-  - component: {fileID: 833120907}
   - component: {fileID: 833120908}
+  - component: {fileID: 833120909}
   m_Layer: 5
   m_Name: GroundSmash
   m_TagString: Untagged
@@ -748,14 +732,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.78443694, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 613d41d6b1ca7764cb365bfc29ef1864, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -773,20 +757,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833120903}
   m_CullTransparentMesh: 1
---- !u!114 &833120907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 833120903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89d6b687d35f5564b9434a6689ce244e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  usedSkills: {fileID: 764556579}
-  usedSprite: {fileID: 1155551144}
 --- !u!114 &833120908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -801,6 +771,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillID: -1
   usedImagePrefab: {fileID: 1155551143}
+--- !u!114 &833120909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833120903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d4b1368d81625d4a9c5d1f5225cd483, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 833120905}
+  skillName: {fileID: 1549046043}
 --- !u!224 &879748101 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5630217422838044987, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
@@ -1000,7 +984,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 200}
+  m_SizeDelta: {x: 700, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1229994381
 MonoBehaviour:
@@ -1309,8 +1293,8 @@ GameObject:
   - component: {fileID: 1693526006}
   - component: {fileID: 1693526008}
   - component: {fileID: 1693526007}
-  - component: {fileID: 1693526009}
   - component: {fileID: 1693526010}
+  - component: {fileID: 1693526011}
   m_Layer: 5
   m_Name: Up Dance
   m_TagString: Untagged
@@ -1351,14 +1335,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.82005805, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 613d41d6b1ca7764cb365bfc29ef1864, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1376,20 +1360,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693526005}
   m_CullTransparentMesh: 1
---- !u!114 &1693526009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693526005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89d6b687d35f5564b9434a6689ce244e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  usedSkills: {fileID: 764556579}
-  usedSprite: {fileID: 1155551144}
 --- !u!114 &1693526010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,6 +1374,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillID: -1
   usedImagePrefab: {fileID: 1155551143}
+--- !u!114 &1693526011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693526005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d4b1368d81625d4a9c5d1f5225cd483, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 1693526007}
+  skillName: {fileID: 1963534816}
 --- !u!1 &1702955056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1415,7 +1399,6 @@ GameObject:
   - component: {fileID: 1702955057}
   - component: {fileID: 1702955059}
   - component: {fileID: 1702955058}
-  - component: {fileID: 1702955060}
   - component: {fileID: 1702955061}
   - component: {fileID: 1702955062}
   m_Layer: 5
@@ -1482,18 +1465,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1702955056}
   m_CullTransparentMesh: 1
---- !u!114 &1702955060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1702955056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8baef1369a0f9c74d9609ffc3a243638, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!225 &1702955061
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2050,7 +2021,6 @@ GameObject:
   - component: {fileID: 2132081941}
   - component: {fileID: 2132081943}
   - component: {fileID: 2132081942}
-  - component: {fileID: 2132081944}
   - component: {fileID: 2132081945}
   - component: {fileID: 2132081946}
   m_Layer: 5
@@ -2117,18 +2087,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2132081940}
   m_CullTransparentMesh: 1
---- !u!114 &2132081944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2132081940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8baef1369a0f9c74d9609ffc3a243638, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!225 &2132081945
 CanvasGroup:
   m_ObjectHideFlags: 0

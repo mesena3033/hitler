@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -23,3 +24,4 @@ public class Dropimage : MonoBehaviour
         draggedObj.GetComponent<DragImage>().MarkDropped();
     }
 }
+*/
