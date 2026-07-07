@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 public enum SkillType
 {
     Attack,
@@ -32,8 +34,8 @@ public class SkillDataNo2
     public float cooldown = 1f;
 
     [Header("スキルの名前&アイコン")]
-    public string skillName;
     public Sprite Icon;
+    public string skillName;
 
     [Header("スキルの効果")]
     public int damage;        // Attack 用
