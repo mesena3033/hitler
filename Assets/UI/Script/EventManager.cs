@@ -8,7 +8,9 @@ public class EventManager : MonoBehaviour
 {
     [Header("canvasのみアタッチ")]
     [SerializeField] private Canvas canvas;
+    [Space]
 
+    [Header("シーン名")]
     [SerializeField] private string titleSceneName;
     [SerializeField] private string gameSceneName1;
     [SerializeField] private string gameSceneName2;
@@ -139,7 +141,7 @@ public class EventManager : MonoBehaviour
             if (Keyboard.current.uKey.wasPressedThisFrame)
 #else
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
-#endif
+#endif 
             {
                 MenuButton();
             }
