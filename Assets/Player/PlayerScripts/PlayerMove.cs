@@ -51,6 +51,8 @@ public class PlayerMove : MonoBehaviour
     private float dodgePendingTimer = 0.4f;
     private float dodgeCooldownTimer = 0f;
 
+    [SerializeField] Clock clock;
+
     //  時間管理用
     private float dt = 0.0f;
 
@@ -115,6 +117,9 @@ public class PlayerMove : MonoBehaviour
             StartDodge();
             attack.ResetCombo();
         }
+
+        //  
+        clock.UpdateClock(_updateTimer());
     }
 
     // 外部から被弾状態を設定する（duration 秒間移動を無効化）
@@ -303,5 +308,13 @@ public class PlayerMove : MonoBehaviour
         {
             return false;
         }
+    }
+
+    float _updateTimer()
+    {
+        float timer = dodgeCooldownTimer / dodgeCooldown;
+
+        //追加　float型のtimerを返す
+        return timer;
     }
 }
