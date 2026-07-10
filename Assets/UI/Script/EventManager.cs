@@ -54,7 +54,7 @@ public class EventManager : MonoBehaviour
             if(titlePanel.transform.Find("TitleButton") != null)
             {
                 titleButton=titlePanel.transform.Find("TitleButton").GetComponent<Button>();
-                titleButton.onClick.AddListener(TitleButton);
+                titleButton.onClick.AddListener(NextButton);
             }
 
             if (titlePanel.transform.Find("TitleMenuButton") != null)
@@ -148,29 +148,29 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    private void TitleButton()
+    private void NextButton()   //  Stageが増えたら追記
     {
-        //  ボタンクリックで移動
-        SceneManager.LoadScene(gameSceneName1);
+        //  TitleScene => PlayerScene
+        if(sceneName == titleSceneName && gameSceneName1 != null)
+        {
+            SceneManager.LoadScene(gameSceneName1);
+        }
+        //  PlayerScene => Stage1
+        if (sceneName == gameSceneName1 && gameSceneName2 != null)
+        {
+            SceneManager.LoadScene(gameSceneName2);
+        }
+        //  Stage1 => ?
+        else if (sceneName == gameSceneName2 && gameSceneName3 != null)
+        {
+            SceneManager.LoadScene(gameSceneName3);
+        }
     }
 
     private void RestartButton()
     {
         //  現在のシーンのリロード
         SceneManager.LoadScene(sceneName);
-    }
-
-    private void NextButton()   //  Stageが増えたら追記
-    {
-       //  PlayerScene => Stage1
-        if (sceneName == gameSceneName1)
-        {
-            SceneManager.LoadScene(gameSceneName2);
-        }
-        //  Stage1 => ?
-        else if (sceneName == gameSceneName2)
-        {
-        }
     }
 
     private void TitleBackButton()
@@ -183,6 +183,12 @@ public class EventManager : MonoBehaviour
     {
         foreach (Transform child in canvas.transform)
         {
+            if (child.gameObject == titlePanel)
+                continue;
+
+            if (child.gameObject == gamePanel)
+                continue;
+
             if (child.gameObject == menuPanel)
                 continue;
 
