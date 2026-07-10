@@ -604,7 +604,7 @@ PrefabInstance:
     - target: {fileID: 2748988486013152344, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
       propertyPath: clock
       value: 
-      objectReference: {fileID: 1546265987}
+      objectReference: {fileID: 1546265994}
     - target: {fileID: 3599890172395690983, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.9
@@ -645,17 +645,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4773840149367445570, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6413236398695696505, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197049493446155478, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.10082245
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -754,8 +746,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4202900798098441954, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -765,9 +756,9 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 9164194796970144117, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
   m_PrefabInstance: {fileID: 1546265985}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1546265987 stripped
+--- !u!114 &1546265994 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3029954238601194172, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
+  m_CorrespondingSourceObject: {fileID: 9202555998393265116, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
   m_PrefabInstance: {fileID: 1546265985}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
