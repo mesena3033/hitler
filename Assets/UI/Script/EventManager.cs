@@ -284,11 +284,4 @@ public class EventManager : MonoBehaviour
             restartButton.gameObject.SetActive(false);
         }
     }
-
-    public void GameClear()
-    {
-        if (resultPanel != null)
-        {
-        }
-    }
 }
