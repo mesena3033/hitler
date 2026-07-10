@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -31,7 +32,7 @@ public class WaveSystem : MonoBehaviour
     {
         // 上限値越え処理
         if (currentWave > waveCount) return;
-
+        //Debug.Log("現ウェーブ: " +currentWave);
 
         // ウェーブタイム進行
         if (waveTime > 0f) 
@@ -42,7 +43,7 @@ public class WaveSystem : MonoBehaviour
 
                 waveTime -= Time.deltaTime;
 
-                Debug.Log(waveTime);
+                //Debug.Log(waveTime);
             }
 
             else
@@ -66,7 +67,13 @@ public class WaveSystem : MonoBehaviour
     // ウェーブ終了処理
     private void WaveEnd()
     {
-        Debug.Log("クリア");
+        //Debug.Log("クリア");
+
+        if(currentWave < waveCount)
+        {
+            currentWave++;
+            waveTime = timeLimit;
+        }
     }
 
 }
