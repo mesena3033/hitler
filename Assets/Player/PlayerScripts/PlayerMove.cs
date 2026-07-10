@@ -70,11 +70,11 @@ public class PlayerMove : MonoBehaviour
     // 入力処理
     void Update()
     {
-        dt = Time.fixedDeltaTime;
+        
         // クールタイムのカウントダウン
         if (dodgeCooldownTimer > 0f)
         {
-            dodgeCooldownTimer -= dt;
+            dodgeCooldownTimer -= Time.deltaTime;
 
             if (dodgeCooldownTimer < 0f)
             {
@@ -152,7 +152,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (attack.IsAttacking || isBeingHit) return;
 
-        
+        dt = Time.fixedDeltaTime;
 
         // 回避開始待ちの処理: アニメーションが始まってから移動を開始するための遅延
         if (isDodgePending)
