@@ -45,7 +45,6 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetDodge(bool value)
     {
-        
         //Debug.Log("SetDodge : " + value);
 
         if (animator == null || move.CanNotMoving()) return;

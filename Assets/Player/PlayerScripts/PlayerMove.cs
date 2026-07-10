@@ -70,6 +70,21 @@ public class PlayerMove : MonoBehaviour
     // 入力処理
     void Update()
     {
+        dt = Time.fixedDeltaTime;
+        // クールタイムのカウントダウン
+        if (dodgeCooldownTimer > 0f)
+        {
+            dodgeCooldownTimer -= dt;
+
+            if (dodgeCooldownTimer < 0f)
+            {
+                dodgeCooldownTimer = 0f;
+            }
+        }
+
+        // 回避タイマーUI
+        clock.UpdateClock(_updateTimer());
+
         if (CanNotMoving())
         {
             Time.timeScale = 0f;
@@ -119,7 +134,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         //  
-        clock.UpdateClock(_updateTimer());
+        
     }
 
     // 外部から被弾状態を設定する（duration 秒間移動を無効化）
@@ -135,10 +150,9 @@ public class PlayerMove : MonoBehaviour
     // 物理処理
     void FixedUpdate()
     {
-        //CanNotMoving();
         if (attack.IsAttacking || isBeingHit) return;
 
-        dt = Time.fixedDeltaTime;
+        
 
         // 回避開始待ちの処理: アニメーションが始まってから移動を開始するための遅延
         if (isDodgePending)
@@ -154,12 +168,7 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-        // クールタイムのカウントダウン
-        if (dodgeCooldownTimer > 0f)
-        {
-            dodgeCooldownTimer -= dt;
-            if (dodgeCooldownTimer < 0f) dodgeCooldownTimer = 0f;
-        }
+       
 
         if (isDodging)
         {
