@@ -7,6 +7,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
     [SerializeField]
     private NEWSkillMane skillManager;
 
+    [SerializeField]
+    private SkillSlotMane SlotManager;
+
     private void Awake()
     {
         if (skillManager == null)
@@ -20,15 +23,18 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
         if (kb.digit1Key.wasPressedThisFrame)
         {
-            skillManager.UseSkill(0);
+            Debug.Log($"Slot0 = {SlotManager.GetSkillID(0)}");
+            skillManager.UseSkill(SlotManager.GetSkillID(0));
         }
         else if (kb.digit2Key.wasPressedThisFrame)
         {
-            skillManager.UseSkill(1);
+            Debug.Log($"Slot1 = {SlotManager.GetSkillID(1)}");
+            skillManager.UseSkill(SlotManager.GetSkillID(1));
         }
         else if (kb.digit3Key.wasPressedThisFrame)
         {
-            skillManager.UseSkill(2);
+            Debug.Log($"Slot2 = {SlotManager.GetSkillID(2)}");
+            skillManager.UseSkill(SlotManager.GetSkillID(2));
         }
     }
 }
