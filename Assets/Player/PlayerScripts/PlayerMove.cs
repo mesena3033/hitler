@@ -15,7 +15,7 @@ public class PlayerMove : MonoBehaviour
     private PlayerAttack attack;
     private PlayerAnimation playerAnimation;
     private PlayerStatus status;
-    private WaveSystem waveSystem;
+    //private WaveSystem waveSystem;
     private NEWSkillMane skillMane;
 
     // 入力保持
@@ -79,7 +79,7 @@ public class PlayerMove : MonoBehaviour
         attack = GetComponent<PlayerAttack>();
         playerAnimation = GetComponent<PlayerAnimation>();
         status = GetComponent<PlayerStatus>();
-        waveSystem = FindFirstObjectByType<WaveSystem>();
+        //waveSystem = FindFirstObjectByType<WaveSystem>();
         skillMane = FindFirstObjectByType<NEWSkillMane>();
 
         // Rigidbody の補間を有効にして、物理移動とアニメーションのズレを軽減
@@ -90,7 +90,8 @@ public class PlayerMove : MonoBehaviour
     // 入力処理
     private void Update()
     {
-        
+
+
         // クールタイムのカウントダウン
         if (dodgeCooldownTimer > 0f)
         {
@@ -216,6 +217,7 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
+        if (skillMane.isUsingSkill) return;
         MovePlayer();
     }
 
@@ -223,7 +225,7 @@ public class PlayerMove : MonoBehaviour
     void UpdateMoveInput(Keyboard kb)
     {
         if (CanNotMoving()) return;
-
+        //if (skillMane.isUsingSkill) return;
         moveInput = Vector3.zero;
 
         Transform camT = Camera.main.transform;
@@ -292,11 +294,11 @@ public class PlayerMove : MonoBehaviour
     // プレイヤー移動
     void MovePlayer()
     {
-        canNotMove = Cursor.visible || !waveSystem.isWaveRunning;
+        canNotMove = Cursor.visible/*|| !waveSystem.isWaveRunning*/;
         if (canNotMove) return;
         if (moveInput == Vector3.zero) return;
 
-        if (skillMane.isUsingSkill) return;
+        
 
         rb.MovePosition(rb.position + moveInput * speed * dt);
 

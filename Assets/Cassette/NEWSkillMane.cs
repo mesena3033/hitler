@@ -71,6 +71,8 @@ public class NEWSkillMane : MonoBehaviour
 
         cooldowns[id] = Time.time + data.cooldown;
 
+        isUsingSkill = true;
+
         // ƒXƒLƒ‹‚Ì•ª—Ş‚É‰‚¶‚Äˆ—‚ğ•ªŠò
         switch (data.type)
         {
@@ -94,17 +96,15 @@ public class NEWSkillMane : MonoBehaviour
     {
         // Animator
         if (animator != null)
-        {
+        { 
             if (data.animatorController != null)
                 animator.runtimeAnimatorController = data.animatorController;
 
             if (!string.IsNullOrEmpty(data.animatorBool))
             {
-                isUsingSkill = true;
                 animator.SetBool(data.animatorBool, true);
                 StartCoroutine(ResetBool(data.animatorBool, data.resetTime));
                 StartCoroutine(ResetAnimator(data.animatorController.name, AnimatorChangeTime));
-                isUsingSkill = false;
             }
         }
 
@@ -134,6 +134,8 @@ public class NEWSkillMane : MonoBehaviour
         {
             animator.runtimeAnimatorController = playerAnimation.mainController;
         }
+
+        isUsingSkill = false;
     }
 
     private void ExecuteAttack(SkillDataNo2 data)
