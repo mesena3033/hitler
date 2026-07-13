@@ -49,6 +49,8 @@ public class WaveSystem : MonoBehaviour
 
                 waveTime -= Time.deltaTime;
 
+                WaveStart();
+
                 //Debug.Log(waveTime);
             }
 
@@ -82,6 +84,11 @@ public class WaveSystem : MonoBehaviour
         }
 
 
+    }
+
+    private void WaveStart()
+    {
+        panel.WaveStartPanel();
     }
 
 }

@@ -57,10 +57,13 @@ public class PlayerStatus : MonoBehaviour
     //  メニュー監視
     EventManager _event = null;
 
+    NEWSkillMane skillMane;
+    private PlayerAnimation playerAnimation;
     private void Start()
     {
         currentHP = maxHP;
         move = GetComponent<PlayerMove>();
+        playerAnimation = GetComponent<PlayerAnimation>();
 
         //  マウス非表示 + 中央固定
         Cursor.visible = false;
@@ -68,6 +71,7 @@ public class PlayerStatus : MonoBehaviour
 
         //  EventManagerから引っ張れる
         _event = FindAnyObjectByType<EventManager>();
+        skillMane = GetComponent<NEWSkillMane>();
     }
 
     private void Update()
@@ -166,6 +170,8 @@ public class PlayerStatus : MonoBehaviour
             float raw = enemyAttackPower;
             int dmg = Mathf.Max(0, Mathf.FloorToInt(raw - defensePower));
             isDamaged = true;
+
+            ////////////////
             Task task = ApplyDamage(dmg);
         }
     }
