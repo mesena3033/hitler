@@ -135,7 +135,7 @@ public class NEWSkillMane : MonoBehaviour
         animator.SetBool("IsIdle", true);
     }
 
-    private IEnumerator ResetAnimator(string name, float time)
+    public IEnumerator ResetAnimator(string name, float time)
     {
         yield return new WaitForSeconds(time);
         // •Û‘¶‚µ‚½PlayerAnimation‚ğŒÄ‚Ño‚µ‚ÄAAnimator‚ÉŠi”[
