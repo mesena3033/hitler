@@ -18,7 +18,7 @@ public class NEWSkillMane : MonoBehaviour
     private Dictionary<int, float> cooldowns =
         new Dictionary<int, float>();
 
-    bool isUsingSkill = false;
+    public bool isUsingSkill = false;
 
     public int SkillCount => skillList.Count;
 
