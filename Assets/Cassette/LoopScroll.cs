@@ -1,25 +1,44 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LoopScroll : MonoBehaviour
 {
-    [SerializeField] private Transform content;
-    [SerializeField] private SkillItem itemPrefab;
-    [SerializeField] private NEWSkillMane skillManager;
+    [SerializeField]
+    private Transform content;
+
+    [SerializeField]
+    private SkillItem template;
+
+    private NEWSkillMane skillManager;
+
+    private void Awake()
+    {
+        skillManager =
+            FindFirstObjectByType<NEWSkillMane>();
+    }
 
     private void Start()
     {
-        CreateList();
+        CreateItems();
     }
 
-    private void CreateList()
+    private void CreateItems()
     {
+        // ”O‚Ì‚½‚ßContent‚ð‹ó‚É‚·‚é
+        foreach (Transform child in content)
+        {
+            Destroy(child.gameObject);
+        }
+
         for (int i = 0; i < skillManager.SkillCount; i++)
         {
-            SkillItem item = Instantiate(itemPrefab, content);
+            SkillItem item =
+                Instantiate(template, content);
 
-            item.Setup(skillManager.GetSkill(i));
+            item.gameObject.SetActive(true);
+
+            item.Setup(
+                i,
+                skillManager.GetSkill(i));
         }
     }
 }
