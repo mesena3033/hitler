@@ -575,7 +575,7 @@ PrefabInstance:
     - target: {fileID: 4784118431583877200, guid: 32f91e8c6b22e3f41ac8c87d827544fd, type: 3}
       propertyPath: canvas
       value: 
-      objectReference: {fileID: 1609703192}
+      objectReference: {fileID: 0}
     - target: {fileID: 5446221802273057024, guid: 32f91e8c6b22e3f41ac8c87d827544fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -888,11 +888,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
---- !u!223 &1609703192 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 9164194796970144117, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-  m_PrefabInstance: {fileID: 1609703191}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1673393457
 PrefabInstance:
   m_ObjectHideFlags: 0

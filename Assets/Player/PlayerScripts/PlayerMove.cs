@@ -51,12 +51,27 @@ public class PlayerMove : MonoBehaviour
     private float dodgePendingTimer = 0.4f;
     private float dodgeCooldownTimer = 0f;
 
-    [SerializeField] Clock clock;
+    //  キャンバス
+    private Canvas canvas;
+
+    //  タイマーImage
+    private Clock clock;
 
     //  時間管理用
     private float dt = 0.0f;
 
-    void Start()
+    private void Awake()
+    {
+        canvas = FindFirstObjectByType<Canvas>();
+
+        Transform clockPos = canvas.transform.Find("GamePanel/RollingCoolBase/Inner");
+        if (clockPos != null)
+        {
+            clock = clockPos.GetComponent<Clock>();
+        }
+    }
+
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
         attack = GetComponent<PlayerAttack>();
@@ -68,7 +83,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     // 入力処理
-    void Update()
+    private void Update()
     {
         
         // クールタイムのカウントダウン
