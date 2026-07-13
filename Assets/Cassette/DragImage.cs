@@ -37,9 +37,6 @@ public class DragImage : MonoBehaviour
     {
         CurrentSkillID = skillID;
 
-        Debug.Log(name);
-        Debug.Log(skillID);
-
         SkillDataNo2 data =
          skillManager.GetSkill(skillID);
 

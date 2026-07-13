@@ -1909,9 +1909,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a737052bc0331e48aeb4037c2a04ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillID: 5
-  usedImagePrefab: {fileID: 1155551143}
-  usedImageInstance: {fileID: 0}
 --- !u!114 &880219937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2206,7 +2203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6413236398695696505, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
       propertyPath: m_Name
-      value: Player (2)
+      value: PPPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 9197049493446155478, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
       propertyPath: m_LocalPosition.y

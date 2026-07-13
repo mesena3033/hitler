@@ -91,7 +91,6 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
 
-
         // クールタイムのカウントダウン
         if (dodgeCooldownTimer > 0f)
         {
@@ -148,7 +147,7 @@ public class PlayerMove : MonoBehaviour
         UpdateMoveInput(kb);
 
         // スペースで回避開始
-        if (kb.spaceKey.wasPressedThisFrame && !attack.IsAttacking && !isDodging && !isDodgePending && dodgeCooldownTimer <= 0f)
+        if (kb.spaceKey.wasPressedThisFrame && !attack.IsAttacking && !isDodging && !isDodgePending && dodgeCooldownTimer <= 0f && !skillMane.isUsingSkill) 
         {
             StartDodge();
             attack.ResetCombo();
@@ -171,7 +170,7 @@ public class PlayerMove : MonoBehaviour
     // 物理処理
     void FixedUpdate()
     {
-        if (attack.IsAttacking || isBeingHit) return;
+        if (attack.IsAttacking || isBeingHit || skillMane.isUsingSkill) return;
 
         dt = Time.fixedDeltaTime;
 
@@ -217,7 +216,7 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
-        if (skillMane.isUsingSkill) return;
+        //if (skillMane.isUsingSkill) return;
         MovePlayer();
     }
 
@@ -225,6 +224,7 @@ public class PlayerMove : MonoBehaviour
     void UpdateMoveInput(Keyboard kb)
     {
         if (CanNotMoving()) return;
+        if (skillMane.isUsingSkill) return;
         //if (skillMane.isUsingSkill) return;
         moveInput = Vector3.zero;
 
@@ -298,7 +298,6 @@ public class PlayerMove : MonoBehaviour
         if (canNotMove) return;
         if (moveInput == Vector3.zero) return;
 
-        
 
         rb.MovePosition(rb.position + moveInput * speed * dt);
 
@@ -314,7 +313,7 @@ public class PlayerMove : MonoBehaviour
     // 回避開始
     void StartDodge()
     {
-        if (CanNotMoving()) return;
+        if (CanNotMoving() || skillMane.isUsingSkill) return;
         if (moveInput != Vector3.zero)
         {
             dodgeDirection = moveInput.normalized;

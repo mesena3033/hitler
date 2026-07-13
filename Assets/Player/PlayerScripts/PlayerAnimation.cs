@@ -7,6 +7,7 @@ public class PlayerAnimation : MonoBehaviour
     private PlayerMove move;
     private PlayerAttack attack;
     private PlayerStatus status;
+    private NEWSkillMane skillMane;
 
     public RuntimeAnimatorController mainController;
     bool isMoving;
@@ -16,6 +17,7 @@ public class PlayerAnimation : MonoBehaviour
         animator = GetComponent<Animator>();
         move = GetComponent<PlayerMove>();
         attack = GetComponent<PlayerAttack>();
+        skillMane = GetComponent<NEWSkillMane>();
         // アニメーターを物理と同期
         if (animator != null) animator.updateMode = AnimatorUpdateMode.Fixed;
         status = GetComponent<PlayerStatus>();
@@ -23,6 +25,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void Update()
     {
+
         if (move.CanNotMoving())
         {
             animator.speed = 0f;
@@ -32,9 +35,9 @@ public class PlayerAnimation : MonoBehaviour
             animator.speed = 1f;
         }
 
-        isMoving = move.MoveInput != Vector3.zero;
+        isMoving = move.MoveInput != Vector3.zero || skillMane.isUsingSkill;
 
-        if (!move.CanNotMove)
+        if (!move.CanNotMove || !skillMane.isUsingSkill)
         {
             animator.SetBool("IsMoving", isMoving);
             animator.SetBool("IsIdling", !isMoving && !attack.IsAttacking);
