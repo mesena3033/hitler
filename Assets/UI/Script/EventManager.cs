@@ -43,7 +43,7 @@ public class EventManager : MonoBehaviour
     private string sceneName;
     private bool menuActive = false;
 
-    private void Start()
+    private void Awake()
     {
         //  各canvas直下のUIを走査 + アタッチ
         //  title
@@ -113,16 +113,19 @@ public class EventManager : MonoBehaviour
                 titleBackButton.onClick.AddListener(TitleBackButton);
             }
         }
+    }
 
+    private void Start()
+    {
         //  現在のシーン名取得
         sceneName = SceneManager.GetActiveScene().name;
 
         //  タイトルシーンの時タイトル表示
-        if(titlePanel != null && sceneName == "TitleScene")
+        if (titlePanel != null && sceneName == "TitleScene")
         {
             titlePanel.gameObject.SetActive(true);
         }
-        else if(gamePanel != null)
+        else if (gamePanel != null)
         {
             gamePanel.gameObject.SetActive(true);
         }
@@ -271,7 +274,7 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    //  クリア2つはエネミー関係が進んでから
+    //  クリアはエネミー関係が進んでから
     public void StageClear()
     {
         if (resultPanel != null)
