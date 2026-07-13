@@ -29,6 +29,7 @@ public class NEWSkillMane : MonoBehaviour
     {
         Rebuild();
         playerMove = GetComponent<PlayerMove>();
+        
     }
 
 #if UNITY_EDITOR
