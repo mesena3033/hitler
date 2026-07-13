@@ -6,10 +6,6 @@ using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
-    [Header("canvasのみアタッチ")]
-    [SerializeField] private Canvas canvas;
-    [Space]
-
     [Header("シーン名")]
     [SerializeField] private string titleSceneName;
     [SerializeField] private string gameSceneName1;
@@ -17,6 +13,9 @@ public class EventManager : MonoBehaviour
     [SerializeField] private string gameSceneName3; //  予備
 
     //  スクリプトでアタッチするUI
+    //  キャンバス
+    private Canvas canvas;
+
     //  タイトルパネル
     private GameObject titlePanel;
     private Button titleButton;
@@ -33,11 +32,8 @@ public class EventManager : MonoBehaviour
     //  リザルトパネル
     private GameObject resultPanel;
     private TextMeshProUGUI resultText;
-    private Button nextButton;
     private Button restartButton;
     private Button titleBackButton;
-
-    //  クリアパネル(未実装)
 
     //  判定用関数
     private string sceneName;
@@ -45,6 +41,8 @@ public class EventManager : MonoBehaviour
 
     private void Awake()
     {
+        canvas = FindFirstObjectByType<Canvas>();
+
         //  各canvas直下のUIを走査 + アタッチ
         //  title
         if (canvas.transform.Find("TitlePanel") != null)
@@ -97,16 +95,13 @@ public class EventManager : MonoBehaviour
             {
                 resultText = resultPanel.transform.Find("ResultText").GetComponent<TextMeshProUGUI>();
             }
-            if (resultPanel.transform.Find("NextButton") != null)
-            {
-                nextButton = resultPanel.transform.Find("NextButton").GetComponent<Button>();
-                nextButton.onClick.AddListener(NextButton);
-            }
+
             if (resultPanel.transform.Find("RestartButton") != null)
             {
                 restartButton = resultPanel.transform.Find("RestartButton").GetComponent<Button>();
                 restartButton.onClick.AddListener(RestartButton);
             }
+
             if (resultPanel.transform.Find("TitleBackButton") != null)
             {
                 titleBackButton = resultPanel.transform.Find("TitleBackButton").GetComponent<Button>();
@@ -144,7 +139,7 @@ public class EventManager : MonoBehaviour
 #if UNITY_EDITOR
             if (Keyboard.current.uKey.wasPressedThisFrame)
 #else
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+            if (Keyboard.current.escapeKey.wasPressedThisFrame)
 #endif 
             {
                 MenuButton();
@@ -268,24 +263,6 @@ public class EventManager : MonoBehaviour
 
             //  デス時はリスタート
             resultText.text = "Never Give Up";
-
-            nextButton.gameObject.SetActive(false);
-            restartButton.gameObject.SetActive(true);
-        }
-    }
-
-    //  クリアはエネミー関係が進んでから
-    public void StageClear()
-    {
-        if (resultPanel != null)
-        {
-            resultPanel.gameObject.SetActive(true);
-
-            //  クリア時はリザルトと、Next
-            resultText.text = "Stage Clear!";
-
-            nextButton.gameObject.SetActive(true);
-            restartButton.gameObject.SetActive(false);
         }
     }
 }
