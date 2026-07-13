@@ -18,12 +18,11 @@ public class NEWSkillMane : MonoBehaviour
     private Dictionary<int, float> cooldowns =
         new Dictionary<int, float>();
 
+    bool isUsingSkill = false;
+
     public int SkillCount => skillList.Count;
 
     public float AnimatorChangeTime = 0.1f;
-
-    // ÉXÉLÉãèIóπèàóù
-    bool skillActive = false;
 
     private void Awake()
     {
@@ -101,9 +100,11 @@ public class NEWSkillMane : MonoBehaviour
 
             if (!string.IsNullOrEmpty(data.animatorBool))
             {
+                isUsingSkill = true;
                 animator.SetBool(data.animatorBool, true);
                 StartCoroutine(ResetBool(data.animatorBool, data.resetTime));
                 StartCoroutine(ResetAnimator(data.animatorController.name, AnimatorChangeTime));
+                isUsingSkill = false;
             }
         }
 
