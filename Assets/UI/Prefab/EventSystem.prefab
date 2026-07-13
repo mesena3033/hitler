@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ad6d1db74b2e7419f1449ddbe0bf61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
   titleSceneName: TitleScene
   gameSceneName1: PlayerScene
   gameSceneName2: Stage1
+  gameSceneName3: 

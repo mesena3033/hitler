@@ -484,17 +484,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!114 &691923353 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9202555998393265116, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-  m_PrefabInstance: {fileID: 1609703191}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab0b8638ddd556649adee3d41f94e6e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &914666732
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -503,10 +492,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2748988486013152344, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
-      propertyPath: clock
-      value: 
-      objectReference: {fileID: 691923353}
     - target: {fileID: 3599890172395690983, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -551,10 +536,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 9197049493446155478, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.100821786
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -571,10 +552,6 @@ PrefabInstance:
     - target: {fileID: 2635120875105801017, guid: 32f91e8c6b22e3f41ac8c87d827544fd, type: 3}
       propertyPath: m_Name
       value: EventSystem
-      objectReference: {fileID: 0}
-    - target: {fileID: 4784118431583877200, guid: 32f91e8c6b22e3f41ac8c87d827544fd, type: 3}
-      propertyPath: canvas
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5446221802273057024, guid: 32f91e8c6b22e3f41ac8c87d827544fd, type: 3}
       propertyPath: m_LocalPosition.x
