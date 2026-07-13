@@ -63,6 +63,7 @@ public class EventManager : MonoBehaviour
                 titleMenuButton.onClick.AddListener(MenuButton);
             }
         }
+
         //  game
         if (canvas.transform.Find("GamePanel") != null)
         {
