@@ -55,8 +55,8 @@ public class SkillSlot : MonoBehaviour,
             icon.sprite = null;
             icon.enabled = false;
             skillName.text = "";
-            Debug.Log("ID" + skillID);
-            Debug.Log(icon.sprite);
+            //Debug.Log("ID" + skillID);
+            //Debug.Log(icon.sprite);
             return;
         }
 

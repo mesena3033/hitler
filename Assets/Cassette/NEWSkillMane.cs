@@ -11,6 +11,7 @@ public class NEWSkillMane : MonoBehaviour
     public Animator animator;
     public EffectManager effectManager;
     public PlayerAnimation playerAnimation;
+    private PlayerMove playerMove;
 
     private Dictionary<int, SkillDataNo2> skillDict =
         new Dictionary<int, SkillDataNo2>();
@@ -27,6 +28,7 @@ public class NEWSkillMane : MonoBehaviour
     private void Awake()
     {
         Rebuild();
+        playerMove = GetComponent<PlayerMove>();
     }
 
 #if UNITY_EDITOR
@@ -58,6 +60,12 @@ public class NEWSkillMane : MonoBehaviour
     // スキルを使用するメソッド
     public bool UseSkill(int id)
     {
+        if (playerMove.IsDodging)
+        {
+            return false;
+
+        }
+
         // スキルが存在するか確認
         if (!skillDict.TryGetValue(id, out var data))
             return false;
