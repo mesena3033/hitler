@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -7,22 +8,27 @@ public class WaveSystem : MonoBehaviour
 {
     // ウェーブ数
     int waveCount = 3;
-    int currentWave = 0; 
+    int currentWave = 0;
+
+    public int CurrentWave => currentWave;
+
     // ウェーブ時間
     float waveTime = 0f;
     // 時間制限
     float timeLimit = 5f;
 
     // ウェーブ中か
-    bool isWaveRunning = false;
+    public bool isWaveRunning = false;
 
     bool isClear = false;
 
     private PlayerStatus status;
+    private WavePanel panel;
 
     private void Start()
     {
         status = FindFirstObjectByType<PlayerStatus>();
+        panel = GetComponent<WavePanel>();
         currentWave = 0;
         waveTime = timeLimit;
         isWaveRunning = false;
@@ -74,6 +80,8 @@ public class WaveSystem : MonoBehaviour
             currentWave++;
             waveTime = timeLimit;
         }
+
+
     }
 
 }

@@ -15,6 +15,8 @@ public class PlayerMove : MonoBehaviour
     private PlayerAttack attack;
     private PlayerAnimation playerAnimation;
     private PlayerStatus status;
+    private WaveSystem waveSystem;
+    private NEWSkillMane skillMane;
 
     // 入力保持
     private Vector3 moveInput;
@@ -77,6 +79,9 @@ public class PlayerMove : MonoBehaviour
         attack = GetComponent<PlayerAttack>();
         playerAnimation = GetComponent<PlayerAnimation>();
         status = GetComponent<PlayerStatus>();
+        waveSystem = FindFirstObjectByType<WaveSystem>();
+        skillMane = FindFirstObjectByType<NEWSkillMane>();
+
         // Rigidbody の補間を有効にして、物理移動とアニメーションのズレを軽減
         if (rb != null) rb.interpolation = RigidbodyInterpolation.Interpolate;
         
@@ -287,9 +292,11 @@ public class PlayerMove : MonoBehaviour
     // プレイヤー移動
     void MovePlayer()
     {
-        canNotMove = Cursor.visible;
+        canNotMove = Cursor.visible || !waveSystem.isWaveRunning;
         if (canNotMove) return;
         if (moveInput == Vector3.zero) return;
+
+        if (skillMane.isUsingSkill) return;
 
         rb.MovePosition(rb.position + moveInput * speed * dt);
 
