@@ -11,6 +11,7 @@ public class PlayerStatus : MonoBehaviour
 {
     // HP
     private int maxHP = 100;
+    public int MaxHP => maxHP;
     private int currentHP;
 
     //private float hitDisableDuration = 0.5f;
