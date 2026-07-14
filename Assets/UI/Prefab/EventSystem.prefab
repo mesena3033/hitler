@@ -93,6 +93,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   titleSceneName: TitleScene
-  gameSceneName1: PlayerScene
-  gameSceneName2: Stage1
-  gameSceneName3: 
+  gameSceneName1: Stage1
+  gameSceneName2: 

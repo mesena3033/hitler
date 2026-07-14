@@ -10,7 +10,6 @@ public class EventManager : MonoBehaviour
     [SerializeField] private string titleSceneName;
     [SerializeField] private string gameSceneName1;
     [SerializeField] private string gameSceneName2;
-    [SerializeField] private string gameSceneName3; //  予備
 
     //  スクリプトでアタッチするUI
     //  キャンバス
@@ -24,6 +23,7 @@ public class EventManager : MonoBehaviour
     //  ゲームパネル
     private GameObject gamePanel;
     private Button gameMenuButton;
+
 
     //  メニューパネル
     private GameObject menuPanel;
@@ -155,14 +155,9 @@ public class EventManager : MonoBehaviour
             SceneManager.LoadScene(gameSceneName1);
         }
         //  PlayerScene => Stage1
-        if (sceneName == gameSceneName1 && gameSceneName2 != null)
+        else if (sceneName == gameSceneName1 && gameSceneName2 != null)
         {
             SceneManager.LoadScene(gameSceneName2);
-        }
-        //  Stage1 => ?
-        else if (sceneName == gameSceneName2 && gameSceneName3 != null)
-        {
-            SceneManager.LoadScene(gameSceneName3);
         }
     }
 
@@ -243,11 +238,9 @@ public class EventManager : MonoBehaviour
             if (child.gameObject == gamePanel)
                 continue;
 
-            //  Panelタグに限定
             if (child.gameObject.tag != "Panel")
                 continue;
 
-            // アクティブなら true
             if (child.gameObject.activeSelf)
                 return true;
         }
@@ -258,10 +251,7 @@ public class EventManager : MonoBehaviour
     {
         if (resultPanel != null)
         {
-            //  プレイヤーが死んだらresultの表示
             resultPanel.gameObject.SetActive(true);
-
-            //  デス時はリスタート
             resultText.text = "Never Give Up";
         }
     }
