@@ -28,7 +28,7 @@ public class PlayerMove : MonoBehaviour
 
     // 被弾
     private bool isBeingHit = false;
-    public bool IsBeingHit => isBeingHit;
+    public bool IsBeingHit => isBeingHit; // 被弾状態
 
     // 無敵タイマー
     private float hitDisableTimer = 1f;

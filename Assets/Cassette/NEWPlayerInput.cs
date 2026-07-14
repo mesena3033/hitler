@@ -10,16 +10,22 @@ public class NewMonoBehaviourScript : MonoBehaviour
     [SerializeField]
     private SkillSlotMane SlotManager;
 
+    private PlayerMove playerMove;
+
     private void Awake()
     {
         if (skillManager == null)
             skillManager = GetComponent<NEWSkillMane>();
+
+        playerMove = GetComponent<PlayerMove>();
     }
 
     private void Update()
     {
         var kb = Keyboard.current;
         if (kb == null) return;
+        /////////////// îÌíeíÜÇÕèoÇ≥Ç»Ç¢ //////////////
+        if (playerMove.IsBeingHit) return;
 
         if (kb.digit1Key.wasPressedThisFrame)
         {
