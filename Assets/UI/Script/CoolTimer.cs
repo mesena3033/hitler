@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-//UI‚ðŽg‚¤‚Ì‚Å’Ç‹L
 using UnityEngine.UI;
 
 public class Clock : MonoBehaviour
