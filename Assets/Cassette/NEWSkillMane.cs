@@ -170,4 +170,15 @@ public class NEWSkillMane : MonoBehaviour
         Execute(data);
        
     }
+
+    public void HitChangeAnimation()
+    {
+        if(playerMove.IsBeingHit)
+        {
+            if (animator != null)
+            {
+                animator.runtimeAnimatorController = playerAnimation.mainController;
+            }
+        }
+    }
 }
