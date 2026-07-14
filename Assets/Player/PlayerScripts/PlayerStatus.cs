@@ -166,9 +166,11 @@ public class PlayerStatus : MonoBehaviour
     {
         if (!isInvincible || move.CanNotMoving())
         {
+            skillMane.HitChangeAnimation();
             float raw = enemyAttackPower;
             int dmg = Mathf.Max(0, Mathf.FloorToInt(raw - defensePower));
             isDamaged = true;
+            
 
             ////////////////
             Task task = ApplyDamage(dmg);

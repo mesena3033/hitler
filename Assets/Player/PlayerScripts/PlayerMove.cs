@@ -153,7 +153,8 @@ public class PlayerMove : MonoBehaviour
             attack.ResetCombo();
         }
 
-        //  
+        // アニメーター切り替え
+        
         
     }
 
