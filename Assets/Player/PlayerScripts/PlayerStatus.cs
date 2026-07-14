@@ -15,6 +15,7 @@ public class PlayerStatus : MonoBehaviour
 
     //private float hitDisableDuration = 0.5f;
     private PlayerMove move;
+
     public int CurrentHP => currentHP;
 
     private bool isPlayerDead = false;
@@ -170,7 +171,7 @@ public class PlayerStatus : MonoBehaviour
             float raw = enemyAttackPower;
             int dmg = Mathf.Max(0, Mathf.FloorToInt(raw - defensePower));
             isDamaged = true;
-            
+            skillMane.HitChangeAnimation();
 
             ////////////////
             Task task = ApplyDamage(dmg);
