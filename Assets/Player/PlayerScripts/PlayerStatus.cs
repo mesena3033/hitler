@@ -24,7 +24,6 @@ public class PlayerStatus : MonoBehaviour
     private bool isInvincible = false;
     // 被弾判定
     private bool isDamaged = false;
-    public bool IsDamaged => isDamaged;
     public bool IsInvincible => isInvincible;
     [SerializeField] private float invincibilityDuration = 3.5f;
     private float invincibilityTimer = 0f;
