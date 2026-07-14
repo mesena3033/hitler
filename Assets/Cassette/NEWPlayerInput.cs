@@ -24,8 +24,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         var kb = Keyboard.current;
         if (kb == null) return;
-        /////////////// ”í’e’†‚Ío‚³‚È‚¢ //////////////
+        
         if (playerMove.IsBeingHit) return;
+
+        if (skillManager.isUsingSkill) return;
 
         if (kb.digit1Key.wasPressedThisFrame)
         {
