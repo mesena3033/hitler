@@ -35,6 +35,7 @@ public class PlayerStatus : MonoBehaviour
     // スキルID取得して格納
     // UI
 
+
     // 攻撃力
     private float baseAttackPower = 10f;
 

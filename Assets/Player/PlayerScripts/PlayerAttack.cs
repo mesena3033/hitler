@@ -251,7 +251,7 @@ public class PlayerAttack : MonoBehaviour
     }
 
     // バフ系スキルメソッド
-    public float GetSkillDamage(float amount)
+    public float ATKUp(float amount)
     {
         return amount;
     }
