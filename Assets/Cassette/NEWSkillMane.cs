@@ -19,6 +19,8 @@ public class NEWSkillMane : MonoBehaviour
     private Dictionary<int, float> cooldowns =
         new Dictionary<int, float>();
 
+    private GameObject currentEffect;
+
     public bool isUsingSkill = false;
 
     public int SkillCount => skillList.Count;
@@ -123,7 +125,11 @@ public class NEWSkillMane : MonoBehaviour
             effectManager.SpawnEffect(
                 data.effectPrefab,
                 data.effectSpawnPoint,
-                data.effectDelay
+                data.effectDelay,
+                effect =>
+                {
+                    currentEffect = effect;
+                }
             );
         }
     }
@@ -138,11 +144,8 @@ public class NEWSkillMane : MonoBehaviour
     public IEnumerator ResetAnimator(float time)
     {
         yield return new WaitForSeconds(time);
-        // ï€ë∂ÇµÇΩPlayerAnimationÇåƒÇ—èoÇµÇƒÅAAnimatorÇ…äiî[
-        if (animator.runtimeAnimatorController != null)
-        {
-            animator.runtimeAnimatorController = playerAnimation.mainController;
-        }
+       
+       HitChangeAnimation();
 
         isUsingSkill = false;
     }
@@ -168,15 +171,22 @@ public class NEWSkillMane : MonoBehaviour
     private void ExecuteSupport(SkillDataNo2 data)
     {
         Execute(data);
-       
     }
 
     public void HitChangeAnimation()
     {
+        effectManager.CancelSpawn();
+
+        // ï€ë∂ÇµÇΩPlayerAnimationÇåƒÇ—èoÇµÇƒÅAAnimatorÇ…äiî[
         if (animator.runtimeAnimatorController != null)
         {
             animator.runtimeAnimatorController = playerAnimation.mainController;
         }
-        isUsingSkill = false;
+
+        if (currentEffect != null)
+        {
+            Destroy(currentEffect);
+            currentEffect = null;
+        }
     }
 }
