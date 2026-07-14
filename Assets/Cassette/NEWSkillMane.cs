@@ -113,7 +113,7 @@ public class NEWSkillMane : MonoBehaviour
             {
                 animator.SetBool(data.animatorBool, true);
                 StartCoroutine(ResetBool(data.animatorBool, data.resetTime));
-                StartCoroutine(ResetAnimator(data.animatorController.name, AnimatorChangeTime));
+                StartCoroutine(ResetAnimator(AnimatorChangeTime));
             }
         }
 
@@ -135,7 +135,7 @@ public class NEWSkillMane : MonoBehaviour
         animator.SetBool("IsIdle", true);
     }
 
-    public IEnumerator ResetAnimator(string name, float time)
+    public IEnumerator ResetAnimator(float time)
     {
         yield return new WaitForSeconds(time);
         // ï€ë∂ÇµÇΩPlayerAnimationÇåƒÇ—èoÇµÇƒÅAAnimatorÇ…äiî[
@@ -173,12 +173,10 @@ public class NEWSkillMane : MonoBehaviour
 
     public void HitChangeAnimation()
     {
-        if(playerMove.IsBeingHit)
+        if (animator.runtimeAnimatorController != null)
         {
-            if (animator != null)
-            {
-                animator.runtimeAnimatorController = playerAnimation.mainController;
-            }
+            animator.runtimeAnimatorController = playerAnimation.mainController;
         }
+        isUsingSkill = false;
     }
 }
