@@ -27,8 +27,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
         
         if (playerMove.IsBeingHit) return;
 
-        if (skillManager.isUsingSkill) return;
-
         if (kb.digit1Key.wasPressedThisFrame)
         {
             //Debug.Log($"Slot0 = {SlotManager.GetSkillID(0)}");
