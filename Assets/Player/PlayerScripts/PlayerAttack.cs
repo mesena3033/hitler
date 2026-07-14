@@ -1,14 +1,16 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class PlayerAttack : MonoBehaviour
 {
     private float attackDuration = .8f;
     private int maxCombo = 3;
-
+    
     private Animator animator;
     [SerializeField] private Collider swordCollider;
     private SwordHit swordHitComponent;
@@ -22,7 +24,8 @@ public class PlayerAttack : MonoBehaviour
     private bool isComboQueued;   // コンボ受付時間か
     private int comboCount = 0;
     private float attackTimer;
-
+    private bool isSkilled = false;
+    private int skillDamage = 0;
     // 攻撃CT
     private float attackCT = 0.5f;
     private float currentAttack = 0f;
@@ -39,6 +42,7 @@ public class PlayerAttack : MonoBehaviour
         status = GetComponent<PlayerStatus>();
         animator = GetComponent<Animator>();
 
+        isSkilled = false;
         // 剣のコンポーネントを取得
         swordHitComponent = GetComponentInChildren<SwordHit>();
         if (swordHitComponent != null)
@@ -133,11 +137,15 @@ public class PlayerAttack : MonoBehaviour
 
         animator.Play("Combo" + comboCount);
 
-        // 攻撃時に剣の当たり判定を有効化
-        if (swordCollider != null) swordCollider.enabled = true;
-
+        // 0.3秒後判定を出す
+        StartCoroutine(ColliderDelay());
     }
 
+    private IEnumerator ColliderDelay()
+    {
+        yield return new WaitForSeconds(0.3f);
+        if (swordCollider != null) swordCollider.enabled = true;
+    }
 
     void EndAttack()
     {
@@ -179,7 +187,7 @@ public class PlayerAttack : MonoBehaviour
     public void OnSwordHit(Collider other)
     {
         if (other == null) return;
-
+        int dmg = 0;
 
         int id = other.gameObject.GetInstanceID();
         if (hitTargets.Contains(id)) return; // 既にヒット済み
@@ -194,7 +202,21 @@ public class PlayerAttack : MonoBehaviour
         var targetStatus = other.GetComponent<PlayerStatus>();
         if (targetStatus != null) targetDefense = targetStatus.DefensePower;
 
-        int dmg = CalculateDamage(targetDefense, false);
+        
+        if (!isSkilled)
+        {
+            dmg = CalculateDamage(targetDefense, false);
+            //damageable.ApplyDamage(dmg);
+        }
+
+        else 
+        {
+            dmg = CalculateDamage(targetDefense, true, skillDamage);
+            //Debug.Log("スキルだめーじ" + skillDamage);
+            //damageable.ApplyDamage(dmg);
+            //isSkilled = false;
+        }
+
         damageable.ApplyDamage(dmg);
 
         // デバッグ出力: プレイヤーHP, 敵HP, プレイヤー攻撃力, 敵防御力
@@ -221,6 +243,10 @@ public class PlayerAttack : MonoBehaviour
     // 攻撃系スキルメソッド
     public int SkillDamage(int amount)
     {
+        isSkilled = true;
+        StartAttack();
+        skillDamage = amount;
+        //Debug.Log("攻撃力 =" + amount);
         return amount;
     }
 
