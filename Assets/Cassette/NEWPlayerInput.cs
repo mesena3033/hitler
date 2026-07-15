@@ -12,12 +12,16 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     private PlayerMove playerMove;
 
+    private PlayerStatus playerStatus;
+
     private void Awake()
     {
         if (skillManager == null)
             skillManager = GetComponent<NEWSkillMane>();
 
         playerMove = GetComponent<PlayerMove>();
+
+        playerStatus = GetComponent<PlayerStatus>();
     }
 
     private void Update()
@@ -26,6 +30,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
         if (kb == null) return;
         
         if (playerMove.IsBeingHit) return;
+
+        if (playerStatus.IsPlayerDead) return;
+        if (skillManager.isUsingSkill) return;
 
         if (kb.digit1Key.wasPressedThisFrame)
         {
