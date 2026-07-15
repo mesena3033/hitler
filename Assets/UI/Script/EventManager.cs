@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class EventManager : MonoBehaviour
 {
     [Header("シーン名")]
-    [SerializeField] private string titleSceneName;
+    private string titleSceneName = "TitleScene";
     [SerializeField] private string gameSceneName1;
     [SerializeField] private string gameSceneName2;
 
@@ -23,7 +23,6 @@ public class EventManager : MonoBehaviour
     //  ゲームパネル
     private GameObject gamePanel;
     private Button gameMenuButton;
-
 
     //  メニューパネル
     private GameObject menuPanel;
