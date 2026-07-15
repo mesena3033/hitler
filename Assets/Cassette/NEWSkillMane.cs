@@ -165,7 +165,7 @@ public class NEWSkillMane : MonoBehaviour
         PlayerAttack playerAttack = GetComponent<PlayerAttack>();
         if (playerAttack != null)
         {
-            playerAttack.GetSkillDamage(data.buffValue);
+            playerAttack.ATKUp(data.buffValue);
         }
     }
     private void ExecuteSupport(SkillDataNo2 data)

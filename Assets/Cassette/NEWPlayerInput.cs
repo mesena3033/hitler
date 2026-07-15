@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// �X�L�������̂��߂̃L�[�{�[�h���͂��Ď�����X�N���v�g
+// スキル発動のためのキーボード入力を監視するスクリプト
 public class NewMonoBehaviourScript : MonoBehaviour
 {
     [SerializeField]
@@ -11,6 +11,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private SkillSlotMane SlotManager;
 
     private PlayerMove playerMove;
+    private PlayerStatus playerStatus;
 
     private PlayerStatus playerStatus;
 
@@ -20,7 +21,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
             skillManager = GetComponent<NEWSkillMane>();
 
         playerMove = GetComponent<PlayerMove>();
-
         playerStatus = GetComponent<PlayerStatus>();
     }
 
@@ -30,7 +30,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
         if (kb == null) return;
         
         if (playerMove.IsBeingHit) return;
-
         if (playerStatus.IsPlayerDead) return;
         if (skillManager.isUsingSkill) return;
 
