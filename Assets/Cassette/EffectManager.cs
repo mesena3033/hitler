@@ -50,7 +50,6 @@ public class EffectManager : MonoBehaviour
 
         GameObject obj =
             Instantiate(prefab, pos, rot);
-        Debug.Log("Effect Spawn");
 
         onSpawn?.Invoke(obj);
 
@@ -59,10 +58,8 @@ public class EffectManager : MonoBehaviour
 
     public void CancelSpawn()
     {
-        Debug.Log("Cancel");
         if (spawnCoroutine != null)
         {
-            Debug.Log("Coroutine Stop");
             StopCoroutine(spawnCoroutine);
             spawnCoroutine = null;
         }

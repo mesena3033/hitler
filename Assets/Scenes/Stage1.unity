@@ -368,14 +368,17 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8880968194012508882, guid: 8ee1b80487ab90047b39abe75fcb3417, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 801617485}
   m_SourcePrefab: {fileID: 100100000, guid: 8ee1b80487ab90047b39abe75fcb3417, type: 3}
 --- !u!114 &235846694 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 393232373621839452, guid: 8ee1b80487ab90047b39abe75fcb3417, type: 3}
   m_PrefabInstance: {fileID: 235846693}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 801617483}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f91c1ea60ac92d44e9d454abc50c7d73, type: 3}
@@ -392,6 +395,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &801617483 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8880968194012508882, guid: 8ee1b80487ab90047b39abe75fcb3417, type: 3}
+  m_PrefabInstance: {fileID: 235846693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &801617485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801617483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc6e13e44600ea341839572b8b03eda6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObject: {fileID: 2044868738}
 --- !u!1 &1017229697
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,7 +648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4491692865028931405, guid: 02fc97ee361571f4c92c77d5909e08a1, type: 3}
       propertyPath: maxHP
-      value: 1
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -688,7 +709,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4491692865028931405, guid: 02fc97ee361571f4c92c77d5909e08a1, type: 3}
       propertyPath: maxHP
-      value: 1
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -782,7 +803,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4491692865028931405, guid: 02fc97ee361571f4c92c77d5909e08a1, type: 3}
       propertyPath: maxHP
-      value: 1
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -844,6 +865,18 @@ PrefabInstance:
     - target: {fileID: 8829501029181951945, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
       propertyPath: m_Name
       value: PPPlayer Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989636503676688432, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
+      propertyPath: skillList.Array.data[0].damage
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989636503676688432, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
+      propertyPath: skillList.Array.data[1].damage
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989636503676688432, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
+      propertyPath: skillList.Array.data[1].cooldown
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -926,6 +959,10 @@ PrefabInstance:
     - target: {fileID: 590512708249780261, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1116738469349609898, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1485059631609539127, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: m_IsActive
