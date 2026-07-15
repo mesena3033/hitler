@@ -13,8 +13,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private PlayerMove playerMove;
     private PlayerStatus playerStatus;
 
-    private PlayerStatus playerStatus;
-
     private void Awake()
     {
         if (skillManager == null)
