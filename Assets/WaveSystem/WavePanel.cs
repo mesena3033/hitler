@@ -1,18 +1,20 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class WavePanel : MonoBehaviour
 {
     private WaveSystem waveSystem;
-    private Text waveStartText;
+    private TextMeshProUGUI waveStartText;
     void Start()
     {
-        waveSystem = GetComponent<WaveSystem>();
+        waveSystem = FindFirstObjectByType<WaveSystem>();
     }
 
     public void WaveStartPanel()
     {
-        this.waveStartText = GetComponent<Text>();
+        if (waveSystem == null) return;
+        this.waveStartText = GetComponent<TextMeshProUGUI>();
         this.waveStartText.text = "Wave" + waveSystem.CurrentWave + "Start";
     }
 
