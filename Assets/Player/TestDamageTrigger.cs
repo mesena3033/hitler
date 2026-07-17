@@ -22,18 +22,12 @@ public class TestDamageTrigger : MonoBehaviour
 
     void Update()
     {
-        //var kb = Keyboard.current;
-        //if (kb == null) return;
+        var kb = Keyboard.current;
+        if (kb == null) return;
 
-        // if (kb.kKey.wasPressedThisFrame)
-    }
-
-
-    private void OnCollisionEnter(Collision enemyAttack)
-    {
-        // ダメージ適用
-        if (enemyAttack.gameObject.CompareTag("Bullet"))
+        if (kb.kKey.wasPressedThisFrame)
         {
+            // ダメージ適用
             if (status != null)
             {
                 status.ReceiveAttack(enemyAttackPower);
@@ -60,6 +54,4 @@ public class TestDamageTrigger : MonoBehaviour
             Debug.Log($"TestDamageTrigger: applied attack {enemyAttackPower}");
         }
     }
-
 }
-
