@@ -926,7 +926,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9016556768850650549
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1023,7 +1023,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 37.799988, y: -255}
+  m_AnchoredPosition: {x: 37.80005, y: -255}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &7800180539606920083
@@ -1375,7 +1375,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 37.799988, y: -342}
+  m_AnchoredPosition: {x: 37.80005, y: -342}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1366032897529819481
@@ -2056,7 +2056,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 37.8, y: -168}
+  m_AnchoredPosition: {x: 37.80005, y: -168}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &5885659333644248520
@@ -3529,7 +3529,7 @@ RectTransform:
   m_Father: {fileID: 7751082223087238319}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.58, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5016,7 +5016,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6518618206691071962, guid: bd0be370f12b02549aa208e589808830, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8962826301970732810, guid: bd0be370f12b02549aa208e589808830, type: 3}
       propertyPath: m_Pivot.x
@@ -5127,7 +5127,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 919511524307598606, guid: 6891f633c28f5784e98ea4fd4343b72d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -700
       objectReference: {fileID: 0}
     - target: {fileID: 1416229205364554966, guid: 6891f633c28f5784e98ea4fd4343b72d, type: 3}
       propertyPath: m_Pivot.x
