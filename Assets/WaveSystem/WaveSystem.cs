@@ -82,12 +82,13 @@ public class WaveSystem : MonoBehaviour
             currentWave++;
             waveTime = timeLimit;
         }
+
+
     }
 
-    //ウェーブスタートの時に文字を出す
     private void WaveStart()
     {
         panel.WaveStartPanel();
     }
-    
+
 }
