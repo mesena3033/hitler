@@ -9,6 +9,7 @@ TagManager:
   - OnlyCanvas
   - Panel
   - Object
+  - Bullet
   layers:
   - Default
   - TransparentFX
