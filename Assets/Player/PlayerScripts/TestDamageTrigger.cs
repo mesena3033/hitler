@@ -19,10 +19,14 @@ public class TestDamageTrigger : MonoBehaviour
 
     void Update()
     {
-        var kb = Keyboard.current;
-        if (kb == null) return;
+        //var kb = Keyboard.current;
+        //if (kb == null) return;
 
-        if (kb.kKey.wasPressedThisFrame && !status.IsInvincible)
+        //if (kb.kKey.wasPressedThisFrame && !status.IsInvincible)
+    }
+    private void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.CompareTag("Bullet"))
         {
             // ダメージ適用
             if (status != null)
@@ -47,7 +51,8 @@ public class TestDamageTrigger : MonoBehaviour
             {
                 attack.ResetCombo();
             }
-
         }
     }
+        
+    
 }
