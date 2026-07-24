@@ -7,7 +7,7 @@ public class ShortEnemy : EnemyBase
     // 攻撃のオーバーライド
     protected override void Attack()
     {
-        animator.SetTrigger("isAttacking");
+        animator.SetBool("isAttacking",true);
     }
 
 }
