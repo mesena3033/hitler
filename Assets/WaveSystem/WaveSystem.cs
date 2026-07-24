@@ -2,6 +2,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
 
 public class WaveSystem : MonoBehaviour
@@ -22,13 +23,15 @@ public class WaveSystem : MonoBehaviour
 
     bool isClear = false;
 
+    private PlayerMove move;
     private PlayerStatus status;
     private WavePanel panel;
 
     private void Start()
     {
         status = FindFirstObjectByType<PlayerStatus>();
-        panel = GetComponent<WavePanel>();
+        panel = FindFirstObjectByType<WavePanel>();
+        move = FindFirstObjectByType<PlayerMove>();
         currentWave = 0;
         waveTime = timeLimit;
         isWaveRunning = false;
@@ -67,6 +70,8 @@ public class WaveSystem : MonoBehaviour
         {
             isWaveRunning = false;
             WaveEnd();
+
+
         }
 
 
@@ -76,19 +81,20 @@ public class WaveSystem : MonoBehaviour
     private void WaveEnd()
     {
         //Debug.Log("クリア");
-
-        if(currentWave < waveCount)
+        panel.waveStartText.text = "クリア";
+        move.CanNotMove = true;
+        if (currentWave < waveCount)
         {
             currentWave++;
             waveTime = timeLimit;
         }
-
 
     }
 
     private void WaveStart()
     {
         panel.WaveStartPanel();
+        move.CanNotMove = false;
     }
 
 }
