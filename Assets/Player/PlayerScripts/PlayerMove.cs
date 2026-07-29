@@ -43,7 +43,6 @@ public class PlayerMove : MonoBehaviour
         set { canNotMove = value; }
     }
 
-
     // 回避
     [Header("回避")]
     private float dodgeDistance = 10f;  // 10より大きくすると貫通する
@@ -114,6 +113,7 @@ public class PlayerMove : MonoBehaviour
         {
             Time.timeScale = 0f;
         }
+
         else
         {
             Time.timeScale = 1f;

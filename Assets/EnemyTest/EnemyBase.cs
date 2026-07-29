@@ -43,7 +43,7 @@ public abstract class EnemyBase : MonoBehaviour
         }
 
         // 範囲外で詰めてくる
-        else if (distance > attackRange)
+        if (distance > attackRange)
         {
             animator.SetBool("isIdling", false);
             animator.SetBool("isMoving", true);
@@ -57,6 +57,7 @@ public abstract class EnemyBase : MonoBehaviour
             animator.SetBool("isIdling", true);
             animator.SetBool("isMoving", false);
             agent.isStopped = false;
+            OnAttackEnd();
             
         }
 

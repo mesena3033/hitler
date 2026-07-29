@@ -4,6 +4,7 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
+using Unity.VisualScripting.Dependencies.Sqlite;
 
 public class WaveSystem : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class WaveSystem : MonoBehaviour
     float waveTime = 0f;
     // 時間制限
     float timeLimit = 5f;
+
+    // ステージクリア時のスキル選択フェーズ
+    float preparationPhase = 20f;
 
     // ウェーブ中か
     public bool isWaveRunning = false;
@@ -41,6 +45,7 @@ public class WaveSystem : MonoBehaviour
         waveTime = timeLimit;
         isWaveRunning = false;
         isWaveStarted = false;
+        preparationPhase = 20f;
     }
 
     private void Update()
@@ -82,7 +87,6 @@ public class WaveSystem : MonoBehaviour
             isWaveRunning = false;
             WaveEnd();
 
-
         }
 
 
@@ -100,6 +104,25 @@ public class WaveSystem : MonoBehaviour
             waveTime = timeLimit;
         }
 
+        // ゲームを止める。
+        // スキルの選択時間を考慮
+        if (preparationPhase > 0.0f)
+        {
+            preparationPhase -= Time.deltaTime;
+        }
+
+
+    }
+
+    private void StageClear()
+    {
+        if(preparationPhase > 0.0f)
+        {
+            preparationPhase -= Time.deltaTime;
+        }
+        
+        
+
     }
 
     private void WaveStart()
@@ -113,4 +136,14 @@ public class WaveSystem : MonoBehaviour
         }
     }
 
+    public bool TimeStop(ref float time)
+    {
+        if (time > 0f)
+        {
+            time -= Time.deltaTime;
+            return false;
+        }
+
+        return true;
+    }
 }
