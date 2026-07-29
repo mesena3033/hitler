@@ -24,6 +24,10 @@ public abstract class EnemyBase : MonoBehaviour
     protected void Update()
     {
         if (player == null) return;
+        if (!agent.isOnNavMesh)
+        {
+            return;
+        }
 
         this.transform.LookAt(player.transform);
 

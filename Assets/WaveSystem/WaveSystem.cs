@@ -21,20 +21,26 @@ public class WaveSystem : MonoBehaviour
     // ウェーブ中か
     public bool isWaveRunning = false;
 
+    // ウェーブ開始した瞬間
+    bool isWaveStarted= false;
+
     bool isClear = false;
 
     private PlayerMove move;
     private PlayerStatus status;
     private WavePanel panel;
+    private EnemySpawner[] spawners;
 
     private void Start()
     {
         status = FindFirstObjectByType<PlayerStatus>();
         panel = FindFirstObjectByType<WavePanel>();
         move = FindFirstObjectByType<PlayerMove>();
+        spawners = FindObjectsByType<EnemySpawner>(FindObjectsSortMode.None);
         currentWave = 0;
         waveTime = timeLimit;
         isWaveRunning = false;
+        isWaveStarted = false;
     }
 
     private void Update()
@@ -48,19 +54,24 @@ public class WaveSystem : MonoBehaviour
         {
             if (!status.IsPlayerDead)
             {
-                isWaveRunning = true;
+                if ((!isWaveStarted))
+                {
+                    isWaveStarted = true;
+                    isWaveRunning = true;
 
+                    WaveStart();
+
+                    //Debug.Log(waveTime);
+                }
                 waveTime -= Time.deltaTime;
 
-                WaveStart();
-
-                //Debug.Log(waveTime);
             }
 
             else
             {
                 // 死亡処理
                 waveTime = 0f;
+                isWaveStarted = false;
                 isWaveRunning = false;
                 WaveEnd();
             }
@@ -95,6 +106,11 @@ public class WaveSystem : MonoBehaviour
     {
         panel.WaveStartPanel();
         move.CanNotMove = false;
+        // 敵スポーン
+        foreach (EnemySpawner spawner in spawners)
+        {
+            spawner.EnemySpawn();
+        }
     }
 
 }
