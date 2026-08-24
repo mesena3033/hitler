@@ -190,6 +190,6 @@ public class NEWSkillMane : MonoBehaviour
         {
             Destroy(currentEffect);
             currentEffect = null;
-        }
+        } // ‚¨ŽŽ‚µ
     }
 }

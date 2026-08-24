@@ -43,5 +43,5 @@ public class SkillDataNo2
     public float healValue;   // Support 用
 
     [Header("スキルレベル")]
-    public int skillLevel;
+    public int skillLevel; // お試し
 }

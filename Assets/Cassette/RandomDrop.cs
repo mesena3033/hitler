@@ -63,7 +63,7 @@ public class RandomDrop : MonoBehaviour
                 $"{skill.skillName} が Lv.{skill.skillLevel} になりました。");
 
             // 同じウェーブでは重複しない
-            candidates.RemoveAt(randomIndex);
+            candidates.RemoveAt(randomIndex); // お試し
         }
     }
 }

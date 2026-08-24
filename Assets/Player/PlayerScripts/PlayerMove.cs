@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
@@ -15,7 +16,7 @@ public class PlayerMove : MonoBehaviour
     private PlayerAttack attack;
     private PlayerAnimation playerAnimation;
     private PlayerStatus status;
-    //private WaveSystem waveSystem;
+    private WaveSystem waveSystem;
     private NEWSkillMane skillMane;
 
     // 入力保持
@@ -37,7 +38,11 @@ public class PlayerMove : MonoBehaviour
 
     // プレイヤー動作可能状態
     private bool canNotMove;
-    public bool CanNotMove => canNotMove;
+    public bool CanNotMove
+    {
+        get {  return canNotMove; }
+        set { canNotMove = value; }
+    }
 
     // 回避
     [Header("回避")]
@@ -79,7 +84,7 @@ public class PlayerMove : MonoBehaviour
         attack = GetComponent<PlayerAttack>();
         playerAnimation = GetComponent<PlayerAnimation>();
         status = GetComponent<PlayerStatus>();
-        //waveSystem = FindFirstObjectByType<WaveSystem>();
+        waveSystem = FindFirstObjectByType<WaveSystem>();
         skillMane = FindFirstObjectByType<NEWSkillMane>();
 
         // Rigidbody の補間を有効にして、物理移動とアニメーションのズレを軽減
@@ -90,72 +95,77 @@ public class PlayerMove : MonoBehaviour
     // 入力処理
     private void Update()
     {
-
-        // クールタイムのカウントダウン
-        if (dodgeCooldownTimer > 0f)
+        if (!waveSystem.isGameStop)
         {
-            dodgeCooldownTimer -= Time.deltaTime;
-
-            if (dodgeCooldownTimer < 0f)
+            // クールタイムのカウントダウン
+            if (dodgeCooldownTimer > 0f)
             {
-                dodgeCooldownTimer = 0f;
-            }
-        }
+                dodgeCooldownTimer -= Time.deltaTime;
 
-        // 回避タイマーUI
-        clock.UpdateClock(_updateTimer());
-
-        if (CanNotMoving())
-        {
-            Time.timeScale = 0f;
-        }
-        else
-        {
-            Time.timeScale = 1f;
-        }
-        var kb = Keyboard.current;
-
-        if (kb == null) return;
-
-        // 攻撃中または被弾中は入力を無効化
-        if (attack.IsAttacking || hitDisableTimer > 0f || status.IsPlayerDead )
-        {
-            moveInput = Vector3.zero;
-            // 被弾無効時間のカウントダウン
-            if (hitDisableTimer > 0f)
-            {
-                hitDisableTimer -= Time.deltaTime;
-                if (hitDisableTimer <= 0f)
+                if (dodgeCooldownTimer < 0f)
                 {
-                    //Debug.Log("Hit End");
-                    isBeingHit = false;
-                    hitDisableTimer = 0f;
+                    dodgeCooldownTimer = 0f;
                 }
             }
 
-            return;
+            // 回避タイマーUI
+            clock.UpdateClock(_updateTimer());
+
+            if (CanNotMoving())
+            {
+                Time.timeScale = 0f;
+            }
+
+            else
+            {
+                Time.timeScale = 1f;
+            }
+            var kb = Keyboard.current;
+
+            if (kb == null) return;
+
+            // 攻撃中または被弾中は入力を無効化
+            if (attack.IsAttacking || hitDisableTimer > 0f || status.IsPlayerDead)
+            {
+                moveInput = Vector3.zero;
+                // 被弾無効時間のカウントダウン
+                if (hitDisableTimer > 0f)
+                {
+                    hitDisableTimer -= Time.deltaTime;
+                    if (hitDisableTimer <= 0f)
+                    {
+                        //Debug.Log("Hit End");
+                        isBeingHit = false;
+                        hitDisableTimer = 0f;
+                    }
+                }
+
+                return;
+            }
+
+            // 回避中または回避開始待ち中は通常入力を処理しない
+            // クールタイム中でも移動は可能にして、次回回避のみ制限する
+            if (isDodging /*|| isDodgePending*/)
+            {
+                moveInput = Vector3.zero;
+                return;
+            }
+
+            UpdateMoveInput(kb);
+
+            // スペースで回避開始
+            if (kb.spaceKey.wasPressedThisFrame && !attack.IsAttacking && !isDodging && !isDodgePending && dodgeCooldownTimer <= 0f && !skillMane.isUsingSkill)
+            {
+                StartDodge();
+                attack.ResetCombo();
+            }
+
+            // アニメーター切り替え
+
         }
 
-        // 回避中または回避開始待ち中は通常入力を処理しない
-        // クールタイム中でも移動は可能にして、次回回避のみ制限する
-        if (isDodging /*|| isDodgePending*/)
-        {
-            moveInput = Vector3.zero;
-            return;
-        }
 
-        UpdateMoveInput(kb);
 
-        // スペースで回避開始
-        if (kb.spaceKey.wasPressedThisFrame && !attack.IsAttacking && !isDodging && !isDodgePending && dodgeCooldownTimer <= 0f && !skillMane.isUsingSkill) 
-        {
-            StartDodge();
-            attack.ResetCombo();
-        }
-
-        // アニメーター切り替え
-        
-        
     }
 
     // 外部から被弾状態を設定する（duration 秒間移動を無効化）
@@ -188,8 +198,6 @@ public class PlayerMove : MonoBehaviour
 
             }
         }
-
-       
 
         if (isDodging)
         {
