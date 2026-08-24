@@ -37,11 +37,7 @@ public class PlayerMove : MonoBehaviour
 
     // プレイヤー動作可能状態
     private bool canNotMove;
-    public bool CanNotMove
-    {
-        get {  return canNotMove; }
-        set { canNotMove = value; }
-    }
+    public bool CanNotMove => canNotMove;
 
     // 回避
     [Header("回避")]
@@ -113,7 +109,6 @@ public class PlayerMove : MonoBehaviour
         {
             Time.timeScale = 0f;
         }
-
         else
         {
             Time.timeScale = 1f;
