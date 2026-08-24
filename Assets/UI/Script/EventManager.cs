@@ -118,11 +118,17 @@ public class EventManager : MonoBehaviour
         if (titlePanel != null && sceneName == "TitleScene")
         {
             titlePanel.gameObject.SetActive(true);
+
+            gamePanel.gameObject.SetActive(false);
         }
         else if (gamePanel != null)
         {
             gamePanel.gameObject.SetActive(true);
+
+            titlePanel.gameObject.SetActive(false);
         }
+        menuPanel.gameObject.SetActive(false);
+        resultPanel.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -251,7 +257,6 @@ public class EventManager : MonoBehaviour
         if (resultPanel != null)
         {
             resultPanel.gameObject.SetActive(true);
-            resultText.text = "Never Give Up";
         }
     }
 }
