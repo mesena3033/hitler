@@ -2,7 +2,9 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
+using Unity.VisualScripting.Dependencies.Sqlite;
 
 public class WaveSystem : MonoBehaviour
 {
@@ -17,21 +19,33 @@ public class WaveSystem : MonoBehaviour
     // 時間制限
     float timeLimit = 5f;
 
+    // ステージクリア時のスキル選択フェーズ
+    float preparationPhase = 20f;
+
     // ウェーブ中か
     public bool isWaveRunning = false;
 
+    // ウェーブ開始した瞬間
+    bool isWaveStarted= false;
+
     bool isClear = false;
 
+    private PlayerMove move;
     private PlayerStatus status;
     private WavePanel panel;
+    private EnemySpawner[] spawners;
 
     private void Start()
     {
         status = FindFirstObjectByType<PlayerStatus>();
-        panel = GetComponent<WavePanel>();
+        panel = FindFirstObjectByType<WavePanel>();
+        move = FindFirstObjectByType<PlayerMove>();
+        spawners = FindObjectsByType<EnemySpawner>(FindObjectsSortMode.None);
         currentWave = 0;
         waveTime = timeLimit;
         isWaveRunning = false;
+        isWaveStarted = false;
+        preparationPhase = 20f;
     }
 
     private void Update()
@@ -45,19 +59,24 @@ public class WaveSystem : MonoBehaviour
         {
             if (!status.IsPlayerDead)
             {
-                isWaveRunning = true;
+                if ((!isWaveStarted))
+                {
+                    isWaveStarted = true;
+                    isWaveRunning = true;
 
+                    WaveStart();
+
+                    //Debug.Log(waveTime);
+                }
                 waveTime -= Time.deltaTime;
 
-                WaveStart();
-
-                //Debug.Log(waveTime);
             }
 
             else
             {
                 // 死亡処理
                 waveTime = 0f;
+                isWaveStarted = false;
                 isWaveRunning = false;
                 WaveEnd();
             }
@@ -67,6 +86,7 @@ public class WaveSystem : MonoBehaviour
         {
             isWaveRunning = false;
             WaveEnd();
+
         }
 
 
@@ -76,19 +96,54 @@ public class WaveSystem : MonoBehaviour
     private void WaveEnd()
     {
         //Debug.Log("クリア");
-
-        if(currentWave < waveCount)
+        panel.waveStartText.text = "クリア";
+        move.CanNotMove = true;
+        if (currentWave < waveCount)
         {
             currentWave++;
             waveTime = timeLimit;
         }
 
+        // ゲームを止める。
+        // スキルの選択時間を考慮
+        if (preparationPhase > 0.0f)
+        {
+            preparationPhase -= Time.deltaTime;
+        }
+
+
+    }
+
+    private void StageClear()
+    {
+        if(preparationPhase > 0.0f)
+        {
+            preparationPhase -= Time.deltaTime;
+        }
+        
+        
 
     }
 
     private void WaveStart()
     {
         panel.WaveStartPanel();
+        move.CanNotMove = false;
+        // 敵スポーン
+        foreach (EnemySpawner spawner in spawners)
+        {
+            spawner.EnemySpawn();
+        }
     }
 
+    public bool TimeStop(ref float time)
+    {
+        if (time > 0f)
+        {
+            time -= Time.deltaTime;
+            return false;
+        }
+
+        return true;
+    }
 }
