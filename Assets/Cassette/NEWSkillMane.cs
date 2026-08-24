@@ -19,6 +19,9 @@ public class NEWSkillMane : MonoBehaviour
     private Dictionary<int, float> cooldowns =
         new Dictionary<int, float>();
 
+    private Dictionary<int, int> skillCounts =
+    new Dictionary<int, int>();
+
     private GameObject currentEffect;
 
     public bool isUsingSkill = false;
