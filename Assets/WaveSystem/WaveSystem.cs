@@ -11,6 +11,7 @@ public class WaveSystem : MonoBehaviour
     // ウェーブ数
     int waveCount = 3;
     int currentWave = 0;
+    public bool isGameStop = false;
 
     public int CurrentWave => currentWave;
 
@@ -22,13 +23,17 @@ public class WaveSystem : MonoBehaviour
     // ステージクリア時のスキル選択フェーズ
     float preparationPhase = 20f;
 
+    // ウェーブ待機時間
+    float waitTime = 10f;
     // ウェーブ中か
     public bool isWaveRunning = false;
 
     // ウェーブ開始した瞬間
     bool isWaveStarted= false;
 
-    bool isClear = false;
+    bool isStageCleared = false;
+    // ステージクリアCanvas
+    [SerializeField] private GameObject stageCleardCanvas;
 
     private PlayerMove move;
     private PlayerStatus status;
@@ -46,10 +51,19 @@ public class WaveSystem : MonoBehaviour
         isWaveRunning = false;
         isWaveStarted = false;
         preparationPhase = 20f;
+
+        isGameStop = false;
+
+        if(stageCleardCanvas != null)
+        {
+            stageCleardCanvas.SetActive(false);
+        }
     }
 
     private void Update()
     {
+        if(isStageCleared) return;
+
         // 上限値越え処理
         if (currentWave > waveCount) return;
         //Debug.Log("現ウェーブ: " +currentWave);
@@ -89,6 +103,7 @@ public class WaveSystem : MonoBehaviour
 
         }
 
+        // ステージクリア処理
 
     }
 
@@ -110,8 +125,9 @@ public class WaveSystem : MonoBehaviour
         {
             preparationPhase -= Time.deltaTime;
         }
+        TimeStop(ref waitTime);
 
-
+        isGameStop = true;
     }
 
     private void StageClear()
@@ -121,8 +137,6 @@ public class WaveSystem : MonoBehaviour
             preparationPhase -= Time.deltaTime;
         }
         
-        
-
     }
 
     private void WaveStart()
