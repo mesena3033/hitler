@@ -33,7 +33,7 @@ public class WaveSystem : MonoBehaviour
 
     bool isStageCleared = false;
     // ステージクリアCanvas
-    [SerializeField] private GameObject stageCleardCanvas;
+    [SerializeField] private GameObject stageEndCanvas;
 
     private PlayerMove move;
     private PlayerStatus status;
@@ -54,9 +54,9 @@ public class WaveSystem : MonoBehaviour
 
         isGameStop = false;
 
-        if(stageCleardCanvas != null)
+        if(stageEndCanvas != null)
         {
-            stageCleardCanvas.SetActive(false);
+            stageEndCanvas.SetActive(false);
         }
     }
 
@@ -69,16 +69,15 @@ public class WaveSystem : MonoBehaviour
         //Debug.Log("現ウェーブ: " +currentWave);
 
         // ウェーブタイム進行
-        if (waveTime > 0f) 
+        if (waveTime > 0f)
         {
             if (!status.IsPlayerDead)
             {
-                if ((!isWaveStarted))
+                if (!isWaveStarted)
                 {
                     isWaveStarted = true;
                     isWaveRunning = true;
-
-                    WaveStart();
+                    WaveEnd();
 
                     //Debug.Log(waveTime);
                 }
@@ -88,17 +87,15 @@ public class WaveSystem : MonoBehaviour
 
             else
             {
-                // 死亡処理
-                waveTime = 0f;
-                isWaveStarted = false;
-                isWaveRunning = false;
-                WaveEnd();
+                currentWave++;
+                waveTime -= Time.deltaTime;
             }
         }
 
         else
         {
             isWaveRunning = false;
+            // ウェーブ時間が尽きたときの終了処理
             WaveEnd();
 
         }
@@ -107,36 +104,49 @@ public class WaveSystem : MonoBehaviour
 
     }
 
-    // ウェーブ終了処理
+    // ウェーブ終了処理（元の挙動に戻す）
     private void WaveEnd()
     {
-        //Debug.Log("クリア");
-        panel.waveStartText.text = "クリア";
-        move.CanNotMove = true;
+        
         if (currentWave < waveCount)
         {
+            // 次のウェーブへ
             currentWave++;
             waveTime = timeLimit;
+            WaveStart();
+        }
+        else
+        {
+            // 最終ウェーブクリア：ステージクリア表示
+            
+            StageClear();
+            if (stageEndCanvas != null)
+            {
+                stageEndCanvas.SetActive(true);
+            }
         }
 
-        // ゲームを止める。
-        // スキルの選択時間を考慮
+        
+    }
+
+    private void StageClear()
+    {
+        isStageCleared = true;
+        isGameStop = true;
+        if (preparationPhase > 0.0f)
+        {
+            preparationPhase -= Time.deltaTime;
+        }
+
+        // ゲームを止める。スキル選択時間を考慮
         if (preparationPhase > 0.0f)
         {
             preparationPhase -= Time.deltaTime;
         }
         TimeStop(ref waitTime);
 
-        isGameStop = true;
-    }
-
-    private void StageClear()
-    {
-        if(preparationPhase > 0.0f)
-        {
-            preparationPhase -= Time.deltaTime;
-        }
         
+
     }
 
     private void WaveStart()

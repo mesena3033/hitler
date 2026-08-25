@@ -7,6 +7,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected Transform player;
     protected NavMeshAgent agent;
     protected Animator animator;
+    private PlayerMove playerMove;
 
     protected bool isAttacking = false;
 
@@ -18,6 +19,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected void Start()
     {
+        playerMove = FindFirstObjectByType<PlayerMove>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
@@ -28,6 +30,14 @@ public abstract class EnemyBase : MonoBehaviour
         {
             return;
         }
+
+        if (playerMove.CanNotMove)
+        {
+            agent.isStopped = true;
+            return;
+        }
+
+        agent.isStopped = false;
 
         this.transform.LookAt(player.transform);
 
