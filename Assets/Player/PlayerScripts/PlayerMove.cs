@@ -95,6 +95,10 @@ public class PlayerMove : MonoBehaviour
     // 入力処理
     private void Update()
     {
+        if (waveSystem.isGameStop)
+        {
+            canNotMove = true;
+        }
         // クールタイムのカウントダウン
         if (dodgeCooldownTimer > 0f)
         {
@@ -118,6 +122,7 @@ public class PlayerMove : MonoBehaviour
         {
             Time.timeScale = 1f;
         }
+
         var kb = Keyboard.current;
 
         if (kb == null) return;
