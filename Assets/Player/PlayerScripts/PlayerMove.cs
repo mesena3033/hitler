@@ -95,75 +95,70 @@ public class PlayerMove : MonoBehaviour
     // 入力処理
     private void Update()
     {
-        if (!waveSystem.isGameStop)
+        // クールタイムのカウントダウン
+        if (dodgeCooldownTimer > 0f)
         {
-            // クールタイムのカウントダウン
-            if (dodgeCooldownTimer > 0f)
+            dodgeCooldownTimer -= Time.deltaTime;
+
+            if (dodgeCooldownTimer < 0f)
             {
-                dodgeCooldownTimer -= Time.deltaTime;
-
-                if (dodgeCooldownTimer < 0f)
-                {
-                    dodgeCooldownTimer = 0f;
-                }
+                dodgeCooldownTimer = 0f;
             }
-
-            // 回避タイマーUI
-            clock.UpdateClock(_updateTimer());
-
-            if (CanNotMoving())
-            {
-                Time.timeScale = 0f;
-            }
-
-            else
-            {
-                Time.timeScale = 1f;
-            }
-            var kb = Keyboard.current;
-
-            if (kb == null) return;
-
-            // 攻撃中または被弾中は入力を無効化
-            if (attack.IsAttacking || hitDisableTimer > 0f || status.IsPlayerDead)
-            {
-                moveInput = Vector3.zero;
-                // 被弾無効時間のカウントダウン
-                if (hitDisableTimer > 0f)
-                {
-                    hitDisableTimer -= Time.deltaTime;
-                    if (hitDisableTimer <= 0f)
-                    {
-                        //Debug.Log("Hit End");
-                        isBeingHit = false;
-                        hitDisableTimer = 0f;
-                    }
-                }
-
-                return;
-            }
-
-            // 回避中または回避開始待ち中は通常入力を処理しない
-            // クールタイム中でも移動は可能にして、次回回避のみ制限する
-            if (isDodging /*|| isDodgePending*/)
-            {
-                moveInput = Vector3.zero;
-                return;
-            }
-
-            UpdateMoveInput(kb);
-
-            // スペースで回避開始
-            if (kb.spaceKey.wasPressedThisFrame && !attack.IsAttacking && !isDodging && !isDodgePending && dodgeCooldownTimer <= 0f && !skillMane.isUsingSkill)
-            {
-                StartDodge();
-                attack.ResetCombo();
-            }
-
-            // アニメーター切り替え
-
         }
 
+        // 回避タイマーUI
+        clock.UpdateClock(_updateTimer());
+
+        if (CanNotMoving())
+        {
+            Time.timeScale = 0f;
+        }
+
+        else
+        {
+            Time.timeScale = 1f;
+        }
+        var kb = Keyboard.current;
+
+        if (kb == null) return;
+
+        // 攻撃中または被弾中は入力を無効化
+        if (attack.IsAttacking || hitDisableTimer > 0f || status.IsPlayerDead)
+        {
+            moveInput = Vector3.zero;
+            // 被弾無効時間のカウントダウン
+            if (hitDisableTimer > 0f)
+            {
+                hitDisableTimer -= Time.deltaTime;
+                if (hitDisableTimer <= 0f)
+                {
+                    //Debug.Log("Hit End");
+                    isBeingHit = false;
+                    hitDisableTimer = 0f;
+                }
+            }
+
+            return;
+        }
+
+        // 回避中または回避開始待ち中は通常入力を処理しない
+        // クールタイム中でも移動は可能にして、次回回避のみ制限する
+        if (isDodging /*|| isDodgePending*/)
+        {
+            moveInput = Vector3.zero;
+            return;
+        }
+
+        UpdateMoveInput(kb);
+
+        // スペースで回避開始
+        if (kb.spaceKey.wasPressedThisFrame && !attack.IsAttacking && !isDodging && !isDodgePending && dodgeCooldownTimer <= 0f && !skillMane.isUsingSkill)
+        {
+            StartDodge();
+            attack.ResetCombo();
+        }
+
+        // アニメーター切り替え
 
 
     }
@@ -303,7 +298,7 @@ public class PlayerMove : MonoBehaviour
     // プレイヤー移動
     void MovePlayer()
     {
-        canNotMove = Cursor.visible/*|| !waveSystem.isWaveRunning*/;
+        //canNotMove = Cursor.visible/*|| !waveSystem.isWaveRunning*/;
         if (canNotMove) return;
         if (moveInput == Vector3.zero) return;
 
@@ -342,13 +337,10 @@ public class PlayerMove : MonoBehaviour
 
     public bool CanNotMoving()
     {
-        canNotMove = Cursor.visible;
-        if (canNotMove) return canNotMove;
+        /*canNotMove = Cursor.visible;
+        if (canNotMove) return canNotMove;*/
+        return CanNotMove || Cursor.visible;
 
-        else
-        {
-            return false;
-        }
     }
 
     float _updateTimer()

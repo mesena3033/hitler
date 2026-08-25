@@ -501,6 +501,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &609258184 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1116738469349609898, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
+  m_PrefabInstance: {fileID: 1546265985}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &801617483 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8880968194012508882, guid: 8ee1b80487ab90047b39abe75fcb3417, type: 3}
@@ -518,7 +523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6e13e44600ea341839572b8b03eda6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObject: {fileID: 0}
+  gameObject: {fileID: 609258184}
 --- !u!114 &801617487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1146,10 +1151,6 @@ PrefabInstance:
     - target: {fileID: 590512708249780261, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: m_Name
       value: Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 3938351214741846831, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5630217422838044987, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: m_Pivot.x
