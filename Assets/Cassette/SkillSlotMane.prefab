@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillManager: {fileID: 0}
-  dropCount: 3
+  dropCount: 2
   maxSkillLevel: 10
 --- !u!114 &3828018053434703253
 MonoBehaviour:

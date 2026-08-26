@@ -126,7 +126,7 @@ MonoBehaviour:
     damage: 15
     buffValue: 0
     SupportValue: 0
-    skillLevel: 0
+    skillLevel: 1
     skillUpGrade: 0.15
   - type: 0
     animatorController: {fileID: 9100000, guid: 6ddb366d48e7da6499787af261091818, type: 2}
@@ -141,7 +141,7 @@ MonoBehaviour:
     damage: 12
     buffValue: 0
     SupportValue: 0
-    skillLevel: 0
+    skillLevel: 1
     skillUpGrade: 0.2
   - type: 1
     animatorController: {fileID: 9100000, guid: 6ddb366d48e7da6499787af261091818, type: 2}
@@ -156,7 +156,7 @@ MonoBehaviour:
     damage: 0
     buffValue: 1.2
     SupportValue: 0
-    skillLevel: 0
+    skillLevel: 1
     skillUpGrade: 0.1
   upGradeSkill: {fileID: 0}
   animator: {fileID: 3413158963615053904}

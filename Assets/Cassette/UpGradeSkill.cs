@@ -5,6 +5,8 @@ public class UpGradeSkill : MonoBehaviour
     [SerializeField]
     private NEWSkillMane skillManager;
 
+    float Normalrate = 1.0f;
+
     // 指定したスキルIDから、現在のスキルレベルに応じた倍率を取得する
     public float GetMultiplier(int skillID)
     {
@@ -14,7 +16,7 @@ public class UpGradeSkill : MonoBehaviour
             Debug.LogWarning(
                 "UpGradeSkill : skillManagerが設定されていません。");
 
-            return 1.0f;
+            return Normalrate;
         }
 
         // IDが存在する範囲か確認
@@ -23,7 +25,7 @@ public class UpGradeSkill : MonoBehaviour
             Debug.LogWarning(
                 $"UpGradeSkill : 存在しないSkillIDです。ID = {skillID}");
 
-            return 1.0f;
+            return Normalrate;
         }
 
         // SkillIDからSkillDataを取得
@@ -36,7 +38,7 @@ public class UpGradeSkill : MonoBehaviour
             Debug.LogWarning(
                 $"UpGradeSkill : SkillDataが存在しません。ID = {skillID}");
 
-            return 1.0f;
+            return Normalrate;
         }
 
         // 現在のスキルレベルを取得
@@ -50,13 +52,13 @@ public class UpGradeSkill : MonoBehaviour
         // レベル1では基礎倍率の1.0倍
         if (skillLevel <= 1)
         {
-            return 1.0f;
+            return Normalrate;
         }
 
         // レベルに応じた倍率を計算
         
         float multiplier =
-            1.0f +
+            Normalrate +
             (skillLevel - 1) * skillUpGrade;
 
         return multiplier;
