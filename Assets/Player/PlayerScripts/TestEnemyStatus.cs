@@ -16,10 +16,9 @@ public class EnemyStatus : MonoBehaviour, IDamageable
     public void ApplyDamage(int damage)
     {
         int final = Mathf.Max(0, Mathf.FloorToInt(damage - defensePower));
-        if (final <= 0) return; // ダメージ無効なら何もしない／エフェクトだけ出すことも可
-
+        if (final <= 0) return; 
         currentHP -= final;
-        // ここで被弾エフェクト・アニメーションなどを呼ぶ
+        // 被弾アニメーションなど
         if (currentHP <= 0) Die();
     }
 

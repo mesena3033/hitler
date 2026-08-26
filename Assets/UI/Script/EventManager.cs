@@ -30,7 +30,6 @@ public class EventManager : MonoBehaviour
 
     //  リザルトパネル
     private GameObject resultPanel;
-    private TextMeshProUGUI resultText;
     private Button restartButton;
     private Button titleBackButton;
 
@@ -48,9 +47,9 @@ public class EventManager : MonoBehaviour
         {
             titlePanel = canvas.transform.Find("TitlePanel").gameObject;
 
-            if(titlePanel.transform.Find("TitleButton") != null)
+            if (titlePanel.transform.Find("TitleButton") != null)
             {
-                titleButton=titlePanel.transform.Find("TitleButton").GetComponent<Button>();
+                titleButton = titlePanel.transform.Find("TitleButton").GetComponent<Button>();
                 titleButton.onClick.AddListener(NextButton);
             }
 
@@ -89,11 +88,6 @@ public class EventManager : MonoBehaviour
         if (canvas.transform.Find("ResultPanel") != null)
         {
             resultPanel = canvas.transform.Find("ResultPanel").gameObject;
-
-            if(resultPanel.transform.Find("ResultText") != null)
-            {
-                resultText = resultPanel.transform.Find("ResultText").GetComponent<TextMeshProUGUI>();
-            }
 
             if (resultPanel.transform.Find("RestartButton") != null)
             {
@@ -155,7 +149,7 @@ public class EventManager : MonoBehaviour
     private void NextButton()   //  Stageが増えたら追記
     {
         //  TitleScene => PlayerScene
-        if(sceneName == titleSceneName && gameSceneName1 != null)
+        if (sceneName == titleSceneName && gameSceneName1 != null)
         {
             SceneManager.LoadScene(gameSceneName1);
         }
@@ -220,7 +214,7 @@ public class EventManager : MonoBehaviour
                     gameMenuButton.gameObject.SetActive(false);
                 }
             }
-            else
+            else if (menuPanel != null && menuActive != false)
             {
                 menuPanel.gameObject.SetActive(false);
 
