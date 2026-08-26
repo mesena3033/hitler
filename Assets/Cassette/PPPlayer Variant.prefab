@@ -125,7 +125,9 @@ MonoBehaviour:
     skillName: Fire
     damage: 15
     buffValue: 0
-    healValue: 0
+    SupportValue: 0
+    skillLevel: 0
+    skillUpGrade: 0.15
   - type: 0
     animatorController: {fileID: 9100000, guid: 6ddb366d48e7da6499787af261091818, type: 2}
     animatorBool: skillNo2
@@ -138,7 +140,9 @@ MonoBehaviour:
     skillName: Smash
     damage: 12
     buffValue: 0
-    healValue: 0
+    SupportValue: 0
+    skillLevel: 0
+    skillUpGrade: 0.2
   - type: 1
     animatorController: {fileID: 9100000, guid: 6ddb366d48e7da6499787af261091818, type: 2}
     animatorBool: skillNo3
@@ -151,7 +155,10 @@ MonoBehaviour:
     skillName: ATKUp
     damage: 0
     buffValue: 1.2
-    healValue: 0
+    SupportValue: 0
+    skillLevel: 0
+    skillUpGrade: 0.1
+  upGradeSkill: {fileID: 0}
   animator: {fileID: 3413158963615053904}
   effectManager: {fileID: 3651713310998110042}
   playerAnimation: {fileID: 2863227031440822429}
@@ -169,7 +176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6108b93b9d2f8ab468ca481ade9b1f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyTime: 5
 --- !u!114 &6015734184766371097
 MonoBehaviour:
   m_ObjectHideFlags: 0
