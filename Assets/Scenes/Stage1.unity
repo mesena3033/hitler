@@ -1160,14 +1160,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3082269418086619206, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_text
-      value: Go Next
-      objectReference: {fileID: 0}
-    - target: {fileID: 4344387907254007281, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5630217422838044987, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1247,42 +1239,6 @@ PrefabInstance:
     - target: {fileID: 5630217422838044987, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6385858362836949595, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 6385858362836949595, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989863231217090429, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989863231217090429, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989863231217090429, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989863231217090429, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989863231217090429, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989863231217090429, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989863231217090429, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
