@@ -34,6 +34,7 @@ public class WaveSystem : MonoBehaviour
     bool isStageCleared = false;
     // ステージクリアCanvas
     [SerializeField] private GameObject stageEndCanvas;
+    [SerializeField] private GameObject nextButton;
 
     private PlayerMove move;
     private PlayerStatus status;
@@ -51,7 +52,7 @@ public class WaveSystem : MonoBehaviour
         isWaveRunning = false;
         isWaveStarted = false;
         preparationPhase = 20f;
-
+        nextButton.SetActive(false);
         isGameStop = false;
 
         if(stageEndCanvas != null)
@@ -133,19 +134,19 @@ public class WaveSystem : MonoBehaviour
     {
         isStageCleared = true;
         isGameStop = true;
-        if (preparationPhase > 0.0f)
-        {
-            preparationPhase -= Time.deltaTime;
-        }
-
+        isWaveRunning = false;
+        nextButton.SetActive(true);
+        Cursor.visible = true;
+        move.CanNotMove = true;
         // ゲームを止める。スキル選択時間を考慮
         if (preparationPhase > 0.0f)
         {
             preparationPhase -= Time.deltaTime;
-        }
-        TimeStop(ref waitTime);
+            
 
-        
+        }
+
+        TimeStop(ref waitTime);
 
     }
 

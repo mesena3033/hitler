@@ -122,7 +122,7 @@ public class PlayerMove : MonoBehaviour
         {
             Time.timeScale = 1f;
         }
-
+        
         var kb = Keyboard.current;
 
         if (kb == null) return;
