@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4147168067555803327}
   - component: {fileID: 393232373621839452}
-  - component: {fileID: 535845482239623491}
-  - component: {fileID: 2241520494983561209}
-  - component: {fileID: 7381631123743943153}
+  - component: {fileID: 2597606931754589843}
+  - component: {fileID: 4911570566965547100}
+  - component: {fileID: 3828018053434703253}
   m_Layer: 0
   m_Name: SkillSlotMane
   m_TagString: Untagged
@@ -52,7 +52,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   skillManager: {fileID: 0}
---- !u!114 &535845482239623491
+--- !u!114 &2597606931754589843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObject: {fileID: 0}
---- !u!114 &2241520494983561209
+--- !u!114 &4911570566965547100
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,9 +78,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillManager: {fileID: 0}
-  dropCount: 2
+  dropCount: 3
   maxSkillLevel: 10
---- !u!114 &7381631123743943153
+--- !u!114 &3828018053434703253
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
