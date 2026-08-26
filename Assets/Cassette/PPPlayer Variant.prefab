@@ -125,7 +125,9 @@ MonoBehaviour:
     skillName: Fire
     damage: 15
     buffValue: 0
-    healValue: 0
+    SupportValue: 0
+    skillLevel: 1
+    skillUpGrade: 0.15
   - type: 0
     animatorController: {fileID: 9100000, guid: 6ddb366d48e7da6499787af261091818, type: 2}
     animatorBool: skillNo2
@@ -133,12 +135,14 @@ MonoBehaviour:
     effectPrefab: {fileID: 158789456559184324, guid: 87167b19fb4a32a4e8e4f2c5f40a40b3, type: 3}
     effectSpawnPoint: {fileID: 1516263829376756274}
     effectDelay: 0.5
-    cooldown: 5
+    cooldown: 3
     Icon: {fileID: 21300000, guid: 613d41d6b1ca7764cb365bfc29ef1864, type: 3}
     skillName: Smash
-    damage: 12
+    damage: 13
     buffValue: 0
-    healValue: 0
+    SupportValue: 0
+    skillLevel: 1
+    skillUpGrade: 0.2
   - type: 1
     animatorController: {fileID: 9100000, guid: 6ddb366d48e7da6499787af261091818, type: 2}
     animatorBool: skillNo3
@@ -147,11 +151,14 @@ MonoBehaviour:
     effectSpawnPoint: {fileID: 1516263829376756274}
     effectDelay: 0.5
     cooldown: 5
-    Icon: {fileID: 21300000, guid: 613d41d6b1ca7764cb365bfc29ef1864, type: 3}
+    Icon: {fileID: 21300000, guid: 0aa0d72ed1e476443a21d92edb4cc3bc, type: 3}
     skillName: ATKUp
     damage: 0
-    buffValue: 1.2
-    healValue: 0
+    buffValue: 1.3
+    SupportValue: 0
+    skillLevel: 1
+    skillUpGrade: 0.1
+  upGradeSkill: {fileID: 0}
   animator: {fileID: 3413158963615053904}
   effectManager: {fileID: 3651713310998110042}
   playerAnimation: {fileID: 2863227031440822429}
@@ -169,7 +176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6108b93b9d2f8ab468ca481ade9b1f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyTime: 5
 --- !u!114 &6015734184766371097
 MonoBehaviour:
   m_ObjectHideFlags: 0
