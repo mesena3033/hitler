@@ -40,8 +40,11 @@ public class SkillDataNo2
     [Header("スキルの効果")]
     public int damage;        // Attack 用
     public float buffValue;   // Buff 用
-    public float healValue;   // Support 用
+    public float SupportValue;   // Support 用
 
     [Header("スキルレベル")]
     public int skillLevel; // お試し
+
+    [Header("スキルアップグレード")]
+    public float skillUpGrade;
 }
