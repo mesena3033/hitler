@@ -8,6 +8,9 @@ public class NEWSkillMane : MonoBehaviour
     [SerializeField]
     private List<SkillDataNo2> skillList = new();
 
+    [SerializeField]
+    private UpGradeSkill upGradeSkill;
+
     public Animator animator;
     public EffectManager effectManager;
     public PlayerAnimation playerAnimation;
@@ -19,8 +22,8 @@ public class NEWSkillMane : MonoBehaviour
     private Dictionary<int, float> cooldowns =
         new Dictionary<int, float>();
 
-    private Dictionary<int, int> skillCounts =
-    new Dictionary<int, int>();
+    private Dictionary<int, float> skillUpGrade =
+    new Dictionary<int, float>();
 
     private GameObject currentEffect;
 
@@ -91,7 +94,7 @@ public class NEWSkillMane : MonoBehaviour
         switch (data.type)
         {
             case SkillType.Attack:
-                ExecuteAttack(data);
+                ExecuteAttack(id,data);
                 break;
 
             case SkillType.Buff:
@@ -153,14 +156,23 @@ public class NEWSkillMane : MonoBehaviour
         isUsingSkill = false;
     }
 
-    private void ExecuteAttack(SkillDataNo2 data)
+    private void ExecuteAttack(int skillID,SkillDataNo2 data)
     {
         Execute(data);
         PlayerAttack playerAttack = GetComponent<PlayerAttack>();
         if (playerAttack != null)
         {
-            playerAttack.SkillDamage(data.damage);
+            float multiplier =
+        upGradeSkill.GetMultiplier(skillID);
+
+            int damage =
+                Mathf.RoundToInt(data.damage * multiplier);
+
+            playerAttack.SkillDamage(damage);
+
+            Debug.Log($"Skill {data.skillName} executed with damage: {playerAttack.SkillDamage(damage)}");
         }
+       
     }
     private void ExecuteBuff(SkillDataNo2 data)
     {
