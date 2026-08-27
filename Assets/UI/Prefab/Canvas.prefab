@@ -435,7 +435,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8818928763239228841}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5238712130727798651}
+        m_TargetAssemblyTypeName: WaveSystem, Assembly-CSharp
+        m_MethodName: GoNextStage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &906792264299833158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -589,6 +601,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1642508443585614439, guid: caadf0460caa29b4abe9d098c692c05a, type: 3}
   m_PrefabInstance: {fileID: 906792264299833158}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5238712130727798651 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4910672022912532541, guid: caadf0460caa29b4abe9d098c692c05a, type: 3}
+  m_PrefabInstance: {fileID: 906792264299833158}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10c34c1c6df93cb4499ca88e5beb245f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &9016556768850650549 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8193363144082801395, guid: caadf0460caa29b4abe9d098c692c05a, type: 3}
