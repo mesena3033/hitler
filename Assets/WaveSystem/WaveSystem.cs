@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
 using Unity.VisualScripting.Dependencies.Sqlite;
+using UnityEngine.SceneManagement;
 
 public class WaveSystem : MonoBehaviour
 {
@@ -35,6 +36,8 @@ public class WaveSystem : MonoBehaviour
     // ステージクリアCanvas
     [SerializeField] private GameObject stageEndCanvas;
     [SerializeField] private GameObject nextButton;
+
+    [SerializeField] private StageManager stageManager;
 
     private PlayerMove move;
     private PlayerStatus status;
@@ -108,7 +111,6 @@ public class WaveSystem : MonoBehaviour
     // ウェーブ終了処理（元の挙動に戻す）
     private void WaveEnd()
     {
-        
         if (currentWave < waveCount)
         {
             // 次のウェーブへ
@@ -116,10 +118,10 @@ public class WaveSystem : MonoBehaviour
             waveTime = timeLimit;
             WaveStart();
         }
+
         else
         {
             // 最終ウェーブクリア：ステージクリア表示
-            
             StageClear();
             if (stageEndCanvas != null)
             {
@@ -132,10 +134,19 @@ public class WaveSystem : MonoBehaviour
 
     private void StageClear()
     {
+        // 敵を消す
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+
+
         isStageCleared = true;
         isGameStop = true;
         isWaveRunning = false;
         nextButton.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         move.CanNotMove = true;
         // ゲームを止める。スキル選択時間を考慮
@@ -154,11 +165,14 @@ public class WaveSystem : MonoBehaviour
     {
         panel.WaveStartPanel();
         move.CanNotMove = false;
-        // 敵スポーン
-        foreach (EnemySpawner spawner in spawners)
-        {
-            spawner.EnemySpawn();
-        }
+
+        Debug.Log("Spawner取得前");
+        EnemySpawner spawner = stageManager.GetCurrentSpawner();
+
+        Debug.Log("Spawner = " + spawner);
+
+        spawner.EnemySpawn(currentWave);
+        
     }
 
     public bool TimeStop(ref float time)
@@ -170,5 +184,30 @@ public class WaveSystem : MonoBehaviour
         }
 
         return true;
+    }
+
+    // 次のステージへ
+    public void GoNextStage()
+    {
+        Time.timeScale = 1f;
+
+        stageManager.NextStage();
+
+        // ステージクリア状態を解除
+        isStageCleared = false;
+        isGameStop = false;
+
+        // クリアキャンバスをけす
+        stageEndCanvas.SetActive(false);
+
+        // ウェーブ数をリセット
+        currentWave = 0;
+        waveTime = timeLimit;
+        isWaveStarted = false;
+        isWaveRunning = false;
+
+        move.CanNotMove = false;
+
+        
     }
 }
