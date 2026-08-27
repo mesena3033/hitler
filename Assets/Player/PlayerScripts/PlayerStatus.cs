@@ -69,7 +69,7 @@ public class PlayerStatus : MonoBehaviour
 
         //  マウス非表示 + 中央固定
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
 
         //  EventManagerから引っ張れる
         _event = FindAnyObjectByType<EventManager>();
