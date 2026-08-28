@@ -69,11 +69,10 @@ public abstract class EnemyBase : MonoBehaviour
 
         animator.SetBool("isIdling", false);
         animator.SetBool("isMoving", true);
-        animator .SetBool("isAttacking", false);
         agent.isStopped = false;
         agent.SetDestination(player.position);
             
-            
+        
     }
 
 
@@ -92,18 +91,11 @@ public abstract class EnemyBase : MonoBehaviour
             // 攻撃範囲外なら移動
             animator.SetBool("isMoving", true);
             animator.SetBool("isIdling", false);
-            animator.SetBool("isAttacking", false);
 
             agent.isStopped = false;
             agent.SetDestination(player.position);
         }
-        else
-        {
-            // 攻撃範囲内なら停止
-            animator.SetBool("isMoving", false);
-            animator.SetBool("isIdling", false);
 
-            agent.isStopped = true;
-        }
+
     }
 }
