@@ -4,11 +4,18 @@ public class EnemyStatus : MonoBehaviour, IDamageable
 {
     [SerializeField] int maxHP = 50;
     [SerializeField] float defensePower = 3f; // 攻撃値から引く値（小数可）
+    private WaveSystem waveSystem;
+    private KillsEnemyCount killsEnemyCount;
 
     int currentHP;
 
     void Awake() => currentHP = maxHP;
-
+    
+    void Start()
+    {
+        waveSystem = FindFirstObjectByType<WaveSystem>();
+        killsEnemyCount = FindFirstObjectByType<KillsEnemyCount>();
+    }
     // 外部参照用
     public float DefensePower => defensePower;
 
@@ -24,7 +31,12 @@ public class EnemyStatus : MonoBehaviour, IDamageable
 
     void Die()
     {
-        // 死亡処理（アニメーション、削除など）
+        // 死亡処理（アニメーション、削除など）s
+        if (waveSystem.isWaveRunning)
+        {
+            killsEnemyCount.AddKillCount();
+        }
         Destroy(gameObject);
+        
     }
 }
