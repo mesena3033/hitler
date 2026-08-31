@@ -8,6 +8,8 @@ public class SkillSlot : MonoBehaviour,
 {
     private int slotIndex;
 
+    public int SlotIndex => slotIndex;
+
     private SkillSlotMane skillSlotMane;
     private NEWSkillMane skillManager;
 
@@ -65,5 +67,9 @@ public class SkillSlot : MonoBehaviour,
         icon.enabled = true;
         icon.sprite = data.Icon;
         skillName.text = data.skillName;
+    }
+    public int GetSkillID()
+    {
+        return skillSlotMane.GetSkillID(slotIndex);
     }
 }

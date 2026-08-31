@@ -204,4 +204,29 @@ public class NEWSkillMane : MonoBehaviour
             currentEffect = null;
         } // お試し
     }
+
+    public float GetCooldown(int skillID)
+    {
+        // CTが存在しない場合
+        if (!cooldowns.TryGetValue(skillID, out float endTime))
+        {
+            return 0f;
+        }
+
+        // 現在時刻から終了時刻までの時間を計算
+        float remainingTime = endTime - Time.time;
+
+        // マイナスにならないようにする
+        return Mathf.Max(0f, remainingTime);
+    }
+
+    public float GetMaxCooldown(int skillID)
+    {
+        if (!skillDict.TryGetValue(skillID, out SkillDataNo2 data))
+        {
+            return 0f;
+        }
+
+        return data.cooldown;
+    }
 }
