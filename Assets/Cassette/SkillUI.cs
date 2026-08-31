@@ -48,7 +48,6 @@ public class SkillUI : MonoBehaviour
 
             text.text = "";
 
-            return;
         }
 
         // ƒAƒCƒRƒ“‚ğ“¯Šú
