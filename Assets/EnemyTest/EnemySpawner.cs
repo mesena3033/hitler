@@ -39,26 +39,19 @@ public class EnemySpawner : MonoBehaviour
             // SpawnPoint確認
             if (spawnPoint == null)
             {
-                Debug.LogError($"Wave {wave + 1} スポーン地点がない");
+                //Debug.LogError($"Wave {wave + 1} スポーン地点がない");
                 continue;
-            }
-
-
-            if (wave < 0 || wave >= currentSpawnPoints.Length)
-            {
-                return;
             }
 
 
             // SpawnPoint確認
             if (spawnPoint == null)
             {
-                Debug.LogError($"Wave {wave + 1} スポーン地点がない");
+                //Debug.LogError($"Wave {wave + 1} スポーン地点がない");
                 return;
             }
 
-            Debug.Log($"Wave {wave + 1} / " + $"SpawnPoint[{wave}] / "
-                + $"位置 = {spawnPoint.position}");
+            
 
             NavMeshHit hit;
 
@@ -69,24 +62,20 @@ public class EnemySpawner : MonoBehaviour
                     Instantiate(enemy, hit.position, spawnPoint.rotation);
 
 
-                Debug.Log($"Wave {wave + 1} Spawn位置: {hit.position}");
+                //Debug.Log($"Wave {wave + 1} Spawn位置: {hit.position}");
 
                 NavMeshAgent agent = obj.GetComponent<NavMeshAgent>();
 
                 if (agent != null)
                 {
                     {
-                        Debug.Log($"isOnNavMesh = {agent.isOnNavMesh}");
+                        //Debug.Log($"isOnNavMesh = {agent.isOnNavMesh}");
                     }
                 }
 
             }
 
-            else
-            {
-                Debug.LogError($"Spawnpoint[{wave}]の位置にNavMeshがない");
-            }
+            
         }
     }
-
 }

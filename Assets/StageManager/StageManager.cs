@@ -4,7 +4,9 @@ public class StageManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] stages;
 
-    // ステージごとの敵スポナー
+
+    // ステージごとのスポナー
+    [SerializeField] private Transform[] playerSpawnPoints;
     [SerializeField] private EnemySpawner[] enemySpawners;
 
     private int currentStage = 0;
@@ -40,5 +42,10 @@ public class StageManager : MonoBehaviour
 
         // 次のステージを表示
         stages[currentStage].SetActive(true);
+    }
+
+    public Transform GetCurrentPlayerSpawnPoint()
+    {
+        return playerSpawnPoints[CurrentStage];
     }
 }

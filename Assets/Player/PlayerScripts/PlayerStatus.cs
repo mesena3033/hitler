@@ -16,6 +16,7 @@ public class PlayerStatus : MonoBehaviour
 
     //private float hitDisableDuration = 0.5f;
     private PlayerMove move;
+    public WaveSystem waveSystem;
 
     public int CurrentHP => currentHP;
 
@@ -66,6 +67,7 @@ public class PlayerStatus : MonoBehaviour
         currentHP = maxHP;
         move = GetComponent<PlayerMove>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        waveSystem = FindFirstObjectByType<WaveSystem>();
 
         //  マウス非表示 + 中央固定
         Cursor.visible = false;
@@ -78,6 +80,13 @@ public class PlayerStatus : MonoBehaviour
 
     private void Update()
     {
+        if(waveSystem != null && waveSystem.isStageCleared)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            return;
+        }
+
         //Debug.Log(currentHP);
         // 無敵タイマーの処理
         if (isInvincible)

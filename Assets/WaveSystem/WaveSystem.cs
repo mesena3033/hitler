@@ -32,7 +32,7 @@ public class WaveSystem : MonoBehaviour
     // ウェーブ開始した瞬間
     bool isWaveStarted= false;
 
-    bool isStageCleared = false;
+    public bool isStageCleared = false;
     // ステージクリアCanvas
     [SerializeField] private GameObject stageEndCanvas;
     [SerializeField] private GameObject nextButton;
@@ -166,10 +166,10 @@ public class WaveSystem : MonoBehaviour
         panel.WaveStartPanel();
         move.CanNotMove = false;
 
-        Debug.Log("Spawner取得前");
+        //Debug.Log("Spawner取得前");
         EnemySpawner spawner = stageManager.GetCurrentSpawner();
 
-        Debug.Log("Spawner = " + spawner);
+        //Debug.Log("Spawner = " + spawner);
 
         spawner.EnemySpawn(currentWave);
         

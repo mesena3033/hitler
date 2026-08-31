@@ -31,13 +31,23 @@ public abstract class EnemyBase : MonoBehaviour
             return;
         }
 
+        // プレイヤーが動けない場合は停止
         if (playerMove.CanNotMove)
         {
             agent.isStopped = true;
             return;
         }
 
-        agent.isStopped = false;
+        // 攻撃中に移動を停止
+        if (isAttacking)
+        {
+            agent.isStopped = true;
+            animator.SetBool("isIdling", false);
+            animator.SetBool("isMoving", false);
+            return;
+        }
+
+        // agent.isStopped = false;
 
         this.transform.LookAt(player.transform);
 
@@ -48,46 +58,44 @@ public abstract class EnemyBase : MonoBehaviour
         if (distance <= attackRange) 
         {
             agent.isStopped = true;
+            animator.SetBool("isIdling", false);
+            animator.SetBool("isMoving", false);
+
             isAttacking = true;
             Attack();
+
+            return; 
         }
 
-        // 範囲外で詰めてくる
-        if (distance > attackRange)
-        {
-            animator.SetBool("isIdling", false);
-            animator.SetBool("isMoving", true);
-            agent.isStopped = false;
-            agent.SetDestination(player.position);
-        }
-
-        // プレイヤーがいない場合は停止
-        else
-        {
-            animator.SetBool("isIdling", true);
-            animator.SetBool("isMoving", false);
-            agent.isStopped = false;
-            OnAttackEnd();
+        animator.SetBool("isIdling", false);
+        animator.SetBool("isMoving", true);
+        agent.isStopped = false;
+        agent.SetDestination(player.position);
             
-        }
-
-        if (isAttacking)
-        {
-            agent.isStopped = true;
-        }
-
-        else
-        {
-            agent.isStopped = false;
-        }
-
-
+        
     }
+
 
     protected abstract void Attack();
 
     public void OnAttackEnd()
     {
         isAttacking = false;
+
+        if (player == null) return;
+
+        float distance = Vector3.Distance(transform.position, player.position);
+
+        if (distance > attackRange)
+        {
+            // 攻撃範囲外なら移動
+            animator.SetBool("isMoving", true);
+            animator.SetBool("isIdling", false);
+
+            agent.isStopped = false;
+            agent.SetDestination(player.position);
+        }
+
+
     }
 }
