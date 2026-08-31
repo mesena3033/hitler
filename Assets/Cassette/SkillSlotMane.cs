@@ -8,6 +8,9 @@ public class SkillSlotMane : MonoBehaviour
     [SerializeField]
     private NEWSkillMane skillManager;
 
+    [SerializeField]
+    private SkillUI[] skillUIs;
+
     private int[] equippedSkills = { -1, -1, -1 };
 
     private void Awake()
@@ -19,6 +22,8 @@ public class SkillSlotMane : MonoBehaviour
                 skillManager,
                 i);
         }
+
+        RefreshUI();
     }
 
     // スキルを装備する
@@ -39,6 +44,8 @@ public class SkillSlotMane : MonoBehaviour
         equippedSkills[slotIndex] = skillID;
 
         slots[slotIndex].Refresh();
+
+        RefreshUI();
     }
 
     // スキルを外す
@@ -47,6 +54,8 @@ public class SkillSlotMane : MonoBehaviour
         equippedSkills[slotIndex] = -1;
 
         slots[slotIndex].Refresh();
+
+        RefreshUI();
     }
 
     // スロットのスキルIDを取得
@@ -56,5 +65,16 @@ public class SkillSlotMane : MonoBehaviour
             return -1;
 
         return equippedSkills[slotIndex];
+    }
+
+    private void RefreshUI()
+    {
+        for (int i = 0; i < skillUIs.Length; i++)
+        {
+            if (skillUIs[i] == null)
+                continue;
+
+            skillUIs[i].Refresh();
+        }
     }
 }
