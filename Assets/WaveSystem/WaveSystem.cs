@@ -149,12 +149,12 @@ public class WaveSystem : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         move.CanNotMove = true;
+
         // ゲームを止める。スキル選択時間を考慮
         if (preparationPhase > 0.0f)
         {
             preparationPhase -= Time.deltaTime;
             
-
         }
 
         TimeStop(ref waitTime);
