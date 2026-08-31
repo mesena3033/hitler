@@ -52,6 +52,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   skillManager: {fileID: 0}
+  skillUIs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &2597606931754589843
 MonoBehaviour:
   m_ObjectHideFlags: 0
