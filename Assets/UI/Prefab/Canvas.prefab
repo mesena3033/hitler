@@ -638,6 +638,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4743653357597881870, guid: caadf0460caa29b4abe9d098c692c05a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7815985243958928992}
+    - targetCorrespondingSourceObject: {fileID: 4743653357597881870, guid: caadf0460caa29b4abe9d098c692c05a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2097403356970237114}
     - targetCorrespondingSourceObject: {fileID: 434540436717203904, guid: caadf0460caa29b4abe9d098c692c05a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6161162530034195873}
@@ -726,6 +729,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 6433074520882219349}
   skillName: {fileID: 8501733839175360869}
+--- !u!114 &2097403356970237114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5566806867450794312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b47794bc801383f46bbe4c07f9cd5e57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 6433074520882219349}
+  skillName: {fileID: 0}
 --- !u!114 &6263897634574453099 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6519039026384711213, guid: caadf0460caa29b4abe9d098c692c05a, type: 3}
@@ -794,10 +811,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9016556768850650549}
     m_Modifications:
+    - target: {fileID: 623488312983465411, guid: 50122f79bf1b41742bdedcd23e8a5888, type: 3}
+      propertyPath: skillSlot
+      value: 
+      objectReference: {fileID: 7815985243958928992}
+    - target: {fileID: 3822564471066645441, guid: 50122f79bf1b41742bdedcd23e8a5888, type: 3}
+      propertyPath: skillSlot
+      value: 
+      objectReference: {fileID: 6161162530034195873}
     - target: {fileID: 7184892059132074250, guid: 50122f79bf1b41742bdedcd23e8a5888, type: 3}
       propertyPath: m_Name
       value: SkillUIs
       objectReference: {fileID: 0}
+    - target: {fileID: 7680294805175021708, guid: 50122f79bf1b41742bdedcd23e8a5888, type: 3}
+      propertyPath: skillSlot
+      value: 
+      objectReference: {fileID: 7197501140970323474}
     - target: {fileID: 9063226635793860659, guid: 50122f79bf1b41742bdedcd23e8a5888, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
