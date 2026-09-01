@@ -835,7 +835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillSlot: {fileID: 6161162530034195873}
   icon: {fileID: 8988264154558273688}
-  cooldownImage: {fileID: 1384174507318419842}
+  coolTimeImage: {fileID: 1384174507318419842}
   text: {fileID: 3483996767785264091}
   skillManager: {fileID: 0}
 --- !u!1 &5195914693329200848
@@ -931,7 +931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillSlot: {fileID: 7815985243958928992}
   icon: {fileID: 8911147253150503352}
-  cooldownImage: {fileID: 2067784475231550324}
+  coolTimeImage: {fileID: 2067784475231550324}
   text: {fileID: 2897791359271051286}
   skillManager: {fileID: 0}
 --- !u!1 &5710783967439472175
@@ -1099,7 +1099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillSlot: {fileID: 7197501140970323474}
   icon: {fileID: 751862045422771828}
-  cooldownImage: {fileID: 5839630331232609760}
+  coolTimeImage: {fileID: 5839630331232609760}
   text: {fileID: 3667682860559025124}
   skillManager: {fileID: 0}
 --- !u!1 &7710277823200547276
