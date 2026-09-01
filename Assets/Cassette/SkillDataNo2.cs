@@ -31,7 +31,7 @@ public class SkillDataNo2
     public float effectDelay;
 
     [Header("クールタイム")]
-    public float cooldown = 1f;
+    public float coolTime = 1f;
 
     [Header("スキルの名前&アイコン")]
     public Sprite Icon;

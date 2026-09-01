@@ -19,7 +19,7 @@ public class NEWSkillMane : MonoBehaviour
     private Dictionary<int, SkillDataNo2> skillDict =
         new Dictionary<int, SkillDataNo2>();
 
-    private Dictionary<int, float> cooldowns =
+    private Dictionary<int, float> coolTimes =
         new Dictionary<int, float>();
 
     private Dictionary<int, float> skillUpGrade =
@@ -80,13 +80,13 @@ public class NEWSkillMane : MonoBehaviour
             return false;
 
         // スキルのクールダウンがあるか確認
-        if (cooldowns.TryGetValue(id, out float end))
+        if (coolTimes.TryGetValue(id, out float end))
         {
             if (Time.time < end)
                 return false;
         }
 
-        cooldowns[id] = Time.time + data.cooldown;
+        coolTimes[id] = Time.time + data.coolTime;
 
         isUsingSkill = true;
 
@@ -205,10 +205,10 @@ public class NEWSkillMane : MonoBehaviour
         } // お試し
     }
 
-    public float GetCooldown(int skillID)
+    public float GetCoolTime(int skillID)
     {
         // CTが存在しない場合
-        if (!cooldowns.TryGetValue(skillID, out float endTime))
+        if (!coolTimes.TryGetValue(skillID, out float endTime))
         {
             return 0f;
         }
@@ -220,13 +220,13 @@ public class NEWSkillMane : MonoBehaviour
         return Mathf.Max(0f, remainingTime);
     }
 
-    public float GetMaxCooldown(int skillID)
+    public float GetMaxCoolTime(int skillID)
     {
         if (!skillDict.TryGetValue(skillID, out SkillDataNo2 data))
         {
             return 0f;
         }
 
-        return data.cooldown;
+        return data.coolTime;
     }
 }

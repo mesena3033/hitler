@@ -13,7 +13,7 @@ public class SkillUI : MonoBehaviour
     private Image icon;
 
     [SerializeField]
-    private Image cooldownImage;
+    private Image coolTimeImage;
 
     [SerializeField]
     private TMP_Text text;
@@ -61,7 +61,7 @@ public class SkillUI : MonoBehaviour
             return;
         }
 
-        if (cooldownImage == null)
+        if (coolTimeImage == null)
         {
             Debug.LogWarning(
                 $"{name} : CooldownImageが設定されていません。");
@@ -98,8 +98,8 @@ public class SkillUI : MonoBehaviour
             icon.sprite = null;
             icon.enabled = false;
 
-            cooldownImage.sprite = null;
-            cooldownImage.enabled = false;
+            coolTimeImage.sprite = null;
+            coolTimeImage.enabled = false;
 
             text.text = "";
 
@@ -114,8 +114,8 @@ public class SkillUI : MonoBehaviour
             icon.sprite = null;
             icon.enabled = false;
 
-            cooldownImage.sprite = null;
-            cooldownImage.enabled = false;
+            coolTimeImage.sprite = null;
+            coolTimeImage.enabled = false;
 
             text.text = "";
 
@@ -130,8 +130,8 @@ public class SkillUI : MonoBehaviour
         icon.enabled = true;
 
         // CT用アイコンにも同じSpriteを設定
-        cooldownImage.sprite = data.Icon;
-        cooldownImage.enabled = true;
+        coolTimeImage.sprite = data.Icon;
+        coolTimeImage.enabled = true;
 
         // 最初はスキル名を表示
         text.text = data.skillName;
@@ -144,40 +144,25 @@ public class SkillUI : MonoBehaviour
     private void RefreshCooldown()
     {
         // スキルが設定されていない場合
-        if (currentSkillID < 0)
-        {
-            return;
-        }
-
-        if (skillManager == null)
-        {
-            return;
-        }
-
-        if (cooldownImage == null)
-        {
-            return;
-        }
-
-        if (text == null)
+        if (currentSkillID < 0 || skillManager == null || coolTimeImage == null || text == null)
         {
             return;
         }
 
         // 現在のCTを取得
         float remainingTime =
-            skillManager.GetCooldown(currentSkillID);
+            skillManager.GetCoolTime(currentSkillID);
 
         // 最大CTを取得
-        float maxCooldown =
-            skillManager.GetMaxCooldown(currentSkillID);
+        float maxCoolTime =
+            skillManager.GetMaxCoolTime(currentSkillID);
 
         // CTが存在しない、または終了した場合
-        if (remainingTime <= 0f || maxCooldown <= 0f)
+        if (remainingTime <= 0f || maxCoolTime <= 0f)
         {
-            cooldownImage.fillAmount = 0f;
+            coolTimeImage.fillAmount = 0f;
 
-            cooldownImage.enabled = false;
+            coolTimeImage.enabled = false;
 
             SkillDataNo2 data =
                 skillManager.GetSkill(currentSkillID);
@@ -188,18 +173,18 @@ public class SkillUI : MonoBehaviour
         }
 
         // CT中
-        cooldownImage.enabled = true;
+        coolTimeImage.enabled = true;
 
         // CTの残り割合を計算
-        float cooldownRate =
-            remainingTime / maxCooldown;
+        float coolTimeRate =
+            remainingTime / maxCoolTime;
 
         // 0～1の範囲に収める
-        cooldownRate =
-            Mathf.Clamp01(cooldownRate);
+        coolTimeRate =
+            Mathf.Clamp01(coolTimeRate);
 
         // 上から下へ黒い部分を減らす
-        cooldownImage.fillAmount = cooldownRate;
+        coolTimeImage.fillAmount = coolTimeRate;
 
         // 残りCTを表示
         text.text =

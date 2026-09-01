@@ -120,7 +120,7 @@ MonoBehaviour:
     effectPrefab: {fileID: 1205478487176026167, guid: 8436419d5cd706242bb810378b8a8835, type: 3}
     effectSpawnPoint: {fileID: 1516263829376756274}
     effectDelay: 0.5
-    cooldown: 5
+    coolTime: 5
     Icon: {fileID: 21300000, guid: 613d41d6b1ca7764cb365bfc29ef1864, type: 3}
     skillName: Fire
     damage: 15
@@ -135,7 +135,7 @@ MonoBehaviour:
     effectPrefab: {fileID: 158789456559184324, guid: 87167b19fb4a32a4e8e4f2c5f40a40b3, type: 3}
     effectSpawnPoint: {fileID: 1516263829376756274}
     effectDelay: 0.5
-    cooldown: 5
+    coolTime: 4
     Icon: {fileID: 21300000, guid: 613d41d6b1ca7764cb365bfc29ef1864, type: 3}
     skillName: Smash
     damage: 12
@@ -150,7 +150,7 @@ MonoBehaviour:
     effectPrefab: {fileID: 0}
     effectSpawnPoint: {fileID: 1516263829376756274}
     effectDelay: 0.5
-    cooldown: 5
+    coolTime: 5
     Icon: {fileID: 21300000, guid: 613d41d6b1ca7764cb365bfc29ef1864, type: 3}
     skillName: ATKUp
     damage: 0
