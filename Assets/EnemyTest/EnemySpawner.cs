@@ -51,8 +51,6 @@ public class EnemySpawner : MonoBehaviour
                 return;
             }
 
-            
-
             NavMeshHit hit;
 
             if (NavMesh.SamplePosition
