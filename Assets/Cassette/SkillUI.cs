@@ -13,6 +13,9 @@ public class SkillUI : MonoBehaviour
     private Image icon;
 
     [SerializeField]
+    private Image CTImage;
+
+    [SerializeField]
     private TMP_Text text;
 
     [SerializeField]
@@ -21,6 +24,11 @@ public class SkillUI : MonoBehaviour
     private void Start()
     {
         Refresh();
+    }
+
+    private void Update()
+    {
+        //RefreshCooldown();
     }
 
     public void Refresh()
@@ -57,4 +65,6 @@ public class SkillUI : MonoBehaviour
         // 現在は確認用にスキル名を表示
         text.text = data.skillName;
     }
+
+
 }
