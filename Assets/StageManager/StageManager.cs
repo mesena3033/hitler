@@ -74,8 +74,6 @@ public class StageManager : MonoBehaviour
         stages[currentStage].SetActive(true);
     }
 
-    
-
     public Transform GetCurrentPlayerSpawnPoint()
     {
         return playerSpawnPoints[CurrentStage];

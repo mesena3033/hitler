@@ -11,7 +11,7 @@ public class WaveSystem : MonoBehaviour
 {
     // ウェーブ数
     int waveCount = 3;
-    int currentWave = 0;
+    int currentWave = 1;
     public bool isGameStop = false;
 
     public int CurrentWave => currentWave;
@@ -50,7 +50,7 @@ public class WaveSystem : MonoBehaviour
         panel = FindFirstObjectByType<WavePanel>();
         move = FindFirstObjectByType<PlayerMove>();
         spawners = FindObjectsByType<EnemySpawner>(FindObjectsSortMode.None);
-        currentWave = 0;
+        currentWave = 1;
         waveTime = timeLimit;
         isWaveRunning = false;
         isWaveStarted = false;
@@ -69,39 +69,28 @@ public class WaveSystem : MonoBehaviour
         if(isStageCleared) return;
 
         // 上限値越え処理
-        if (currentWave > waveCount) return;
+        //if (currentWave >= waveCount) return;
         //Debug.Log("現ウェーブ: " +currentWave);
 
-        // ウェーブタイム進行
-        if (waveTime > 0f)
+        // プレイヤーが死亡していたら
+        if (status.IsPlayerDead) return;
+
+        if (!isWaveStarted) 
         {
-            if (!status.IsPlayerDead)
-            {
-                if (!isWaveStarted)
-                {
-                    isWaveStarted = true;
-                    isWaveRunning = true;
-                    WaveEnd();
+            isWaveStarted = true;
+            isWaveRunning = true;
 
-                    //Debug.Log(waveTime);
-                }
-                waveTime -= Time.deltaTime;
-
-            }
-
-            else
-            {
-                currentWave++;
-                waveTime -= Time.deltaTime;
-            }
+            WaveStart();
         }
 
-        else
+        waveTime -= Time.deltaTime;
+
+        // wave終了
+        if (waveTime <= 0f) 
         {
             isWaveRunning = false;
-            // ウェーブ時間が尽きたときの終了処理
-            WaveEnd();
 
+            WaveEnd();
         }
 
         // ステージクリア処理
@@ -111,24 +100,15 @@ public class WaveSystem : MonoBehaviour
     // ウェーブ終了処理（元の挙動に戻す）
     private void WaveEnd()
     {
-        if (currentWave < waveCount)
+        if (currentWave >= waveCount)
         {
-            // 次のウェーブへ
-            currentWave++;
-            waveTime = timeLimit;
-            WaveStart();
-        }
-
-        else
-        {
-            // 最終ウェーブクリア：ステージクリア表示
             StageClear();
-            if (stageEndCanvas != null)
-            {
-                stageEndCanvas.SetActive(true);
-            }
+            return;
         }
 
+        currentWave++;
+        waveTime = timeLimit;
+        isWaveStarted = false;
         
     }
 
@@ -145,6 +125,8 @@ public class WaveSystem : MonoBehaviour
         isStageCleared = true;
         isGameStop = true;
         isWaveRunning = false;
+        // ステージクリアUIを表示
+        stageEndCanvas.SetActive(true);
         nextButton.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -201,7 +183,7 @@ public class WaveSystem : MonoBehaviour
         stageEndCanvas.SetActive(false);
 
         // ウェーブ数をリセット
-        currentWave = 0;
+        currentWave = 1;
         waveTime = timeLimit;
         isWaveStarted = false;
         isWaveRunning = false;
