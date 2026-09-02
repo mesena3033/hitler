@@ -148,13 +148,15 @@ public class WaveSystem : MonoBehaviour
         panel.WaveStartPanel();
         move.CanNotMove = false;
 
-        //Debug.Log("Spawner取得前");
         EnemySpawner spawner = stageManager.GetCurrentSpawner();
 
-        //Debug.Log("Spawner = " + spawner);
+        if (spawner == null)
+        {
+            Debug.LogError("現在のステージのEnemySpawnerが取得できません");
+            return;
+        }
 
         spawner.EnemySpawn(currentWave);
-        
     }
 
     public bool TimeStop(ref float time)
@@ -172,7 +174,6 @@ public class WaveSystem : MonoBehaviour
     public void GoNextStage()
     {
         Time.timeScale = 1f;
-
         stageManager.NextStage();
 
         // ステージクリア状態を解除
@@ -181,6 +182,7 @@ public class WaveSystem : MonoBehaviour
 
         // クリアキャンバスをけす
         stageEndCanvas.SetActive(false);
+        nextButton.SetActive(false);
 
         // ウェーブ数をリセット
         currentWave = 1;
@@ -189,7 +191,8 @@ public class WaveSystem : MonoBehaviour
         isWaveRunning = false;
 
         move.CanNotMove = false;
+        Debug.Log($"次のステージ開始。Wave = {currentWave}");
 
-        
+
     }
 }
