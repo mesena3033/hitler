@@ -561,11 +561,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1116738469349609898, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
   m_PrefabInstance: {fileID: 1546265985}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &331372292 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7710277823200547276, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-  m_PrefabInstance: {fileID: 1546265985}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &444585799 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1660495643114339282, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
@@ -979,6 +974,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02fc97ee361571f4c92c77d5909e08a1, type: 3}
+--- !u!114 &1430069695 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2597606931754589843, guid: 8ee1b80487ab90047b39abe75fcb3417, type: 3}
+  m_PrefabInstance: {fileID: 235846693}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc6e13e44600ea341839572b8b03eda6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1447036806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1121,10 +1127,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 516028855040128380, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 578587513467392723, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: skillManager
       value: 
@@ -1133,14 +1135,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 1211319788284264433, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1392364505523264324, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: skillManager
       value: 
       objectReference: {fileID: 1113166031}
+    - target: {fileID: 2330710908713349411, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1430069695}
     - target: {fileID: 3022204160869124089, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1149,30 +1151,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3604714570996632487, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3772437702065933826, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4191089640443340411, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4631844124467058148, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4853436648061300689, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5238712130727798651, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: nextButton
-      value: 
-      objectReference: {fileID: 331372292}
     - target: {fileID: 5238712130727798651, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: stageManager
       value: 
@@ -1257,14 +1235,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5710783967439472175, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7716017321363618381, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: skillManager
       value: 
       objectReference: {fileID: 1113166031}
+    - target: {fileID: 8994306395813601849, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

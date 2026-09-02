@@ -12,18 +12,28 @@ public class ONOFFSwitch : MonoBehaviour
     {
         if (gameObject != null)
         {
-            gameObject.SetActive(false);
+            gameObject.SetActive(true);
         }
     }
 
     private void Update()
     {
+        /*
         if(Keyboard.current.tabKey.wasPressedThisFrame)
         {
             if (gameObject != null)
             {
                 gameObject.SetActive(!gameObject.activeSelf);
             }
+        }
+        */
+    }
+
+    public void OnButtonClick()
+    {
+        if (gameObject != null)
+        {
+            gameObject.SetActive(false);
         }
     }
 }
