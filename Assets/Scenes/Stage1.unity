@@ -491,6 +491,7 @@ MonoBehaviour:
   - {fileID: 812548466}
   enemySpawners:
   - {fileID: 2389505694142243417}
+  - {fileID: 2389505694142243417}
 --- !u!4 &272674855
 Transform:
   m_ObjectHideFlags: 0
