@@ -1,3 +1,5 @@
+using NUnit.Framework.Interfaces;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering.Universal;
@@ -8,48 +10,27 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject enemy;
 
     // スポーン地点
-    [SerializeField] private Transform[] stage1spawnPoints;
-    [SerializeField] private Transform[] stage2spawnPoints;
-    [SerializeField] private Transform[] stage3spawnPoints;
-
+    [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private StageManager stageManager;
 
     public void EnemySpawn(int wave)
     {
-        Transform[] currentSpawnPoints = null;
-        switch(stageManager.CurrentStage)
+        if(spawnPoints == null || spawnPoints.Length == 0)
         {
-            case 0:
-                currentSpawnPoints = stage1spawnPoints;
-                break;
-            case 1:
-                currentSpawnPoints = stage2spawnPoints;
-                break;
-            case 2:
-                currentSpawnPoints = stage3spawnPoints;
-                break;
-            default:
-                Debug.LogError("Invalid stage index");
-                return;
+            Debug.LogError($"Wave {wave} スポーン地点が設定されていません");
+            return;
         }
 
         // スポーン
-        foreach (Transform spawnPoint in currentSpawnPoints)
+        foreach (Transform spawnPoint in spawnPoints)
         {
             // SpawnPoint確認
             if (spawnPoint == null)
             {
-                //Debug.LogError($"Wave {wave + 1} スポーン地点がない");
+                //Debug.LogError($"Wave {wave} スポーン地点がない");
                 continue;
             }
 
-
-            // SpawnPoint確認
-            if (spawnPoint == null)
-            {
-                //Debug.LogError($"Wave {wave + 1} スポーン地点がない");
-                return;
-            }
 
             NavMeshHit hit;
 
@@ -71,6 +52,15 @@ public class EnemySpawner : MonoBehaviour
                     }
                 }
 
+            }
+
+            else
+            {
+                {
+                    Debug.LogError(
+                        $"SpawnPointの位置にNavMeshがありません: {spawnPoint.position}"
+                    );
+                }
             }
 
             
