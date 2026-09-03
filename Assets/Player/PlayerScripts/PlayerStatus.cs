@@ -200,5 +200,4 @@ public class PlayerStatus : MonoBehaviour
             currentHP += 100;
         }
     }
-
 }

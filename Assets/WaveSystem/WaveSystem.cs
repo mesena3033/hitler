@@ -19,7 +19,7 @@ public class WaveSystem : MonoBehaviour
     // ウェーブ時間
     float waveTime = 0f;
     // 時間制限
-    float timeLimit = 5f;
+    float timeLimit = 20f;
 
     // ステージクリア時のスキル選択フェーズ
     float preparationPhase = 20f;
