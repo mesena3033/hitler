@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3599890172395690983, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -48.3
       objectReference: {fileID: 0}
     - target: {fileID: 3599890172395690983, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9197049493446155478, guid: 051a423d93c56b84e82407504bcc15a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.100821786
+      value: -0.10082245
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -136,7 +136,7 @@ MonoBehaviour:
     effectSpawnPoint: {fileID: 1516263829376756274}
     effectDelay: 0.5
     coolTime: 4
-    Icon: {fileID: 21300000, guid: 613d41d6b1ca7764cb365bfc29ef1864, type: 3}
+    Icon: {fileID: 21300000, guid: 3b437c66003ba8b41956857755414954, type: 3}
     skillName: Smash
     damage: 12
     buffValue: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
     effectSpawnPoint: {fileID: 1516263829376756274}
     effectDelay: 0.5
     coolTime: 5
-    Icon: {fileID: 21300000, guid: 613d41d6b1ca7764cb365bfc29ef1864, type: 3}
+    Icon: {fileID: 21300000, guid: 0aa0d72ed1e476443a21d92edb4cc3bc, type: 3}
     skillName: ATKUp
     damage: 0
     buffValue: 1.2
