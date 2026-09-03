@@ -57,7 +57,6 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        //move.CanNotMoving();
         if (status.IsPlayerDead) return;
 
         canNotMove = Cursor.visible;
@@ -165,6 +164,7 @@ public class PlayerAttack : MonoBehaviour
         attackTimer = 0f;
         currentAttack = attackCT;
 
+        
         // 攻撃終了で当たり判定を無効化
         if (swordCollider != null) swordCollider.enabled = false;
     }
@@ -212,6 +212,7 @@ public class PlayerAttack : MonoBehaviour
         else 
         {
             dmg = CalculateDamage(targetDefense, true, skillDamage);
+            isSkilled = false;
             //Debug.Log("スキルだめーじ" + skillDamage);
             //damageable.ApplyDamage(dmg);
             //isSkilled = false;
@@ -219,13 +220,14 @@ public class PlayerAttack : MonoBehaviour
 
         damageable.ApplyDamage(dmg);
 
+        dmg = 0;
+
         // デバッグ出力: プレイヤーHP, 敵HP, プレイヤー攻撃力, 敵防御力
         var playerStatus = GetComponent<PlayerStatus>();
         int playerHP = playerStatus != null ? playerStatus.CurrentHP : -1;
         float playerAtk = playerStatus != null ? playerStatus.AttackPower : -1f;
         int enemyHP = -1;
         if (targetStatus != null) enemyHP = targetStatus.CurrentHP;
-
         // Debug.Log($"PlayerHP={playerHP} EnemyHP={enemyHP} PlayerATK={playerAtk} EnemyDEF={targetDefense} Damage={dmg}");
     }
 
@@ -235,10 +237,7 @@ public class PlayerAttack : MonoBehaviour
         {
             swordCollider.enabled = false;
         }
-        
-
     }
-
 
     // 攻撃系スキルメソッド
     public int SkillDamage(int amount)
@@ -265,7 +264,6 @@ public class PlayerAttack : MonoBehaviour
         float attackPower = 0f;
         int dmg = 0;
 
-        
         // 通常攻撃
         if (!isSkill)
         {
@@ -282,8 +280,6 @@ public class PlayerAttack : MonoBehaviour
         dmg = Mathf.Max(0, Mathf.FloorToInt(attackPower - targetDefense));
         return dmg;
     }
-
-
 
 }
 
