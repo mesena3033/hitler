@@ -17,7 +17,7 @@ public class SwordHit : MonoBehaviour
 
         if (other.CompareTag("Object"))
         {
-            owner.OnWallHit();
+            owner.DisableSword();
         }
 
         owner.OnSwordHit(other);

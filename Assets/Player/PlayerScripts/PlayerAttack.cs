@@ -34,7 +34,11 @@ public class PlayerAttack : MonoBehaviour
     private bool canNotMove;
 
     // プロパティ
-    public bool IsAttacking => isAttacking;
+    public bool IsAttacking
+    {
+        get { return isAttacking; }
+        set { isAttacking = value; }
+    }
 
     void Start()
     {
@@ -140,7 +144,7 @@ public class PlayerAttack : MonoBehaviour
         StartCoroutine(ColliderDelay());
     }
 
-    private IEnumerator ColliderDelay()
+    public IEnumerator ColliderDelay()
     {
         yield return new WaitForSeconds(0.3f);
         if (swordCollider != null) swordCollider.enabled = true;
@@ -220,7 +224,6 @@ public class PlayerAttack : MonoBehaviour
 
         damageable.ApplyDamage(dmg);
 
-        dmg = 0;
 
         // デバッグ出力: プレイヤーHP, 敵HP, プレイヤー攻撃力, 敵防御力
         var playerStatus = GetComponent<PlayerStatus>();
@@ -231,7 +234,7 @@ public class PlayerAttack : MonoBehaviour
         // Debug.Log($"PlayerHP={playerHP} EnemyHP={enemyHP} PlayerATK={playerAtk} EnemyDEF={targetDefense} Damage={dmg}");
     }
 
-    public void OnWallHit()
+    public void DisableSword()
     {
         if (swordCollider != null)
         {
