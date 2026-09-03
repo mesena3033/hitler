@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 public abstract class EnemyBase : MonoBehaviour
 {
-    [SerializeField] protected float attackRange = 5f;
+    [SerializeField] protected float attackRange = 7f;
 
     protected Transform player;
     protected NavMeshAgent agent;
@@ -15,6 +15,7 @@ public abstract class EnemyBase : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+
     }
 
     protected void Start()
@@ -56,7 +57,9 @@ public abstract class EnemyBase : MonoBehaviour
         // 攻撃範囲で攻撃
         if (distance <= attackRange) 
         {
+            Debug.Log($"攻撃開始 distance={distance} / range={attackRange}");
             agent.isStopped = true;
+
             animator.SetBool("isIdling", false);
             animator.SetBool("isMoving", false);
 
@@ -71,15 +74,21 @@ public abstract class EnemyBase : MonoBehaviour
         }
         
         agent.isStopped = false;
-
-
         animator.SetBool("isIdling", false);
         animator.SetBool("isMoving", true);
         agent.SetDestination(player.position);
-       
-        Vector3 lookPosition = player.position;
-        transform.LookAt(lookPosition);
 
+        if (isAttacking)
+        {
+            Debug.Log(
+    $"distance={distance}, " +
+    $"attackRange={attackRange}, " +
+    $"isAttacking={isAttacking}, " +
+    $"isStopped={agent.isStopped}, " +
+    $"velocity={agent.velocity}"
+);
+        }
+        
     }
 
 
