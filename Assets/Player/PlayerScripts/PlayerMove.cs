@@ -173,6 +173,7 @@ public class PlayerMove : MonoBehaviour
     {
         Debug.Log("Hit Start : " + duration);
         isBeingHit = true;
+        attack.IsAttacking = false;
         hitDisableTimer = Mathf.Max(0f, duration);
 
     }
