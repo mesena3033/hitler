@@ -12,9 +12,12 @@ public class WaveSystem : MonoBehaviour
     // ウェーブ数
     int waveCount = 3;
     int currentWave = 1;
-    public bool isGameStop = false;
 
-    public int CurrentWave => currentWave;
+    // ウェーブプロパティ
+    public int CurrentWave { get { return waveCount; } set { waveCount = value; } }
+
+
+    public bool isGameStop = false;
 
     // ウェーブ時間
     float waveTime = 0f;
