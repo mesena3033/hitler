@@ -3,6 +3,8 @@ using UnityEngine.AI;
 public abstract class EnemyBase : MonoBehaviour
 {
     [SerializeField] protected float attackRange = 7f;
+    float attackCooldownTimer = 0f;
+    [SerializeField] private float attackCooldown= 1.3f;
 
     protected Transform player;
     protected NavMeshAgent agent;
@@ -29,13 +31,21 @@ public abstract class EnemyBase : MonoBehaviour
         if (player == null) return;
         if (!agent.isOnNavMesh)return;
 
+        // 攻撃CT
+        if (attackCooldownTimer > 0f) 
+        {
+            attackCooldownTimer -= Time.deltaTime;
+        }
+
         // プレイヤーが動けない場合は停止
         if (playerMove.CanNotMove)
         {
-            Debug.Log("敵停止：PlayerMove.CanNotMove = true");
+            //Debug.Log("敵停止：PlayerMove.CanNotMove = true");
             agent.isStopped = true;
             return;
         }
+
+        agent.SetDestination(player.position);
 
         // 距離を計算
         float distance = Vector3.Distance(transform.position, player.position);
@@ -49,46 +59,36 @@ public abstract class EnemyBase : MonoBehaviour
             return;
         }
 
-        // agent.isStopped = false;
-
-        this.transform.LookAt(player.transform);
-
 
         // 攻撃範囲で攻撃
-        if (distance <= attackRange) 
+        if (distance <= attackRange)
         {
-            Debug.Log($"攻撃開始 distance={distance} / range={attackRange}");
-            agent.isStopped = true;
+            Vector3 lookPosition = player.position;
+            lookPosition.y = transform.position.y;
 
+            transform.LookAt(lookPosition);
+
+
+            agent.isStopped = true;
             animator.SetBool("isIdling", false);
             animator.SetBool("isMoving", false);
 
-            // 攻撃中
-            if(!isAttacking)
+            // 攻撃できるなら攻撃
+            if (!isAttacking && attackCooldownTimer <= 0f)
             {
                 isAttacking = true;
+                attackCooldownTimer = attackCooldown;
+
                 Attack();
             }
 
-            return; 
+            return;
         }
-        
+
         agent.isStopped = false;
         animator.SetBool("isIdling", false);
         animator.SetBool("isMoving", true);
-        agent.SetDestination(player.position);
 
-        if (isAttacking)
-        {
-            Debug.Log(
-    $"distance={distance}, " +
-    $"attackRange={attackRange}, " +
-    $"isAttacking={isAttacking}, " +
-    $"isStopped={agent.isStopped}, " +
-    $"velocity={agent.velocity}"
-);
-        }
-        
     }
 
 
@@ -96,12 +96,19 @@ public abstract class EnemyBase : MonoBehaviour
 
     public void OnAttackEnd()
     {
+        Debug.Log("OnAttackEnd 呼ばれた");
         isAttacking = false;
 
         if (player == null) return;
-        if (!agent.isOnNavMesh) return;
+
+        if (!agent.isOnNavMesh) return; 
 
         // 攻撃終了後、移動可能状態に戻す
         agent.isStopped = false;
+        // プレイヤーを再び追跡
+        agent.SetDestination(player.position);
+        // 攻撃アニメーションから強制的に抜ける
+        animator.CrossFade("Idle", 0.05f);
+       
     }
 }
