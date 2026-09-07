@@ -39,6 +39,7 @@ public class EventManager : MonoBehaviour
 
     private void Awake()
     {
+        //  canvasは1個
         canvas = FindFirstObjectByType<Canvas>();
 
         //  各canvas直下のUIを走査 + アタッチ
@@ -121,12 +122,15 @@ public class EventManager : MonoBehaviour
 
             titlePanel.gameObject.SetActive(false);
         }
+
+        //  いらんパネル非表示
         menuPanel.gameObject.SetActive(false);
         resultPanel.gameObject.SetActive(false);
     }
 
     private void Update()
     {
+        //  リロード用にシーン名を取り続ける
         sceneName = SceneManager.GetActiveScene().name;
 
         //  メニューの表示判定
@@ -160,16 +164,22 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    private void RestartButton()
+    private void RestartButton()    //  シーンの再スタート
     {
-        //  現在のシーンのリロード
-        SceneManager.LoadScene(sceneName);
+        if(sceneName != null)
+        {
+            //  現在のシーンのリロード
+            SceneManager.LoadScene(sceneName);
+        }
     }
 
-    private void TitleBackButton()
+    private void TitleBackButton()  //  各シーン共通のタイトル遷移
     {
-        //  タイトルバック
-        SceneManager.LoadScene(titleSceneName);
+        if (titleSceneName != null)
+        {
+            //  タイトルバック
+            SceneManager.LoadScene(titleSceneName);
+        }
     }
 
     public bool MenuActiveLock()    //  メニューを反応させていいタイミングか判定
@@ -246,7 +256,7 @@ public class EventManager : MonoBehaviour
         return false;
     }
 
-    public void PlayerDespawn()
+    public void PlayerDespawn() //  P死亡処理
     {
         if (resultPanel != null)
         {
