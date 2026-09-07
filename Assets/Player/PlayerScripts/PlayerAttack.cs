@@ -47,8 +47,8 @@ public class PlayerAttack : MonoBehaviour
         animator = GetComponent<Animator>();
 
         isSkilled = false;
-        // 剣のコンポーネントを取得
-        /*swordHitComponent = GetComponentInChildren<SwordHit>();
+        //剣のコンポーネントを取得
+        swordHitComponent = GetComponentInChildren<SwordHit>();
         if (swordHitComponent != null)
         {
             swordHitComponent.Init(this);
@@ -56,7 +56,7 @@ public class PlayerAttack : MonoBehaviour
             if (col != null && swordCollider == null) swordCollider = col;
         }
 
-        if (swordCollider != null) swordCollider.enabled = false;*/
+        if (swordCollider != null) swordCollider.enabled = false;
     }
 
     void Update()
@@ -141,14 +141,14 @@ public class PlayerAttack : MonoBehaviour
         animator.Play("Combo" + comboCount);
 
         // 0.3秒後判定を出す
-        //StartCoroutine(ColliderDelay());
+        StartCoroutine(ColliderDelay());
     }
 
-    /*public IEnumerator ColliderDelay()
+    public IEnumerator ColliderDelay()
     {
         yield return new WaitForSeconds(0.3f);
         if (swordCollider != null) swordCollider.enabled = true;
-    }*/
+    }
 
     void EndAttack()
     {

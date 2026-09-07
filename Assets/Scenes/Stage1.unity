@@ -785,7 +785,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8989636503676688432, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
   m_PrefabInstance: {fileID: 1447036806}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1372387778}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6a90bfe4a8110c43a1df03b3e22a958, type: 3}
@@ -921,29 +921,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02fc97ee361571f4c92c77d5909e08a1, type: 3}
---- !u!1 &1372387778 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8829501029181951945, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
-  m_PrefabInstance: {fileID: 1447036806}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1372387791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1372387778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d01e36e217826914bb40f51a6dd1ba93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  col: {fileID: 1412151035}
---- !u!65 &1412151035 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 7188803421376095820, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
-  m_PrefabInstance: {fileID: 1447036806}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1429485081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1068,6 +1045,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4004194487716357939, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6015734184766371097, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
       propertyPath: SlotManager
       value: 
@@ -1083,10 +1064,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8829501029181951945, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1372387791}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
 --- !u!1001 &1467046695
 PrefabInstance:
@@ -1273,10 +1251,6 @@ PrefabInstance:
       propertyPath: skillManager
       value: 
       objectReference: {fileID: 1113166031}
-    - target: {fileID: 8293109115535349029, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8994306395813601849, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
