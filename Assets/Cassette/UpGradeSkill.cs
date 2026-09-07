@@ -18,7 +18,7 @@ public class UpGradeSkill : MonoBehaviour
 
             return Normalrate;
         }
-
+        ////////////////////////////////////////////////////////////////////////
         // ID‚ª‘¶İ‚·‚é”ÍˆÍ‚©Šm”F
         if (skillID < 0 || skillID >= skillManager.SkillCount)
         {
