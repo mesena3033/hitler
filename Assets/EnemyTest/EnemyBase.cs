@@ -11,6 +11,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected Animator animator;
     private PlayerMove playerMove;
 
+    protected bool isHit = false;
     protected bool isAttacking = false;
 
     protected void Awake()
@@ -30,6 +31,12 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (player == null) return;
         if (!agent.isOnNavMesh)return;
+
+        if (isHit)
+        {
+            agent.isStopped = true;
+            return;
+        }
 
         // 攻撃CT
         if (attackCooldownTimer > 0f) 
@@ -96,11 +103,11 @@ public abstract class EnemyBase : MonoBehaviour
 
     public void OnAttackEnd()
     {
-        Debug.Log("OnAttackEnd 呼ばれた");
+        // Debug.Log("OnAttackEnd 呼ばれた");
+        if (isHit) return;
         isAttacking = false;
-
         if (player == null) return;
-
+        
         if (!agent.isOnNavMesh) return; 
 
         // 攻撃終了後、移動可能状態に戻す
@@ -112,4 +119,28 @@ public abstract class EnemyBase : MonoBehaviour
        
     }
 
+    
+    // 被弾アニメーション
+    public void OnDamagedAnim()
+    {
+        isHit = true;
+        isAttacking = false;
+        agent.isStopped = true;
+        animator.SetBool("isMoving", false);
+        animator.SetBool("isIdling", false);
+
+        animator.ResetTrigger("Attack");
+        animator.SetTrigger("Hit");
+    }
+
+    public void OnHitEnd()
+    {
+        isHit = false;
+
+        if (player == null) return;
+        if (!agent.isOnNavMesh) return;
+
+        agent.isStopped = false;
+        agent.SetDestination(player.position);
+    }
 }

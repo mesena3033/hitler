@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemySword : MonoBehaviour
+public class SwordCollider : MonoBehaviour
 {
     [SerializeField] Collider col;
 
@@ -9,12 +9,12 @@ public class EnemySword : MonoBehaviour
         col.enabled = false;
     }
 
-    public void EnableEnemySword()
+    public void EnableSword()
     {
         col.enabled = true;
     }
 
-    public void DisableEnemySword()
+    public void DisableSword()
     {
         col.enabled = false;
     }

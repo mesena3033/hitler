@@ -6,6 +6,7 @@ public class EnemyStatus : MonoBehaviour, IDamageable
     [SerializeField] float defensePower = 3f; // 攻撃値から引く値（小数可）
     private WaveSystem waveSystem;
     private KillsEnemyCount killsEnemyCount;
+    private EnemyBase enemyBase;
 
     int currentHP;
 
@@ -15,6 +16,7 @@ public class EnemyStatus : MonoBehaviour, IDamageable
     {
         waveSystem = FindFirstObjectByType<WaveSystem>();
         killsEnemyCount = FindFirstObjectByType<KillsEnemyCount>();
+        enemyBase = GetComponent<EnemyBase>();
     }
     // 外部参照用
     public float DefensePower => defensePower;
@@ -25,7 +27,9 @@ public class EnemyStatus : MonoBehaviour, IDamageable
         int final = Mathf.Max(0, Mathf.FloorToInt(damage - defensePower));
         if (final <= 0) return; 
         currentHP -= final;
-        // 被弾アニメーションなど
+        // 被弾アニメーション
+        enemyBase.OnDamagedAnim();
+
         if (currentHP <= 0) Die();
     }
 
