@@ -111,4 +111,5 @@ public abstract class EnemyBase : MonoBehaviour
         animator.CrossFade("Idle", 0.05f);
        
     }
+
 }
