@@ -6460,6 +6460,7 @@ GameObject:
   - component: {fileID: 3393457945810342629}
   - component: {fileID: 9169934516428418483}
   - component: {fileID: 4777754380793202016}
+  - component: {fileID: 6274399392492810040}
   m_Layer: 0
   m_Name: testEnemy1
   m_TagString: Enemy
@@ -6571,7 +6572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 3
-  attackCooldown: 1
+  attackCooldown: 1.75
   attackDamage: 10
 --- !u!114 &4777754380793202016
 MonoBehaviour:
@@ -6587,6 +6588,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 10
   defensePower: 3
+--- !u!114 &6274399392492810040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7389923134980997987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01e36e217826914bb40f51a6dd1ba93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  col: {fileID: 7402460982837071304}
 --- !u!1 &7395847335449920015
 GameObject:
   m_ObjectHideFlags: 0

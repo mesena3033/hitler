@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class EnemySword : MonoBehaviour
 {
-    Collider col;
+    [SerializeField] Collider col;
 
     void Start()
     {
-        col = GetComponent<Collider>();
         col.enabled = false;
     }
 
