@@ -7,16 +7,25 @@ public class EnemyStatus : MonoBehaviour, IDamageable
     private WaveSystem waveSystem;
     private KillsEnemyCount killsEnemyCount;
     private EnemyBase enemyBase;
+    private HPUI hpUI;
 
-    int currentHP;
+    private int currentHP;
 
-    void Awake() => currentHP = maxHP;
+    public int CurrentHP => currentHP;
+    public int MaxHP => maxHP;
+
+    void Awake()
+    {
+        currentHP = maxHP;
+    }
     
     void Start()
     {
         waveSystem = FindFirstObjectByType<WaveSystem>();
         killsEnemyCount = FindFirstObjectByType<KillsEnemyCount>();
         enemyBase = GetComponent<EnemyBase>();
+        hpUI = GetComponentInChildren<HPUI>();
+        UpdateHPUI();
     }
     // 外部参照用
     public float DefensePower => defensePower;
@@ -29,8 +38,17 @@ public class EnemyStatus : MonoBehaviour, IDamageable
         currentHP -= final;
         // 被弾アニメーション
         enemyBase.OnDamagedAnim();
+        // HPUI 更新
+        UpdateHPUI();
 
         if (currentHP <= 0) Die();
+    }
+
+    private void UpdateHPUI()
+    {
+        if (hpUI == null) return;
+        float hpRate = (float)currentHP / maxHP;
+        hpUI.SetHP(hpRate);
     }
 
     void Die()
