@@ -7002,6 +7002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 3
   attackCooldown: 1.75
+  hpBar: {fileID: 7259435644680701082}
   attackDamage: 10
 --- !u!114 &4777754380793202016
 MonoBehaviour:

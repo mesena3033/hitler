@@ -41,7 +41,7 @@ public class EnemyStatus : MonoBehaviour, IDamageable
         // HPUI 更新
         UpdateHPUI();
 
-        if (currentHP <= 0) Die();
+        if (currentHP <= 0) enemyBase.OnDeath();
     }
 
     private void UpdateHPUI()
@@ -53,11 +53,14 @@ public class EnemyStatus : MonoBehaviour, IDamageable
 
     void Die()
     {
+        
         // 死亡処理（アニメーション、削除など）s
         if (waveSystem.isWaveRunning)
         {
             killsEnemyCount.AddKillCount();
         }
+
+
         Destroy(gameObject);
         
     }
