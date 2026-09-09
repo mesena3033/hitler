@@ -17,6 +17,7 @@ public class PlayerStatus : MonoBehaviour
     //private float hitDisableDuration = 0.5f;
     private PlayerMove move;
     public WaveSystem waveSystem;
+    private PlayerMove playerMove;
 
     public int CurrentHP => currentHP;
 
@@ -68,7 +69,7 @@ public class PlayerStatus : MonoBehaviour
         move = GetComponent<PlayerMove>();
         playerAnimation = GetComponent<PlayerAnimation>();
         waveSystem = FindFirstObjectByType<WaveSystem>();
-
+        playerMove = GetComponent<PlayerMove>();
         //  マウス非表示 + 中央固定
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.None;
@@ -103,33 +104,31 @@ public class PlayerStatus : MonoBehaviour
         var brain = Camera.main.GetComponent<CinemachineBrain>();
 
         //  メニューがない時だけAltキーでマウス呼出し
-        if (_event.GetPanelActive() == false)
+        if (_event.GetPanelActive() == false)    /// false
         {
-            //  Altキーでマウス呼び出し
-            if (Keyboard.current.altKey.isPressed)
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
+            playerMove.CanNotMove = true;
+            //  呼出し中カメラ動かさない
+            brain.enabled = false; // 停止
+
+            // return;
+
+            /*else
             {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Confined;
 
-                //  呼出し中カメラ動かさない
                 brain.enabled = false; // 停止
-
-                return;
-            }
-
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-
-            brain.enabled = true;  // 再開
+            }*/
         }
-        else
+        /*else
         {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
-
-            brain.enabled = false; // 停止
-        }
-
+            playerMove.CanNotMove = false;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.None;
+            brain.enabled = true; // 再開
+        }*/
             CheatingHeal();
     }
 
