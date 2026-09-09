@@ -6,11 +6,17 @@ public abstract class EnemyBase : MonoBehaviour
     float attackCooldownTimer = 0f;
     [SerializeField] private float attackCooldown= 1.3f;
 
+
     protected Transform player;
     protected NavMeshAgent agent;
     protected Animator animator;
     private PlayerMove playerMove;
+    private EnemyStatus enemyStatus;
 
+    // 死亡時にHPUIを消す
+    [SerializeField] private GameObject hpBar;
+
+    private Collider enemyCollider;
     protected bool isHit = false;
     protected bool isAttacking = false;
 
@@ -18,13 +24,14 @@ public abstract class EnemyBase : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-
+        enemyStatus = GetComponent<EnemyStatus>();
     }
 
     protected void Start()
     {
         playerMove = FindFirstObjectByType<PlayerMove>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        enemyCollider = GetComponent<Collider>();
     }
 
     protected void Update()
@@ -142,5 +149,29 @@ public abstract class EnemyBase : MonoBehaviour
 
         agent.isStopped = false;
         agent.SetDestination(player.position);
+    }
+
+    // 死亡アニメーション
+    public void OnDeath()
+    {
+        if(enemyStatus.CurrentHP <= 0)
+        {
+            // コライダーを切る
+            this.enemyCollider.enabled = false;
+            hpBar.SetActive(false);
+            isHit = true;
+            isAttacking = false;
+            agent.isStopped = true;
+            animator.SetBool("isMoving", false);
+            animator.SetBool("isIdling", false);
+            animator.ResetTrigger("Attack");
+            animator.SetTrigger("Death");
+        }
+    }
+
+    public void OnDeathEnd()
+    {
+        // 死亡アニメーション終了後にオブジェクトを破棄
+        Destroy(gameObject);
     }
 }
