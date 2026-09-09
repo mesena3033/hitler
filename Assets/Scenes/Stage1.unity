@@ -1045,10 +1045,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4004194487716357939, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6015734184766371097, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
       propertyPath: SlotManager
       value: 

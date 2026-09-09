@@ -1,37 +1,28 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using Unity.Cinemachine;
 
 public class HPUI : MonoBehaviour
 {
-    private Slider hpSlider;
-    [SerializeField] private GameObject hpUI;
-    [SerializeField] private GameObject hpComponent;
-    private int hp;
+    [SerializeField] private Slider hpSlider;
     private int maxHp;
+
     private void Start()
     {
-        
+        SetHP(1f);
     }
 
     void LateUpdate()
     {
+        // HPUI‚ğƒJƒƒ‰‚Ì•ûŒü‚ÉŒü‚¯‚é
         transform.rotation = Camera.main.transform.rotation;
     }
 
-    public int GetHp()
+    // HP‚ÌŠ„‡‚ğó‚¯æ‚Á‚Ä•\¦
+    public void SetHP(float hpRate)
     {
-        return hp;
-    }
-
-    public int GetMaxHp()
-    {
-        return maxHp;
-    }
-
-    public void UpdateHPVal()
-    {
-        hpSlider.value = (float)GetHp() / (float)GetMaxHp();
+        hpSlider.value = hpRate;
     }
 
 }
