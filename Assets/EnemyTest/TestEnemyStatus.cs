@@ -51,17 +51,4 @@ public class EnemyStatus : MonoBehaviour, IDamageable
         hpUI.SetHP(hpRate);
     }
 
-    void Die()
-    {
-        
-        // 死亡処理（アニメーション、削除など）s
-        if (waveSystem.isWaveRunning)
-        {
-            killsEnemyCount.AddKillCount();
-        }
-
-
-        Destroy(gameObject);
-        
-    }
 }

@@ -6,12 +6,13 @@ public abstract class EnemyBase : MonoBehaviour
     float attackCooldownTimer = 0f;
     [SerializeField] private float attackCooldown= 1.3f;
 
-
+    private KillsEnemyCount killsEnemyCount;
     protected Transform player;
     protected NavMeshAgent agent;
     protected Animator animator;
     private PlayerMove playerMove;
     private EnemyStatus enemyStatus;
+    WaveSystem waveSystem;
 
     // 死亡時にHPUIを消す
     [SerializeField] private GameObject hpBar;
@@ -25,6 +26,8 @@ public abstract class EnemyBase : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         enemyStatus = GetComponent<EnemyStatus>();
+        waveSystem = FindAnyObjectByType<WaveSystem>();
+        killsEnemyCount = FindAnyObjectByType<KillsEnemyCount>();
     }
 
     protected void Start()
@@ -166,11 +169,17 @@ public abstract class EnemyBase : MonoBehaviour
             animator.SetBool("isIdling", false);
             animator.ResetTrigger("Attack");
             animator.SetTrigger("Death");
+            // キル数加算
+            if (waveSystem.isWaveRunning)
+            {
+                killsEnemyCount.AddKillCount();
+            }
         }
     }
 
     public void OnDeathEnd()
     {
+        
         // 死亡アニメーション終了後にオブジェクトを破棄
         Destroy(gameObject);
     }
