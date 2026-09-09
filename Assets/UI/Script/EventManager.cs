@@ -8,8 +8,7 @@ public class EventManager : MonoBehaviour
 {
     [Header("シーン名")]
     private string titleSceneName = "TitleScene";
-    [SerializeField] private string gameSceneName1;
-    [SerializeField] private string gameSceneName2;
+    [SerializeField] private string gameSceneName;
 
     //  スクリプトでアタッチするUI
     //  キャンバス
@@ -153,15 +152,15 @@ public class EventManager : MonoBehaviour
     private void NextButton()   //  Stageが増えたら追記
     {
         //  TitleScene => PlayerScene
-        if (sceneName == titleSceneName && gameSceneName1 != null)
+        if (sceneName == titleSceneName && gameSceneName != null)
         {
-            SceneManager.LoadScene(gameSceneName1);
+            SceneManager.LoadScene(gameSceneName);
         }
         //  PlayerScene => Stage1
-        else if (sceneName == gameSceneName1 && gameSceneName2 != null)
-        {
-            SceneManager.LoadScene(gameSceneName2);
-        }
+        //else if (sceneName == gameSceneName && gameSceneName2 != null)
+        //{
+        //    SceneManager.LoadScene(gameSceneName2);
+        //}
     }
 
     private void RestartButton()    //  シーンの再スタート
