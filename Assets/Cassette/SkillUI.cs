@@ -37,43 +37,9 @@ public class SkillUI : MonoBehaviour
     // SkillSlotの内容をUIに反映
     public void Refresh()
     {
-        if (skillSlot == null)
+        if (skillSlot == null || skillManager == null || icon == null ||
+            coolTimeImage == null || text == null)
         {
-            Debug.LogWarning(
-                $"{name} : SkillSlotが設定されていません。");
-
-            return;
-        }
-
-        if (skillManager == null)
-        {
-            Debug.LogWarning(
-                $"{name} : NEWSkillManeが設定されていません。");
-
-            return;
-        }
-
-        if (icon == null)
-        {
-            Debug.LogWarning(
-                $"{name} : Iconが設定されていません。");
-
-            return;
-        }
-
-        if (coolTimeImage == null)
-        {
-            Debug.LogWarning(
-                $"{name} : CooldownImageが設定されていません。");
-
-            return;
-        }
-
-        if (text == null)
-        {
-            Debug.LogWarning(
-                $"{name} : Textが設定されていません。");
-
             return;
         }
 

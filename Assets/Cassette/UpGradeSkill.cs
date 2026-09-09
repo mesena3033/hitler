@@ -4,7 +4,7 @@ public class UpGradeSkill : MonoBehaviour
 {
     [SerializeField]
     private NEWSkillMane skillManager;
-
+    
     float Normalrate = 1.0f;
 
     // 指定したスキルIDから、現在のスキルレベルに応じた倍率を取得する
@@ -18,7 +18,7 @@ public class UpGradeSkill : MonoBehaviour
 
             return Normalrate;
         }
-        ////////////////////////////////////////////////////////////////////////
+
         // IDが存在する範囲か確認
         if (skillID < 0 || skillID >= skillManager.SkillCount)
         {
