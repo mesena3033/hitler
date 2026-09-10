@@ -158,7 +158,7 @@ MonoBehaviour:
     effectPrefab: {fileID: 0}
     effectSpawnPoint: {fileID: 1516263829376756274}
     effectDelay: 0.5
-    coolTime: 5
+    coolTime: 15
     Icon: {fileID: 21300000, guid: 0aa0d72ed1e476443a21d92edb4cc3bc, type: 3}
     skillName: ATKUp
     damage: 0

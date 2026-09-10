@@ -106,7 +106,7 @@ public class PlayerStatus : MonoBehaviour
         var brain = Camera.main.GetComponent<CinemachineBrain>();
 
         //  スキル選択時のみマウス表示にしたい
-        if (onOffSwitch.SkillPanel.activeSelf )    /// false
+        if (onOffSwitch.SkillPanel.activeSelf || _event.GetPanelActive() == true)    /// false
         {
             //  Altキーでマウス呼び出し
             //if (Keyboard.current.altKey.isPressed)
