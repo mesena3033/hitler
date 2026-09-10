@@ -17,7 +17,8 @@ public class PlayerStatus : MonoBehaviour
     //private float hitDisableDuration = 0.5f;
     private PlayerMove move;
     public WaveSystem waveSystem;
-    private PlayerMove playerMove;
+    [SerializeField] private GameObject skillPanel;
+    private ONOFFSwitch onOffSwitch;
 
     public int CurrentHP => currentHP;
 
@@ -69,7 +70,8 @@ public class PlayerStatus : MonoBehaviour
         move = GetComponent<PlayerMove>();
         playerAnimation = GetComponent<PlayerAnimation>();
         waveSystem = FindFirstObjectByType<WaveSystem>();
-        playerMove = GetComponent<PlayerMove>();
+        onOffSwitch = FindFirstObjectByType<ONOFFSwitch>();
+
         //  マウス非表示 + 中央固定
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.None;
@@ -103,32 +105,36 @@ public class PlayerStatus : MonoBehaviour
         //カメラ制御用
         var brain = Camera.main.GetComponent<CinemachineBrain>();
 
-        //  メニューがない時だけAltキーでマウス呼出し
-        if (_event.GetPanelActive() == false)    /// false
+        //  スキル選択時のみマウス表示にしたい
+        if (onOffSwitch.SkillPanel.activeSelf)    /// false
         {
+            //  Altキーでマウス呼び出し
+            //if (Keyboard.current.altKey.isPressed)
+            //{
+            move.CanNotMove = true; // 移動無効化
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
-            playerMove.CanNotMove = true;
-            //  呼出し中カメラ動かさない
+
+                //  呼出し中カメラ動かさない
             brain.enabled = false; // 停止
 
-            // return;
+            return;
+            //}
 
-            /*else
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.Confined;
+            //Cursor.visible = false;
+            //Cursor.lockState = CursorLockMode.Locked;
 
-                brain.enabled = false; // 停止
-            }*/
+            //brain.enabled = true;  // 再開
         }
-        /*else
+        else
         {
-            playerMove.CanNotMove = false;
+            move.CanNotMove = false;
             Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.None;
-            brain.enabled = true; // 再開
-        }*/
+            Cursor.lockState = CursorLockMode.Locked;
+
+            brain.enabled = true; // 停止
+        }
+        
             CheatingHeal();
     }
 
