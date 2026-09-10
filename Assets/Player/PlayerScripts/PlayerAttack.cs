@@ -36,6 +36,8 @@ public class PlayerAttack : MonoBehaviour
 
     private float currentAttackDMG = 1f;
 
+    private bool isBuffSkillActive = false;
+
     // プロパティ
     public bool IsAttacking
     {
@@ -258,11 +260,24 @@ public class PlayerAttack : MonoBehaviour
     // バフ系スキルメソッド
     public float ATKUp(float amount)
     {
-        
-        currentAttackDMG = amount;
-        Debug.Log("バフ攻撃力 =" + currentAttackDMG);
+        if (!isBuffSkillActive)
+        {
+            isBuffSkillActive = true;
+            currentAttackDMG = amount;
+            StartCoroutine(BuffDuration(5f)); // 10秒間バフを維持
+        }
+
+
+        Debug.Log("バフ =" + isBuffSkillActive);
         return amount;
         
+    }
+
+    private IEnumerator BuffDuration(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isBuffSkillActive = false;
+        currentAttackDMG = 1f; // バフが切れたら元の攻撃力に戻す
     }
 
 
