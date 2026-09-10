@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.VFX;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class PlayerAttack : MonoBehaviour
 
     // プレイヤー動作可能状態
     private bool canNotMove;
+
+    private float currentAttackDMG = 1f;
 
     // プロパティ
     public bool IsAttacking
@@ -255,7 +258,11 @@ public class PlayerAttack : MonoBehaviour
     // バフ系スキルメソッド
     public float ATKUp(float amount)
     {
+        
+        currentAttackDMG = amount;
+        Debug.Log("バフ攻撃力 =" + currentAttackDMG);
         return amount;
+        
     }
 
 
@@ -270,7 +277,7 @@ public class PlayerAttack : MonoBehaviour
         // 通常攻撃
         if (!isSkill)
         {
-            attackPower = status.AttackPower * status.BuffMuktiPlier; // 基礎攻撃力 * バフ
+            attackPower = status.AttackPower * currentAttackDMG; // 基礎攻撃力 * バフ
 
         }
 
