@@ -1061,6 +1061,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3935706416950172837, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
+      propertyPath: skillPanel
+      value: 
+      objectReference: {fileID: 307330854}
+    - target: {fileID: 3935706416950172837, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
+      propertyPath: waveSystem
+      value: 
+      objectReference: {fileID: 1546265987}
     - target: {fileID: 6015734184766371097, guid: ce5a8c9fa7b535948a6d5ff2040c097e, type: 3}
       propertyPath: SlotManager
       value: 
@@ -1158,6 +1166,10 @@ PrefabInstance:
     - target: {fileID: 590512708249780261, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1116738469349609898, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
+      propertyPath: m_TagString
+      value: SkillPanel
       objectReference: {fileID: 0}
     - target: {fileID: 1392364505523264324, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: skillManager

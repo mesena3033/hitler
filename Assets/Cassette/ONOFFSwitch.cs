@@ -7,6 +7,11 @@ public class ONOFFSwitch : MonoBehaviour
 {
     [SerializeField]
     private GameObject gameObject;
+    public GameObject SkillPanel
+    {
+        get { return gameObject; }
+        set { gameObject = value; }
+    }
 
     void Start()
     {
