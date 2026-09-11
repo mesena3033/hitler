@@ -101,6 +101,7 @@ public class PlayerAttack : MonoBehaviour
             // 初回攻撃
             if (!isAttacking && currentAttack <= 0f)
             {
+                isSkilled = false;
                 StartAttack();
             }
 
@@ -221,7 +222,7 @@ public class PlayerAttack : MonoBehaviour
         else 
         {
             dmg = CalculateDamage(targetDefense, true, skillDamage);
-            isSkilled = false;
+            //isSkilled = false;
             //Debug.Log("スキルだめーじ" + skillDamage);
             //damageable.ApplyDamage(dmg);
             //isSkilled = false;
@@ -230,13 +231,20 @@ public class PlayerAttack : MonoBehaviour
         damageable.ApplyDamage(dmg);
 
 
-        // デバッグ出力: プレイヤーHP, 敵HP, プレイヤー攻撃力, 敵防御力
+        
         var playerStatus = GetComponent<PlayerStatus>();
         int playerHP = playerStatus != null ? playerStatus.CurrentHP : -1;
         float playerAtk = playerStatus != null ? playerStatus.AttackPower : -1f;
         int enemyHP = -1;
         if (targetStatus != null) enemyHP = targetStatus.CurrentHP;
-        // Debug.Log($"PlayerHP={playerHP} EnemyHP={enemyHP} PlayerATK={playerAtk} EnemyDEF={targetDefense} Damage={dmg}");
+        Debug.Log(
+            $"isSkilled={isSkilled}, skillDamage={skillDamage}, dmg={dmg}"
+            );
+    }
+
+    public void EndSkill()
+    {
+        isSkilled = false;
     }
 
     public void DisableSword()
@@ -250,9 +258,9 @@ public class PlayerAttack : MonoBehaviour
     // 攻撃系スキルメソッド
     public int SkillDamage(int amount)
     {
+        skillDamage = amount;
         isSkilled = true;
         StartAttack();
-        skillDamage = amount;
         //Debug.Log("攻撃力 =" + amount);
         return amount;
     }
@@ -262,22 +270,28 @@ public class PlayerAttack : MonoBehaviour
     {
         if (!isBuffSkillActive)
         {
+            Debug.Log("バフ開始");
             isBuffSkillActive = true;
             currentAttackDMG = amount;
             StartCoroutine(BuffDuration(5f)); // 10秒間バフを維持
         }
 
 
-        Debug.Log("バフ =" + isBuffSkillActive);
+        //Debug.Log("バフ =" + isBuffSkillActive);
         return amount;
         
     }
 
     private IEnumerator BuffDuration(float duration)
     {
+        Debug.Log("バフタイマー開始");
+
         yield return new WaitForSeconds(duration);
+
         isBuffSkillActive = false;
-        currentAttackDMG = 1f; // バフが切れたら元の攻撃力に戻す
+        currentAttackDMG = 1f;
+
+        Debug.Log("バフ終了");
     }
 
 

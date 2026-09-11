@@ -129,7 +129,6 @@ public abstract class EnemyBase : MonoBehaviour
        
     }
 
-    
     // 被弾アニメーション
     public void OnDamagedAnim()
     {
