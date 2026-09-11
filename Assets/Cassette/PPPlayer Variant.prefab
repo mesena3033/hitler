@@ -162,7 +162,7 @@ MonoBehaviour:
     Icon: {fileID: 21300000, guid: 0aa0d72ed1e476443a21d92edb4cc3bc, type: 3}
     skillName: ATKUp
     damage: 0
-    buffValue: 3
+    buffValue: 1.2
     SupportValue: 0
     skillLevel: 1
     skillUpGrade: 0.1
