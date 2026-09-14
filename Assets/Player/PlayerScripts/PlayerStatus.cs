@@ -20,10 +20,18 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField] private GameObject skillPanel;
     private ONOFFSwitch onOffSwitch;
 
-    public int CurrentHP => currentHP;
+    public int CurrentHP
+    {
+        get { return currentHP; }
+        set { currentHP = value; }
+    }
 
     private bool isPlayerDead = false;
-    public bool IsPlayerDead => isPlayerDead;
+    public bool IsPlayerDead
+    {
+        get { return isPlayerDead; }
+        set { isPlayerDead = value; }
+    }
     
     // 無敵（被弾無効）
     private bool isInvincible = false;
@@ -108,9 +116,6 @@ public class PlayerStatus : MonoBehaviour
         //  スキル選択時のみマウス表示にしたい
         if (onOffSwitch.SkillPanel.activeSelf || _event.GetPanelActive() == true)    /// false
         {
-            //  Altキーでマウス呼び出し
-            //if (Keyboard.current.altKey.isPressed)
-            //{
             move.CanNotMove = true; // 移動無効化
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
@@ -119,12 +124,6 @@ public class PlayerStatus : MonoBehaviour
             brain.enabled = false; // 停止
 
             return;
-            //}
-
-            //Cursor.visible = false;
-            //Cursor.lockState = CursorLockMode.Locked;
-
-            //brain.enabled = true;  // 再開
         }
         else
         {
