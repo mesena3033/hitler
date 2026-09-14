@@ -95,6 +95,7 @@ public class PlayerMove : MonoBehaviour
     // 入力処理
     private void Update()
     {
+        if (waveSystem == null) return;
         if (waveSystem.isGameStop)
         {
             canNotMove = true;
