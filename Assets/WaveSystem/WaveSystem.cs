@@ -36,11 +36,15 @@ public class WaveSystem : MonoBehaviour
     // ステージクリアしたか
     public bool isStageCleared = false;
 
+    // クリア条件キル数
+    private int normaKillCount = 6;
+
     // ステージクリアCanvas
     [SerializeField] private GameObject stageEndCanvas;
     [SerializeField] private GameObject nextButton;
     [SerializeField] private TextMeshProUGUI stageTimerText;
     [SerializeField] private TextMeshProUGUI waveTimerText;
+    [SerializeField] private TextMeshProUGUI killCountText;
     [SerializeField] private StageManager stageManager;
 
     private PlayerMove move;
@@ -73,8 +77,13 @@ public class WaveSystem : MonoBehaviour
     private void Update()
     {
         if(isStageCleared) return;
-        stageTimerText.text = "StageTimeLimit \n\t" + Mathf.CeilToInt(stageTimeLimit).ToString();
-        waveTimerText.text = "WaveTimeLimit \n\t" + Mathf.CeilToInt(waveTimeLimit).ToString();
+
+        // タイマー表示
+        stageTimerText.text = "StageTimeLimit \n  " + Mathf.CeilToInt(stageTimeLimit).ToString();
+        waveTimerText.text = "WaveTimeLimit \n  " + Mathf.CeilToInt(waveTimeLimit).ToString();
+
+        // キル数表示
+        killCountText.text = killsEnemyCount.KillCount.ToString() + " / " + normaKillCount + " Kills";
 
         // 上限値越え処理
         //if (currentWave >= waveCount) return;
@@ -94,6 +103,7 @@ public class WaveSystem : MonoBehaviour
         waveTimeLimit -= Time.deltaTime; // ウェーブタイマー
         stageTimeLimit -= Time.deltaTime; // ステージタイマー
 
+
         // wave終了   
         if (waveTimeLimit <= 0f) 
         {
@@ -105,7 +115,7 @@ public class WaveSystem : MonoBehaviour
         // ステージクリア処理
         if (stageTimeLimit <= 0f) 
         {
-            if (killsEnemyCount.KillCount >= 6)
+            if (killsEnemyCount.KillCount >= normaKillCount)    // 6kills
             {
                 Debug.Log("ステージクリア");
                 StageClear();
@@ -123,12 +133,6 @@ public class WaveSystem : MonoBehaviour
     // ウェーブ終了処理（元の挙動に戻す）
     private void WaveEnd()
     {
-        /*if (currentWave >= waveCount)
-        {
-            StageClear();
-            return;
-        }
-        */
         currentWave++;
         waveTimeLimit = initWaveTime;
         isWaveStarted = false;
