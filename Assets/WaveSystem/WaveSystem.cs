@@ -20,32 +20,34 @@ public class WaveSystem : MonoBehaviour
     public bool isGameStop = false;
 
     // ウェーブ時間
-    float waveTime = 0f;
+    float waveTimeLimit = 15f;
+    float initWaveTime = 15f;
+
     // 時間制限
-    float timeLimit = 20f;
+    float stageTimeLimit = 60f;
+    float initStageTime = 60f;
 
-    // ステージクリア時のスキル選択フェーズ
-    float preparationPhase = 20f;
-
-    // ウェーブ待機時間
-    float waitTime = 10f;
     // ウェーブ中か
     public bool isWaveRunning = false;
 
     // ウェーブ開始した瞬間
     bool isWaveStarted= false;
 
+    // ステージクリアしたか
     public bool isStageCleared = false;
+
     // ステージクリアCanvas
     [SerializeField] private GameObject stageEndCanvas;
     [SerializeField] private GameObject nextButton;
-    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshProUGUI stageTimerText;
+    [SerializeField] private TextMeshProUGUI waveTimerText;
     [SerializeField] private StageManager stageManager;
 
     private PlayerMove move;
     private PlayerStatus status;
     private WavePanel panel;
     private EnemySpawner[] spawners;
+    private KillsEnemyCount killsEnemyCount;
 
     private void Start()
     {
@@ -53,11 +55,12 @@ public class WaveSystem : MonoBehaviour
         panel = FindFirstObjectByType<WavePanel>();
         move = FindFirstObjectByType<PlayerMove>();
         spawners = FindObjectsByType<EnemySpawner>(FindObjectsSortMode.None);
+        killsEnemyCount = FindFirstObjectByType<KillsEnemyCount>();
         currentWave = 1;
-        waveTime = timeLimit;
         isWaveRunning = false;
         isWaveStarted = false;
-        preparationPhase = 20f;
+        waveTimeLimit = initWaveTime;
+        stageTimeLimit = initStageTime;
         nextButton.SetActive(false);
         isGameStop = false;
 
@@ -70,7 +73,9 @@ public class WaveSystem : MonoBehaviour
     private void Update()
     {
         if(isStageCleared) return;
-        timerText.text = "time" + Mathf.CeilToInt(waveTime).ToString();
+        stageTimerText.text = "StageTimeLimit \n\t" + Mathf.CeilToInt(stageTimeLimit).ToString();
+        waveTimerText.text = "WaveTimeLimit \n\t" + Mathf.CeilToInt(waveTimeLimit).ToString();
+
         // 上限値越え処理
         //if (currentWave >= waveCount) return;
         //Debug.Log("現ウェーブ: " +currentWave);
@@ -86,10 +91,11 @@ public class WaveSystem : MonoBehaviour
             WaveStart();
         }
 
-        waveTime -= Time.deltaTime;
+        waveTimeLimit -= Time.deltaTime; // ウェーブタイマー
+        stageTimeLimit -= Time.deltaTime; // ステージタイマー
 
-        // wave終了
-        if (waveTime <= 0f) 
+        // wave終了   
+        if (waveTimeLimit <= 0f) 
         {
             isWaveRunning = false;
 
@@ -97,24 +103,39 @@ public class WaveSystem : MonoBehaviour
         }
 
         // ステージクリア処理
+        if (stageTimeLimit <= 0f) 
+        {
+            if (killsEnemyCount.KillCount >= 6)
+            {
+                Debug.Log("ステージクリア");
+                StageClear();
+            }
+
+            else
+            {
+                status.CurrentHP = 0;
+                status.IsPlayerDead = true;
+            }
+        }
 
     }
 
     // ウェーブ終了処理（元の挙動に戻す）
     private void WaveEnd()
     {
-        if (currentWave >= waveCount)
+        /*if (currentWave >= waveCount)
         {
             StageClear();
             return;
         }
-
+        */
         currentWave++;
-        waveTime = timeLimit;
+        waveTimeLimit = initWaveTime;
         isWaveStarted = false;
         
     }
 
+    // ステージクリア処理
     private void StageClear()
     {
         // 敵を消す
@@ -123,7 +144,6 @@ public class WaveSystem : MonoBehaviour
         {
             Destroy(enemy);
         }
-
 
         isStageCleared = true;
         isGameStop = true;
@@ -134,15 +154,8 @@ public class WaveSystem : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         move.CanNotMove = true;
-
-        // ゲームを止める。スキル選択時間を考慮
-        if (preparationPhase > 0.0f)
-        {
-            preparationPhase -= Time.deltaTime;
-            
-        }
-
-        TimeStop(ref waitTime);
+        waveTimeLimit = initWaveTime;
+        stageTimeLimit = initStageTime;
 
     }
 
@@ -162,17 +175,6 @@ public class WaveSystem : MonoBehaviour
         spawner.EnemySpawn(currentWave);
     }
 
-    public bool TimeStop(ref float time)
-    {
-        if (time > 0f)
-        {
-            time -= Time.deltaTime;
-            return false;
-        }
-
-        return true;
-    }
-
     // 次のステージへ
     public void GoNextStage()
     {
@@ -189,7 +191,8 @@ public class WaveSystem : MonoBehaviour
 
         // ウェーブ数をリセット
         currentWave = 1;
-        waveTime = timeLimit;
+        waveTimeLimit = initWaveTime;
+        stageTimeLimit = initStageTime;
         isWaveStarted = false;
         isWaveRunning = false;
 
