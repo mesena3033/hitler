@@ -13,4 +13,5 @@ public class KillsEnemyCount : MonoBehaviour
 
     // KillsEnemyCountをinspectorで設定後、
     // killsEnemyCount.AddKillCount()で使えるよ～。
+    // りょうかーい
 }

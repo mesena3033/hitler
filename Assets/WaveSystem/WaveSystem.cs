@@ -85,10 +85,6 @@ public class WaveSystem : MonoBehaviour
         // キル数表示
         killCountText.text = killsEnemyCount.KillCount.ToString() + " / " + normaKillCount + " Kills";
 
-        // 上限値越え処理
-        //if (currentWave >= waveCount) return;
-        //Debug.Log("現ウェーブ: " +currentWave);
-
         // プレイヤーが死亡していたら
         if (status.IsPlayerDead) return;
 

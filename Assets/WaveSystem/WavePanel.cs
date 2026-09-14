@@ -16,6 +16,4 @@ public class WavePanel : MonoBehaviour
     {
         waveStartText.text = "Wave" + waveSystem.CurrentWave + "Start"; 
     }
-
-
 }
