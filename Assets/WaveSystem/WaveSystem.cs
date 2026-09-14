@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
@@ -13,7 +14,7 @@ public class WaveSystem : MonoBehaviour
     int currentWave = 1;
 
     // ウェーブプロパティ
-    public int CurrentWave { get { return waveCount; } set { waveCount = value; } }
+    public int CurrentWave { get { return currentWave; } set { currentWave = value; } }
 
 
     public bool isGameStop = false;
@@ -38,7 +39,7 @@ public class WaveSystem : MonoBehaviour
     // ステージクリアCanvas
     [SerializeField] private GameObject stageEndCanvas;
     [SerializeField] private GameObject nextButton;
-
+    [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private StageManager stageManager;
 
     private PlayerMove move;
@@ -69,7 +70,7 @@ public class WaveSystem : MonoBehaviour
     private void Update()
     {
         if(isStageCleared) return;
-
+        timerText.text = "time" + Mathf.CeilToInt(waveTime).ToString();
         // 上限値越え処理
         //if (currentWave >= waveCount) return;
         //Debug.Log("現ウェーブ: " +currentWave);
