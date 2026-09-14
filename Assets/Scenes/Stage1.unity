@@ -1155,10 +1155,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 1116738469349609898, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_TagString
-      value: SkillPanel
-      objectReference: {fileID: 0}
     - target: {fileID: 1392364505523264324, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: skillManager
       value: 
@@ -1263,10 +1259,6 @@ PrefabInstance:
       propertyPath: skillManager
       value: 
       objectReference: {fileID: 1113166031}
-    - target: {fileID: 8293109115535349029, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8994306395813601849, guid: e2428b8ce9e69b146ba8355e2175a622, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
