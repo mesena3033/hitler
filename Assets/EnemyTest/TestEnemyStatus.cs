@@ -8,6 +8,7 @@ public class EnemyStatus : MonoBehaviour, IDamageable
     private KillsEnemyCount killsEnemyCount;
     private EnemyBase enemyBase;
     private HPUI hpUI;
+    private HitEffect hitEffect;
 
     private int currentHP;
 
@@ -26,7 +27,9 @@ public class EnemyStatus : MonoBehaviour, IDamageable
         enemyBase = GetComponent<EnemyBase>();
         hpUI = GetComponentInChildren<HPUI>();
         UpdateHPUI();
+        hitEffect = GetComponent<HitEffect>();
     }
+
     // 外部参照用
     public float DefensePower => defensePower;
 
@@ -40,6 +43,9 @@ public class EnemyStatus : MonoBehaviour, IDamageable
         enemyBase.OnDamagedAnim();
         // HPUI 更新
         UpdateHPUI();
+
+        // ひっとえふぇくと
+        hitEffect.PlayHitEffect(transform.position);
 
         if (currentHP <= 0) enemyBase.OnDeath();
     }
