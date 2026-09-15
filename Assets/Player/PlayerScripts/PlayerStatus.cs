@@ -19,6 +19,7 @@ public class PlayerStatus : MonoBehaviour
     public WaveSystem waveSystem;
     [SerializeField] private GameObject skillPanel;
     private ONOFFSwitch onOffSwitch;
+    private HitEffect hitEffect;
 
     public int CurrentHP
     {
@@ -79,6 +80,7 @@ public class PlayerStatus : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         waveSystem = FindFirstObjectByType<WaveSystem>();
         onOffSwitch = FindFirstObjectByType<ONOFFSwitch>();
+        hitEffect = GetComponent<HitEffect>();
 
         //  マウス非表示 + 中央固定
         Cursor.visible = false;
@@ -187,6 +189,9 @@ public class PlayerStatus : MonoBehaviour
             int dmg = Mathf.Max(0, Mathf.FloorToInt(raw - defensePower));
             isDamaged = true;
             skillMane.HitChangeAnimation();
+            
+            // ヒットエフェクト
+            hitEffect.PlayHitEffect(transform.position);
 
             ////////////////
             Task task = ApplyDamage(dmg);

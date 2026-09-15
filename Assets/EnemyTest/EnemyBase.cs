@@ -18,8 +18,8 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] private GameObject hpBar;
 
     private Collider enemyCollider;
-    protected bool isHit = false;
-    protected bool isAttacking = false;
+    private bool isHit = false;
+    private bool isAttacking = false;
 
     protected void Awake()
     {
@@ -141,6 +141,8 @@ public abstract class EnemyBase : MonoBehaviour
         animator.ResetTrigger("Attack");
         animator.SetTrigger("Hit");
     }
+
+
 
     public void OnHitEnd()
     {

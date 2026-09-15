@@ -6889,6 +6889,7 @@ GameObject:
   - component: {fileID: 9169934516428418483}
   - component: {fileID: 4777754380793202016}
   - component: {fileID: 6274399392492810040}
+  - component: {fileID: 5836375164562014881}
   m_Layer: 0
   m_Name: testEnemy1
   m_TagString: Enemy
@@ -7031,6 +7032,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   col: {fileID: 7402460982837071304}
+--- !u!114 &5836375164562014881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7389923134980997987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49dcddb7533587a4293efa0ebabf23b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitEffectPrefab: {fileID: 9016892597082127588, guid: f40db358de8027b40a465c9b3026ce5d, type: 3}
 --- !u!1 &7395847335449920015
 GameObject:
   m_ObjectHideFlags: 0
