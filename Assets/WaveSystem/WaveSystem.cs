@@ -35,17 +35,25 @@ public class WaveSystem : MonoBehaviour
 
     // ステージクリアしたか
     public bool isStageCleared = false;
+    private int stageClearCount = 0;
+    private int maxStageCount = 2;
+
+    // ゲームクリアしたか
+    private bool isGameCleared = false;
+    public bool IsGameCleared => isGameCleared;
 
     // クリア条件キル数
     private int normaKillCount = 6;
 
     // ステージクリアCanvas
     [SerializeField] private GameObject stageEndCanvas;
+    [SerializeField] private GameObject gameClearCanvas;
     [SerializeField] private GameObject nextButton;
     [SerializeField] private TextMeshProUGUI stageTimerText;
     [SerializeField] private TextMeshProUGUI waveTimerText;
     [SerializeField] private TextMeshProUGUI killCountText;
     [SerializeField] private StageManager stageManager;
+
 
     private PlayerMove move;
     private PlayerStatus status;
@@ -67,8 +75,9 @@ public class WaveSystem : MonoBehaviour
         stageTimeLimit = initStageTime;
         nextButton.SetActive(false);
         isGameStop = false;
+        stageClearCount = 0;
 
-        if(stageEndCanvas != null)
+        if (stageEndCanvas != null)
         {
             stageEndCanvas.SetActive(false);
         }
@@ -76,7 +85,8 @@ public class WaveSystem : MonoBehaviour
 
     private void Update()
     {
-        if(isStageCleared) return;
+        if (isGameCleared) return;
+        if (isStageCleared) return;
 
         // タイマー表示
         stageTimerText.text = "StageTimeLimit \n  " + Mathf.CeilToInt(stageTimeLimit).ToString();
@@ -145,12 +155,24 @@ public class WaveSystem : MonoBehaviour
             Destroy(enemy);
         }
 
+        stageClearCount++;
         isStageCleared = true;
         isGameStop = true;
         isWaveRunning = false;
         // ステージクリアUIを表示
-        stageEndCanvas.SetActive(true);
-        nextButton.SetActive(true);
+        if(stageClearCount != maxStageCount)
+        {
+            stageEndCanvas.SetActive(true);
+            nextButton.SetActive(true);
+        }
+
+        else
+        {
+            SceneManager.LoadScene("GameClearScene");
+            //gameClearCanvas.SetActive(true);
+        }
+        //stageEndCanvas.SetActive(true);
+        //nextButton.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         move.CanNotMove = true;
@@ -202,6 +224,11 @@ public class WaveSystem : MonoBehaviour
         move.CanNotMove = false;
         Debug.Log($"次のステージ開始。Wave = {currentWave}");
 
+
+    }
+
+    private void GameClear()
+    {
 
     }
 }

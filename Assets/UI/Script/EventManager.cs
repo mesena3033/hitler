@@ -177,7 +177,7 @@ public class EventManager : MonoBehaviour
         if (titleSceneName != null)
         {
             //  タイトルバック
-            SceneManager.LoadScene(titleSceneName);
+            SceneManager.LoadScene("Title");
         }
     }
 
