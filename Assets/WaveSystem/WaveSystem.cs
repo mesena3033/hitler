@@ -196,6 +196,9 @@ public class WaveSystem : MonoBehaviour
         isWaveStarted = false;
         isWaveRunning = false;
 
+        // キル数をリセット
+        killsEnemyCount.ResetKillCount();
+
         move.CanNotMove = false;
         Debug.Log($"次のステージ開始。Wave = {currentWave}");
 

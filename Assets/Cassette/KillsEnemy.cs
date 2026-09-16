@@ -11,6 +11,12 @@ public class KillsEnemyCount : MonoBehaviour
         Debug.Log("敵を倒した数：" + KillCount);
     }
 
+    public void ResetKillCount()
+    {
+        KillCount = 0;
+        Debug.Log("敵を倒した数をリセットしました。");
+    }
+
     // KillsEnemyCountをinspectorで設定後、
     // killsEnemyCount.AddKillCount()で使えるよ～。
     // りょうかーい
