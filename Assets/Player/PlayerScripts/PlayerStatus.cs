@@ -136,7 +136,7 @@ public class PlayerStatus : MonoBehaviour
             brain.enabled = true; // 停止
         }
         
-            CheatingHeal();
+            //CheatingHeal();
     }
 
     // ダメージ処理
